@@ -1,0 +1,20 @@
+[
+  {
+    "id": "8f1be1a2-ca92-4964-a8d0-0dfbcaa9ea76",
+    "username": "testuser",
+    "nickname": "测试用户",
+    "passwordHash": "aa5ba51554032ca0dca027ef76c41204cac2dc788d274e418fd2e045fb9e9431a65e3b12373ef9d0d4f81a6eeb920d0f273666c51b2922aaa98c52295364e547",
+    "salt": "0a80ba16f584f8e223bc3c81799be3b1",
+    "createdAt": "2026-01-20T05:38:08.838Z",
+    "lastLoginAt": "2026-01-20T05:40:55.178Z"
+  },
+  {
+    "id": "75476046-6f81-46dc-b8c1-2db111814d04",
+    "username": "1950600196",
+    "nickname": "塔菲",
+    "passwordHash": "abf6074c3c05984e4c77fa8114fc3d3161822b1ba9c756b79362375a76577ce69edf5de8636fdb21fb0168962980cd5473cc64a279a66cca3ef4ccf8b05b829e",
+    "salt": "1ea88834e0e2d194790a19d0691ea466",
+    "createdAt": "2026-01-20T05:39:40.640Z",
+    "lastLoginAt": null
+  }
+]

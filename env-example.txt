@@ -1,0 +1,6 @@
+# 豆包 API 配置（在 Railway 环境变量中设置）
+DOUBAO_API_KEY=your-doubao-api-key
+DOUBAO_MODEL_ID=doubao-seed-1-6-flash-250828
+
+# 服务端口（可选，Railway 会自动设置）
+PORT=3456

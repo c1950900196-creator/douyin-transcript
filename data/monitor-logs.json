@@ -1,0 +1,4699 @@
+[
+  {
+    "time": "2026-01-20T05:40:33.163Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T05:36:58.148Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T03:24:55.163Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T03:13:48.254Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T03:05:04.148Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T03:01:54.519Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:42:18.227Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:41:25.482Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:38:10.256Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:37:17.946Z",
+    "type": "check_start",
+    "message": "开始检查 6 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:36:54.511Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:36:28.376Z",
+    "type": "transcribe",
+    "message": "转写成功: 7585975276119559443",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:36:28.374Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:35:03.772Z",
+    "type": "transcribe",
+    "message": "转写成功: 7585997738861481257",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:35:03.767Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:33:56.496Z",
+    "type": "transcribe",
+    "message": "转写成功: 7586358929215474995",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:33:56.489Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:32:43.258Z",
+    "type": "transcribe",
+    "message": "转写成功: 7586380056704945454",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:32:43.254Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:31:35.083Z",
+    "type": "transcribe",
+    "message": "转写成功: 7586394855463472411",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:31:35.075Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:30:44.896Z",
+    "type": "transcribe",
+    "message": "转写成功: 7586519559100812550",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:30:44.888Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:29:42.603Z",
+    "type": "transcribe",
+    "message": "转写成功: 7586641902288506138",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:29:42.591Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:28:31.934Z",
+    "type": "transcribe",
+    "message": "转写成功: 7586873147291454726",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:28:31.929Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:26:39.206Z",
+    "type": "error",
+    "message": "转写失败: 7587995542135770409",
+    "data": {
+      "error": "视频没有音轨"
+    }
+  },
+  {
+    "time": "2026-01-20T02:26:13.512Z",
+    "type": "transcribe",
+    "message": "转写成功: 7588537486341246218",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:26:13.507Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:24:38.403Z",
+    "type": "transcribe",
+    "message": "转写成功: 7588543491077115146",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:24:38.390Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:22:19.387Z",
+    "type": "transcribe",
+    "message": "转写成功: 7588549738732031258",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:22:19.381Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:21:37.501Z",
+    "type": "transcribe",
+    "message": "转写成功: 7588573377502153993",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:21:37.495Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:20:52.117Z",
+    "type": "transcribe",
+    "message": "转写成功: 7588588134581931274",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:20:52.112Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:19:42.637Z",
+    "type": "transcribe",
+    "message": "转写成功: 7591512957574483238",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:19:42.630Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:18:44.218Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 18 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:18:36.345Z",
+    "type": "new_videos",
+    "message": "咪咕足球 有 18 个新视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        {
+          "id": "7591512957574483238",
+          "title": ""
+        },
+        {
+          "id": "7588588134581931274",
+          "title": ""
+        },
+        {
+          "id": "7588573377502153993",
+          "title": ""
+        },
+        {
+          "id": "7588549738732031258",
+          "title": ""
+        },
+        {
+          "id": "7588543491077115146",
+          "title": ""
+        },
+        {
+          "id": "7588537486341246218",
+          "title": ""
+        },
+        {
+          "id": "7587995542135770409",
+          "title": ""
+        },
+        {
+          "id": "7586873147291454726",
+          "title": ""
+        },
+        {
+          "id": "7586641902288506138",
+          "title": ""
+        },
+        {
+          "id": "7586519559100812550",
+          "title": ""
+        },
+        {
+          "id": "7586394855463472411",
+          "title": ""
+        },
+        {
+          "id": "7586380056704945454",
+          "title": ""
+        },
+        {
+          "id": "7586358929215474995",
+          "title": ""
+        },
+        {
+          "id": "7585997738861481257",
+          "title": ""
+        },
+        {
+          "id": "7585975276119559443",
+          "title": ""
+        },
+        {
+          "id": "7585948917729185030",
+          "title": ""
+        },
+        {
+          "id": "7585935725271485738",
+          "title": ""
+        },
+        {
+          "id": "7584471004299152703",
+          "title": ""
+        }
+      ]
+    }
+  },
+  {
+    "time": "2026-01-20T02:17:50.300Z",
+    "type": "check_start",
+    "message": "开始检查 6 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:17:38.405Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:16:11.683Z",
+    "type": "check_start",
+    "message": "开始检查 6 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:15:55.826Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:14:52.123Z",
+    "type": "check_start",
+    "message": "开始检查 6 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:14:28.902Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:14:17.133Z",
+    "type": "new_videos",
+    "message": "提提爱体育 有 1 个新视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        {
+          "id": "7597041377637499365",
+          "title": ""
+        }
+      ]
+    }
+  },
+  {
+    "time": "2026-01-20T02:14:09.185Z",
+    "type": "new_videos",
+    "message": "足球中国 有 36 个新视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        {
+          "id": "7596711988500172072",
+          "title": ""
+        },
+        {
+          "id": "7596608197289446702",
+          "title": ""
+        },
+        {
+          "id": "7596359589520575779",
+          "title": ""
+        },
+        {
+          "id": "7596186503152160052",
+          "title": ""
+        },
+        {
+          "id": "7596145297747627304",
+          "title": ""
+        },
+        {
+          "id": "7595958961656909066",
+          "title": ""
+        },
+        {
+          "id": "7595898641915727155",
+          "title": ""
+        },
+        {
+          "id": "7595892712314817819",
+          "title": ""
+        },
+        {
+          "id": "7595236417446382848",
+          "title": ""
+        },
+        {
+          "id": "7595225195380477219",
+          "title": ""
+        },
+        {
+          "id": "7595142355959827747",
+          "title": ""
+        },
+        {
+          "id": "7595100151752953140",
+          "title": ""
+        },
+        {
+          "id": "7595045887722736896",
+          "title": ""
+        },
+        {
+          "id": "7595040617873362185",
+          "title": ""
+        },
+        {
+          "id": "7594753912679255348",
+          "title": ""
+        },
+        {
+          "id": "7589925362222550307",
+          "title": ""
+        },
+        {
+          "id": "7589939630766640384",
+          "title": ""
+        },
+        {
+          "id": "7589504520175078662",
+          "title": ""
+        },
+        {
+          "id": "7589502812700626230",
+          "title": ""
+        },
+        {
+          "id": "7588763882932505894",
+          "title": ""
+        },
+        {
+          "id": "7588762069214809354",
+          "title": ""
+        },
+        {
+          "id": "7587249378096614699",
+          "title": ""
+        },
+        {
+          "id": "7587239440754560297",
+          "title": ""
+        },
+        {
+          "id": "7586613665055427849",
+          "title": ""
+        },
+        {
+          "id": "7586505781499989302",
+          "title": ""
+        },
+        {
+          "id": "7585869701876583720",
+          "title": ""
+        },
+        {
+          "id": "7585573274264931624",
+          "title": ""
+        },
+        {
+          "id": "7584694630533336355",
+          "title": ""
+        },
+        {
+          "id": "7584392229314170154",
+          "title": ""
+        },
+        {
+          "id": "7583923200996773161",
+          "title": ""
+        },
+        {
+          "id": "7583591046378999040",
+          "title": ""
+        },
+        {
+          "id": "7582138551517711657",
+          "title": ""
+        },
+        {
+          "id": "7582136202732588294",
+          "title": ""
+        },
+        {
+          "id": "7581748310604582163",
+          "title": ""
+        },
+        {
+          "id": "7580958974401318186",
+          "title": ""
+        },
+        {
+          "id": "7580777133715295497",
+          "title": ""
+        }
+      ]
+    }
+  },
+  {
+    "time": "2026-01-20T02:14:01.323Z",
+    "type": "new_videos",
+    "message": "今日足球无剧透集锦 有 24 个新视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        {
+          "id": "7597232253357411593",
+          "title": ""
+        },
+        {
+          "id": "7596879016854883594",
+          "title": ""
+        },
+        {
+          "id": "7596873091867741467",
+          "title": ""
+        },
+        {
+          "id": "7596864096012717321",
+          "title": ""
+        },
+        {
+          "id": "7596502162042129702",
+          "title": ""
+        },
+        {
+          "id": "7596495570546494766",
+          "title": ""
+        },
+        {
+          "id": "7596492819116723507",
+          "title": ""
+        },
+        {
+          "id": "7596491662453378331",
+          "title": ""
+        },
+        {
+          "id": "7595751928835902729",
+          "title": ""
+        },
+        {
+          "id": "7595749576531889446",
+          "title": ""
+        },
+        {
+          "id": "7595383586044398899",
+          "title": ""
+        },
+        {
+          "id": "7595378974486727946",
+          "title": ""
+        },
+        {
+          "id": "7595018856180059419",
+          "title": ""
+        },
+        {
+          "id": "7595008290396867891",
+          "title": ""
+        },
+        {
+          "id": "7594645146768051483",
+          "title": ""
+        },
+        {
+          "id": "7594642183190302002",
+          "title": ""
+        },
+        {
+          "id": "7591686451700436275",
+          "title": ""
+        },
+        {
+          "id": "7591671491578662195",
+          "title": ""
+        },
+        {
+          "id": "7591311964094106930",
+          "title": ""
+        },
+        {
+          "id": "7591310841081810185",
+          "title": ""
+        },
+        {
+          "id": "7589913248317721906",
+          "title": ""
+        },
+        {
+          "id": "7589892013798051122",
+          "title": ""
+        },
+        {
+          "id": "7589890416925838601",
+          "title": ""
+        },
+        {
+          "id": "7589862613803142446",
+          "title": ""
+        }
+      ]
+    }
+  },
+  {
+    "time": "2026-01-20T02:13:53.450Z",
+    "type": "new_videos",
+    "message": "小张评球论 有 3 个新视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        {
+          "id": "7596914322027247778",
+          "title": ""
+        },
+        {
+          "id": "7596473603248997248",
+          "title": ""
+        },
+        {
+          "id": "7595993401872663488",
+          "title": ""
+        }
+      ]
+    }
+  },
+  {
+    "time": "2026-01-20T02:13:33.668Z",
+    "type": "check_start",
+    "message": "开始检查 6 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:12:56.768Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:10:08.285Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:10:08.278Z",
+    "type": "error",
+    "message": "获取视频列表失败: net::ERR_INTERNET_DISCONNECTED at https://www.douyin.com/user/MS4wLjABAAAAmiAmqiZ_xacIRjnC35XUfmFEH9ijWCJJpGeUf5_Ywls",
+    "data": {
+      "secUid": "MS4wLjABAAAAmiAmqiZ_xacIRjnC35XUfmFEH9ijWCJJpGeUf5_Ywls"
+    }
+  },
+  {
+    "time": "2026-01-20T02:10:05.115Z",
+    "type": "error",
+    "message": "获取视频列表失败: net::ERR_INTERNET_DISCONNECTED at https://www.douyin.com/user/MS4wLjABAAAAoHInnWbnZ-Odp34gdLP8UfFz2jZnKg_aUqAU1KF9a9hnp6UQj-x9TWYoHkjo4zIq",
+    "data": {
+      "secUid": "MS4wLjABAAAAoHInnWbnZ-Odp34gdLP8UfFz2jZnKg_aUqAU1KF9a9hnp6UQj-x9TWYoHkjo4zIq"
+    }
+  },
+  {
+    "time": "2026-01-20T02:10:01.953Z",
+    "type": "error",
+    "message": "获取视频列表失败: net::ERR_INTERNET_DISCONNECTED at https://www.douyin.com/user/MS4wLjABAAAA7TmreUSmZhiYxkgJ9Pprc0RVHWowQRmh9UQ91QYuM2gDcTTzjQrS7RDdF9DgkiZi",
+    "data": {
+      "secUid": "MS4wLjABAAAA7TmreUSmZhiYxkgJ9Pprc0RVHWowQRmh9UQ91QYuM2gDcTTzjQrS7RDdF9DgkiZi"
+    }
+  },
+  {
+    "time": "2026-01-20T02:09:58.771Z",
+    "type": "error",
+    "message": "获取视频列表失败: net::ERR_INTERNET_DISCONNECTED at https://www.douyin.com/user/MS4wLjABAAAAzpazSQWrIuKEBNl5Rf2Y-W9klthjD-MVi754QXbWKIU",
+    "data": {
+      "secUid": "MS4wLjABAAAAzpazSQWrIuKEBNl5Rf2Y-W9klthjD-MVi754QXbWKIU"
+    }
+  },
+  {
+    "time": "2026-01-20T02:09:55.594Z",
+    "type": "error",
+    "message": "获取视频列表失败: net::ERR_INTERNET_DISCONNECTED at https://www.douyin.com/user/MS4wLjABAAAAtyxMv8rUIKsWZxIe0wvAlqOa7xkNKZIneklyRkEaHWR1Oc7poXZ3ZB_2yYjwgMGw",
+    "data": {
+      "secUid": "MS4wLjABAAAAtyxMv8rUIKsWZxIe0wvAlqOa7xkNKZIneklyRkEaHWR1Oc7poXZ3ZB_2yYjwgMGw"
+    }
+  },
+  {
+    "time": "2026-01-20T02:09:52.420Z",
+    "type": "error",
+    "message": "获取视频列表失败: net::ERR_INTERNET_DISCONNECTED at https://www.douyin.com/user/MS4wLjABAAAAO-hJwDSJjXg4BFERIKUOZc0617kIm-iWK-U-KMEX3D5wuF7oDS7ZUPzK3q7oH51M",
+    "data": {
+      "secUid": "MS4wLjABAAAAO-hJwDSJjXg4BFERIKUOZc0617kIm-iWK-U-KMEX3D5wuF7oDS7ZUPzK3q7oH51M"
+    }
+  },
+  {
+    "time": "2026-01-20T02:09:52.269Z",
+    "type": "check_start",
+    "message": "开始检查 6 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:09:33.123Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:09:33.118Z",
+    "type": "error",
+    "message": "获取视频列表失败: net::ERR_CONNECTION_CLOSED at https://www.douyin.com/user/MS4wLjABAAAAmiAmqiZ_xacIRjnC35XUfmFEH9ijWCJJpGeUf5_Ywls",
+    "data": {
+      "secUid": "MS4wLjABAAAAmiAmqiZ_xacIRjnC35XUfmFEH9ijWCJJpGeUf5_Ywls"
+    }
+  },
+  {
+    "time": "2026-01-20T02:09:29.891Z",
+    "type": "error",
+    "message": "获取视频列表失败: net::ERR_CONNECTION_CLOSED at https://www.douyin.com/user/MS4wLjABAAAAoHInnWbnZ-Odp34gdLP8UfFz2jZnKg_aUqAU1KF9a9hnp6UQj-x9TWYoHkjo4zIq",
+    "data": {
+      "secUid": "MS4wLjABAAAAoHInnWbnZ-Odp34gdLP8UfFz2jZnKg_aUqAU1KF9a9hnp6UQj-x9TWYoHkjo4zIq"
+    }
+  },
+  {
+    "time": "2026-01-20T02:09:26.683Z",
+    "type": "error",
+    "message": "获取视频列表失败: net::ERR_CONNECTION_CLOSED at https://www.douyin.com/user/MS4wLjABAAAA7TmreUSmZhiYxkgJ9Pprc0RVHWowQRmh9UQ91QYuM2gDcTTzjQrS7RDdF9DgkiZi",
+    "data": {
+      "secUid": "MS4wLjABAAAA7TmreUSmZhiYxkgJ9Pprc0RVHWowQRmh9UQ91QYuM2gDcTTzjQrS7RDdF9DgkiZi"
+    }
+  },
+  {
+    "time": "2026-01-20T02:09:23.460Z",
+    "type": "error",
+    "message": "获取视频列表失败: net::ERR_CONNECTION_CLOSED at https://www.douyin.com/user/MS4wLjABAAAAzpazSQWrIuKEBNl5Rf2Y-W9klthjD-MVi754QXbWKIU",
+    "data": {
+      "secUid": "MS4wLjABAAAAzpazSQWrIuKEBNl5Rf2Y-W9klthjD-MVi754QXbWKIU"
+    }
+  },
+  {
+    "time": "2026-01-20T02:09:20.145Z",
+    "type": "error",
+    "message": "获取视频列表失败: net::ERR_CONNECTION_CLOSED at https://www.douyin.com/user/MS4wLjABAAAAtyxMv8rUIKsWZxIe0wvAlqOa7xkNKZIneklyRkEaHWR1Oc7poXZ3ZB_2yYjwgMGw",
+    "data": {
+      "secUid": "MS4wLjABAAAAtyxMv8rUIKsWZxIe0wvAlqOa7xkNKZIneklyRkEaHWR1Oc7poXZ3ZB_2yYjwgMGw"
+    }
+  },
+  {
+    "time": "2026-01-20T02:09:16.854Z",
+    "type": "error",
+    "message": "获取视频列表失败: net::ERR_CONNECTION_CLOSED at https://www.douyin.com/user/MS4wLjABAAAAO-hJwDSJjXg4BFERIKUOZc0617kIm-iWK-U-KMEX3D5wuF7oDS7ZUPzK3q7oH51M",
+    "data": {
+      "secUid": "MS4wLjABAAAAO-hJwDSJjXg4BFERIKUOZc0617kIm-iWK-U-KMEX3D5wuF7oDS7ZUPzK3q7oH51M"
+    }
+  },
+  {
+    "time": "2026-01-20T02:09:15.354Z",
+    "type": "check_start",
+    "message": "开始检查 6 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:07:35.659Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-20T02:06:20.948Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T08:15:15.796Z",
+    "type": "transcribe",
+    "message": "自动转写成功: 7595973010524453546",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T08:15:15.794Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T08:14:32.776Z",
+    "type": "error",
+    "message": "自动转写失败: 7596338109215431302",
+    "data": {
+      "error": "视频没有音轨"
+    }
+  },
+  {
+    "time": "2026-01-19T08:13:59.510Z",
+    "type": "transcribe",
+    "message": "自动转写成功: 7596932933278022569",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T08:13:59.509Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T08:12:34.857Z",
+    "type": "auto_transcribe",
+    "message": "准备转写 3 个近期视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        "7596932933278022569",
+        "7596338109215431302",
+        "7595973010524453546"
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T08:12:34.855Z",
+    "type": "videos",
+    "message": "获取到 16 个视频",
+    "data": {
+      "authorId": null
+    }
+  },
+  {
+    "time": "2026-01-19T08:12:24.157Z",
+    "type": "add",
+    "message": "添加作者: 足球C R 7",
+    "data": {
+      "authorId": null
+    }
+  },
+  {
+    "time": "2026-01-19T08:10:06.963Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T08:06:01.553Z",
+    "type": "transcribe",
+    "message": "自动转写成功: 7378879576237182260",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T08:06:01.552Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T08:04:58.133Z",
+    "type": "transcribe",
+    "message": "自动转写成功: 7381202862572850441",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T08:04:58.131Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T08:04:01.058Z",
+    "type": "transcribe",
+    "message": "自动转写成功: 7380790257953901851",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T08:04:01.056Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T08:02:22.763Z",
+    "type": "auto_transcribe",
+    "message": "准备转写 3 个近期视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        "7380790257953901851",
+        "7381202862572850441",
+        "7378879576237182260"
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T08:02:22.760Z",
+    "type": "videos",
+    "message": "获取到 39 个视频",
+    "data": {
+      "authorId": null
+    }
+  },
+  {
+    "time": "2026-01-19T08:02:15.371Z",
+    "type": "add",
+    "message": "添加作者: 咪咕足球",
+    "data": {
+      "authorId": null
+    }
+  },
+  {
+    "time": "2026-01-19T07:59:59.085Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:59:49.654Z",
+    "type": "transcribe",
+    "message": "自动转写成功: 7596794784570122917",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:59:49.652Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:59:09.379Z",
+    "type": "transcribe",
+    "message": "自动转写成功: 7596810153938110897",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:59:09.378Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:58:22.852Z",
+    "type": "transcribe",
+    "message": "自动转写成功: 7596940083010999525",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:58:22.851Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:57:10.144Z",
+    "type": "auto_transcribe",
+    "message": "准备转写 3 个近期视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        "7596940083010999525",
+        "7596810153938110897",
+        "7596794784570122917"
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T07:57:02.152Z",
+    "type": "add",
+    "message": "添加作者: 提提爱体育",
+    "data": {
+      "authorId": null
+    }
+  },
+  {
+    "time": "2026-01-19T07:57:00.709Z",
+    "type": "remove",
+    "message": "删除作者: 提提爱体育",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:56:57.482Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:56:02.541Z",
+    "type": "transcribe",
+    "message": "自动转写成功: 7596794784570122917",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:56:02.540Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:55:34.148Z",
+    "type": "transcribe",
+    "message": "自动转写成功: 7596810153938110897",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:55:34.146Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:54:52.160Z",
+    "type": "transcribe",
+    "message": "自动转写成功: 7596940083010999525",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:54:52.159Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:53:32.169Z",
+    "type": "auto_transcribe",
+    "message": "准备转写 3 个近期视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        "7596940083010999525",
+        "7596810153938110897",
+        "7596794784570122917"
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T07:53:14.444Z",
+    "type": "add",
+    "message": "添加作者: 提提爱体育",
+    "data": {
+      "authorId": null
+    }
+  },
+  {
+    "time": "2026-01-19T07:53:12.533Z",
+    "type": "remove",
+    "message": "删除作者: 提提爱体育",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:53:09.237Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:51:49.236Z",
+    "type": "transcribe",
+    "message": "自动转写成功: 7596794784570122917",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:51:49.235Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:51:24.098Z",
+    "type": "transcribe",
+    "message": "自动转写成功: 7596810153938110897",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:51:24.096Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:50:54.604Z",
+    "type": "transcribe",
+    "message": "自动转写成功: 7596940083010999525",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:50:54.603Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:50:18.881Z",
+    "type": "auto_transcribe",
+    "message": "准备转写 3 个近期视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        "7596940083010999525",
+        "7596810153938110897",
+        "7596794784570122917"
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T07:50:03.279Z",
+    "type": "add",
+    "message": "添加作者: 提提爱体育",
+    "data": {
+      "authorId": null
+    }
+  },
+  {
+    "time": "2026-01-19T07:49:48.155Z",
+    "type": "remove",
+    "message": "删除作者: 提提爱体育",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:49:44.942Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:46:15.782Z",
+    "type": "transcribe",
+    "message": "自动转写成功: 7596794784570122917",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:46:15.781Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:43:55.617Z",
+    "type": "transcribe",
+    "message": "自动转写成功: 7596810153938110897",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:43:55.616Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:43:19.887Z",
+    "type": "transcribe",
+    "message": "自动转写成功: 7596940083010999525",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:43:19.886Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:42:42.919Z",
+    "type": "auto_transcribe",
+    "message": "准备转写 3 个近期视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        "7596940083010999525",
+        "7596810153938110897",
+        "7596794784570122917"
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T07:42:42.918Z",
+    "type": "videos",
+    "message": "获取到 2 个视频",
+    "data": {
+      "authorId": null
+    }
+  },
+  {
+    "time": "2026-01-19T07:42:33.355Z",
+    "type": "add",
+    "message": "添加作者: 提提爱体育",
+    "data": {
+      "authorId": null
+    }
+  },
+  {
+    "time": "2026-01-19T07:42:31.314Z",
+    "type": "remove",
+    "message": "删除作者: 提提爱体育",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:42:28.108Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:38:51.351Z",
+    "type": "transcribe",
+    "message": "自动转写成功: 7596794784570122917",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:38:51.350Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:38:21.702Z",
+    "type": "transcribe",
+    "message": "自动转写成功: 7596810153938110897",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:38:21.701Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:37:47.109Z",
+    "type": "transcribe",
+    "message": "自动转写成功: 7596940083010999525",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:37:47.105Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:36:17.925Z",
+    "type": "auto_transcribe",
+    "message": "准备转写 3 个近期视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        "7596940083010999525",
+        "7596810153938110897",
+        "7596794784570122917"
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T07:36:17.921Z",
+    "type": "videos",
+    "message": "获取到 14 个视频",
+    "data": {
+      "authorId": null
+    }
+  },
+  {
+    "time": "2026-01-19T07:36:10.092Z",
+    "type": "add",
+    "message": "添加作者: 提提爱体育",
+    "data": {
+      "authorId": null
+    }
+  },
+  {
+    "time": "2026-01-19T07:36:07.326Z",
+    "type": "remove",
+    "message": "删除作者: 提提爱体育",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:36:04.097Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:32:28.072Z",
+    "type": "add",
+    "message": "添加作者: 提提爱体育",
+    "data": {
+      "authorId": null
+    }
+  },
+  {
+    "time": "2026-01-19T07:32:25.836Z",
+    "type": "remove",
+    "message": "删除作者: 提提爱体育",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:32:08.162Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:29:45.714Z",
+    "type": "update",
+    "message": "更新作者: 提提爱体育",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:29:13.447Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:25:27.012Z",
+    "type": "error",
+    "message": "获取视频列表失败: Navigation timeout of 60000 ms exceeded",
+    "data": {
+      "secUid": "MS4wLjABAAAA7TmreUSmZhiYxkgJ9Pprc0RVHWowQRmh9UQ91QYuM2gDcTTzjQrS7RDdF9DgkiZi"
+    }
+  },
+  {
+    "time": "2026-01-19T07:24:25.742Z",
+    "type": "add",
+    "message": "添加作者: 提提爱体育",
+    "data": {
+      "authorId": null
+    }
+  },
+  {
+    "time": "2026-01-19T07:24:01.968Z",
+    "type": "remove",
+    "message": "删除作者: 提提爱体育",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:22:54.196Z",
+    "type": "error",
+    "message": "获取视频列表失败: The browser is already running for /Users/huhaotian/未命名文件夹/抖音文案提取器/chrome-user-data. Use a different `userDataDir` or stop the running browser first.",
+    "data": {
+      "secUid": "MS4wLjABAAAA7TmreUSmZhiYxkgJ9Pprc0RVHWowQRmh9UQ91QYuM2gDcTTzjQrS7RDdF9DgkiZi"
+    }
+  },
+  {
+    "time": "2026-01-19T07:22:53.554Z",
+    "type": "add",
+    "message": "添加作者: 提提爱体育",
+    "data": {
+      "authorId": null
+    }
+  },
+  {
+    "time": "2026-01-19T07:22:40.644Z",
+    "type": "remove",
+    "message": "删除作者: 提提爱体育",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:21:18.888Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:14:05.566Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:11:06.302Z",
+    "type": "transcribe",
+    "message": "自动转写成功: 7594085181431057698",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:11:06.301Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:10:25.901Z",
+    "type": "error",
+    "message": "自动转写失败: 7594113256239795490",
+    "data": {
+      "error": "视频没有音轨"
+    }
+  },
+  {
+    "time": "2026-01-19T07:10:03.937Z",
+    "type": "transcribe",
+    "message": "自动转写成功: 7407382107477003554",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:10:03.935Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:08:26.495Z",
+    "type": "auto_transcribe",
+    "message": "准备转写 3 个近期视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        "7407382107477003554",
+        "7594113256239795490",
+        "7594085181431057698"
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T07:08:26.492Z",
+    "type": "videos",
+    "message": "获取到 19 个视频",
+    "data": {
+      "authorId": null
+    }
+  },
+  {
+    "time": "2026-01-19T07:07:49.388Z",
+    "type": "add",
+    "message": "添加作者: 足球中国",
+    "data": {
+      "authorId": null
+    }
+  },
+  {
+    "time": "2026-01-19T07:06:35.180Z",
+    "type": "add",
+    "message": "添加作者: 提提爱体育",
+    "data": {
+      "authorId": null
+    }
+  },
+  {
+    "time": "2026-01-19T07:06:29.349Z",
+    "type": "remove",
+    "message": "删除作者: 提提爱体育",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:06:07.047Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:01:43.568Z",
+    "type": "add",
+    "message": "添加作者: 提提爱体育",
+    "data": {
+      "authorId": null
+    }
+  },
+  {
+    "time": "2026-01-19T07:01:16.984Z",
+    "type": "remove",
+    "message": "删除作者: 提提爱体育",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T07:00:54.767Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:59:06.523Z",
+    "type": "add",
+    "message": "添加作者: 提提爱体育",
+    "data": {
+      "authorId": null
+    }
+  },
+  {
+    "time": "2026-01-19T06:59:03.544Z",
+    "type": "remove",
+    "message": "删除作者: 提提爱体育",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:58:40.010Z",
+    "type": "error",
+    "message": "获取视频列表失败: Attempted to use detached Frame 'CA161658EFF90BE8B94D872F1786D5AF'.",
+    "data": {
+      "secUid": "MS4wLjABAAAA7TmreUSmZhiYxkgJ9Pprc0RVHWowQRmh9UQ91QYuM2gDcTTzjQrS7RDdF9DgkiZi"
+    }
+  },
+  {
+    "time": "2026-01-19T06:58:36.215Z",
+    "type": "error",
+    "message": "自动转写失败: 7594273310968499494",
+    "data": {
+      "error": "视频没有音轨"
+    }
+  },
+  {
+    "time": "2026-01-19T06:58:24.617Z",
+    "type": "add",
+    "message": "添加作者: 提提爱体育",
+    "data": {
+      "authorId": null
+    }
+  },
+  {
+    "time": "2026-01-19T06:57:52.820Z",
+    "type": "error",
+    "message": "自动转写失败: 7594279920042364169",
+    "data": {
+      "error": "视频没有音轨"
+    }
+  },
+  {
+    "time": "2026-01-19T06:57:14.980Z",
+    "type": "transcribe",
+    "message": "自动转写成功: 7592440139775790387",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:57:14.979Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:55:12.275Z",
+    "type": "auto_transcribe",
+    "message": "准备转写 3 个近期视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        "7592440139775790387",
+        "7594279920042364169",
+        "7594273310968499494"
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T06:54:45.919Z",
+    "type": "add",
+    "message": "添加作者: 今日足球无剧透集锦",
+    "data": {
+      "authorId": null
+    }
+  },
+  {
+    "time": "2026-01-19T06:54:37.059Z",
+    "type": "remove",
+    "message": "删除作者: 未知用户",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:54:13.530Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:52:36.333Z",
+    "type": "error",
+    "message": "自动转写失败: 7594273310968499494",
+    "data": {
+      "error": "Failed to load audio: ffmpeg version 8.0.1-tessus  https://evermeet.cx/ffmpeg/  Copyright (c) 2000-2025 the FFmpeg developers\n  built with Apple clang version 17.0.0 (clang-1700.4.4.1)\n  configuration: --cc=/usr/bin/clang --prefix=/opt/ffmpeg --extra-version=tessus --enable-avisynth --enable-fontconfig --enable-gpl --enable-libaom --enable-libass --enable-libbluray --enable-libdav1d --enable-libfreetype --enable-libgsm --enable-libharfbuzz --enable-libmodplug --enable-libmp3lame --enable-libmysofa --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libopenh264 --enable-libopenjpeg --enable-libopus --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvmaf --enable-libvo-amrwbenc --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxavs --enable-libxml2 --enable-libxvid --enable-libzimg --enable-libzmq --enable-libzvbi --enable-version3 --pkg-config-flags=--static --disable-ffplay\n  libavutil      60.  8.100 / 60.  8.100\n  libavcodec     62. 11.100 / 62. 11.100\n  libavformat    62.  3.100 / 62.  3.100\n  libavdevice    62.  1.100 / 62.  1.100\n  libavfilter    11.  4.100 / 11.  4.100\n  libswscale      9.  1.100 /  9.  1.100\n  libswresample   6.  1.100 /  6.  1.100\nInput #0, mov,mp4,m4a,3gp,3g2,mj2, from '/Users/huhaotian/未命名文件夹/抖音文案提取器/temp/video_1768805531467.mp4':\n  Metadata:\n    minor_version   : 512\n    major_brand     : isom\n    compatible_brands: isomiso2mp41\n    comment         : vid:v0300fg10000d5i4di7og65gd2ts4msg\n    encoder         : Lavf58.76.100\n  Duration: 00:04:49.07, start: 0.000000, bitrate: 657 kb/s\n  Stream #0:0[0x1](und): Video: hevc (Main) (hvc1 / 0x31637668), yuv420p(tv, bt709, progressive), 1280x720, 527 kb/s, SAR 1:1 DAR 16:9, 30 fps, 30 tbr, 15360 tbn (default)\n    Metadata:\n      handler_name    : Bento4 Video Handler\n      vendor_id       : [0][0][0][0]\nOutput #0, s16le, to 'pipe:':\n[out#0/s16le @ 0x7fa66b2041c0] Output file does not contain any stream\nError opening output file -.\nError opening output files: Invalid argument\n"
+    }
+  },
+  {
+    "time": "2026-01-19T06:51:22.566Z",
+    "type": "error",
+    "message": "自动转写失败: 7594279920042364169",
+    "data": {
+      "error": "Failed to load audio: ffmpeg version 8.0.1-tessus  https://evermeet.cx/ffmpeg/  Copyright (c) 2000-2025 the FFmpeg developers\n  built with Apple clang version 17.0.0 (clang-1700.4.4.1)\n  configuration: --cc=/usr/bin/clang --prefix=/opt/ffmpeg --extra-version=tessus --enable-avisynth --enable-fontconfig --enable-gpl --enable-libaom --enable-libass --enable-libbluray --enable-libdav1d --enable-libfreetype --enable-libgsm --enable-libharfbuzz --enable-libmodplug --enable-libmp3lame --enable-libmysofa --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libopenh264 --enable-libopenjpeg --enable-libopus --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvmaf --enable-libvo-amrwbenc --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxavs --enable-libxml2 --enable-libxvid --enable-libzimg --enable-libzmq --enable-libzvbi --enable-version3 --pkg-config-flags=--static --disable-ffplay\n  libavutil      60.  8.100 / 60.  8.100\n  libavcodec     62. 11.100 / 62. 11.100\n  libavformat    62.  3.100 / 62.  3.100\n  libavdevice    62.  1.100 / 62.  1.100\n  libavfilter    11.  4.100 / 11.  4.100\n  libswscale      9.  1.100 /  9.  1.100\n  libswresample   6.  1.100 /  6.  1.100\nInput #0, mov,mp4,m4a,3gp,3g2,mj2, from '/Users/huhaotian/未命名文件夹/抖音文案提取器/temp/video_1768805469084.mp4':\n  Metadata:\n    minor_version   : 512\n    major_brand     : isom\n    compatible_brands: isomiso2mp41\n    comment         : vid:v0200fg10000d5i4okfog65uduej2dhg\n    encoder         : Lavf58.76.100\n  Duration: 00:08:34.80, start: 0.000000, bitrate: 631 kb/s\n  Stream #0:0[0x1](und): Video: hevc (Main) (hvc1 / 0x31637668), yuv420p(tv, bt709, progressive), 1280x720, 454 kb/s, SAR 1:1 DAR 16:9, 30 fps, 30 tbr, 15360 tbn (default)\n    Metadata:\n      handler_name    : Bento4 Video Handler\n      vendor_id       : [0][0][0][0]\nOutput #0, s16le, to 'pipe:':\n[out#0/s16le @ 0x7fd595106900] Output file does not contain any stream\nError opening output file -.\nError opening output files: Invalid argument\n"
+    }
+  },
+  {
+    "time": "2026-01-19T06:50:42.868Z",
+    "type": "transcribe",
+    "message": "自动转写成功: 7592440139775790387",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:50:42.866Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:49:24.265Z",
+    "type": "auto_transcribe",
+    "message": "准备转写 3 个近期视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        "7592440139775790387",
+        "7594279920042364169",
+        "7594273310968499494"
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T06:48:34.875Z",
+    "type": "add",
+    "message": "添加作者: 未知用户",
+    "data": {
+      "authorId": null
+    }
+  },
+  {
+    "time": "2026-01-19T06:48:07.971Z",
+    "type": "remove",
+    "message": "删除作者: 今日足球无剧透集锦",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:47:48.234Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:45:37.784Z",
+    "type": "error",
+    "message": "自动转写失败: 7594273310968499494",
+    "data": {
+      "error": "Failed to load audio: ffmpeg version 8.0.1-tessus  https://evermeet.cx/ffmpeg/  Copyright (c) 2000-2025 the FFmpeg developers\n  built with Apple clang version 17.0.0 (clang-1700.4.4.1)\n  configuration: --cc=/usr/bin/clang --prefix=/opt/ffmpeg --extra-version=tessus --enable-avisynth --enable-fontconfig --enable-gpl --enable-libaom --enable-libass --enable-libbluray --enable-libdav1d --enable-libfreetype --enable-libgsm --enable-libharfbuzz --enable-libmodplug --enable-libmp3lame --enable-libmysofa --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libopenh264 --enable-libopenjpeg --enable-libopus --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvmaf --enable-libvo-amrwbenc --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxavs --enable-libxml2 --enable-libxvid --enable-libzimg --enable-libzmq --enable-libzvbi --enable-version3 --pkg-config-flags=--static --disable-ffplay\n  libavutil      60.  8.100 / 60.  8.100\n  libavcodec     62. 11.100 / 62. 11.100\n  libavformat    62.  3.100 / 62.  3.100\n  libavdevice    62.  1.100 / 62.  1.100\n  libavfilter    11.  4.100 / 11.  4.100\n  libswscale      9.  1.100 /  9.  1.100\n  libswresample   6.  1.100 /  6.  1.100\nInput #0, mov,mp4,m4a,3gp,3g2,mj2, from '/Users/huhaotian/未命名文件夹/抖音文案提取器/temp/video_1768805128354.mp4':\n  Metadata:\n    minor_version   : 512\n    major_brand     : isom\n    compatible_brands: isomiso2mp41\n    comment         : vid:v0300fg10000d5i4di7og65gd2ts4msg\n    encoder         : Lavf58.76.100\n  Duration: 00:04:49.07, start: 0.000000, bitrate: 657 kb/s\n  Stream #0:0[0x1](und): Video: hevc (Main) (hvc1 / 0x31637668), yuv420p(tv, bt709, progressive), 1280x720, 527 kb/s, SAR 1:1 DAR 16:9, 30 fps, 30 tbr, 15360 tbn (default)\n    Metadata:\n      handler_name    : Bento4 Video Handler\n      vendor_id       : [0][0][0][0]\nOutput #0, s16le, to 'pipe:':\n[out#0/s16le @ 0x7fd55a70a180] Output file does not contain any stream\nError opening output file -.\nError opening output files: Invalid argument\n"
+    }
+  },
+  {
+    "time": "2026-01-19T06:45:06.520Z",
+    "type": "error",
+    "message": "自动转写失败: 7594279920042364169",
+    "data": {
+      "error": "Failed to load audio: ffmpeg version 8.0.1-tessus  https://evermeet.cx/ffmpeg/  Copyright (c) 2000-2025 the FFmpeg developers\n  built with Apple clang version 17.0.0 (clang-1700.4.4.1)\n  configuration: --cc=/usr/bin/clang --prefix=/opt/ffmpeg --extra-version=tessus --enable-avisynth --enable-fontconfig --enable-gpl --enable-libaom --enable-libass --enable-libbluray --enable-libdav1d --enable-libfreetype --enable-libgsm --enable-libharfbuzz --enable-libmodplug --enable-libmp3lame --enable-libmysofa --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libopenh264 --enable-libopenjpeg --enable-libopus --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvmaf --enable-libvo-amrwbenc --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx264 --enable-libx265 --enable-libxavs --enable-libxml2 --enable-libxvid --enable-libzimg --enable-libzmq --enable-libzvbi --enable-version3 --pkg-config-flags=--static --disable-ffplay\n  libavutil      60.  8.100 / 60.  8.100\n  libavcodec     62. 11.100 / 62. 11.100\n  libavformat    62.  3.100 / 62.  3.100\n  libavdevice    62.  1.100 / 62.  1.100\n  libavfilter    11.  4.100 / 11.  4.100\n  libswscale      9.  1.100 /  9.  1.100\n  libswresample   6.  1.100 /  6.  1.100\nInput #0, mov,mp4,m4a,3gp,3g2,mj2, from '/Users/huhaotian/未命名文件夹/抖音文案提取器/temp/video_1768805097406.mp4':\n  Metadata:\n    minor_version   : 512\n    major_brand     : isom\n    compatible_brands: isomiso2mp41\n    comment         : vid:v0200fg10000d5i4okfog65uduej2dhg\n    encoder         : Lavf58.76.100\n  Duration: 00:08:34.80, start: 0.000000, bitrate: 631 kb/s\n  Stream #0:0[0x1](und): Video: hevc (Main) (hvc1 / 0x31637668), yuv420p(tv, bt709, progressive), 1280x720, 454 kb/s, SAR 1:1 DAR 16:9, 30 fps, 30 tbr, 15360 tbn (default)\n    Metadata:\n      handler_name    : Bento4 Video Handler\n      vendor_id       : [0][0][0][0]\nOutput #0, s16le, to 'pipe:':\n[out#0/s16le @ 0x7fb5db205ac0] Output file does not contain any stream\nError opening output file -.\nError opening output files: Invalid argument\n"
+    }
+  },
+  {
+    "time": "2026-01-19T06:44:28.667Z",
+    "type": "transcribe",
+    "message": "自动转写成功: 7592440139775790387",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:44:28.666Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:43:30.517Z",
+    "type": "auto_transcribe",
+    "message": "准备转写 3 个近期视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        "7592440139775790387",
+        "7594279920042364169",
+        "7594273310968499494"
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T06:43:01.505Z",
+    "type": "add",
+    "message": "添加作者: 今日足球无剧透集锦",
+    "data": {
+      "authorId": null
+    }
+  },
+  {
+    "time": "2026-01-19T06:42:58.481Z",
+    "type": "remove",
+    "message": "删除作者: 今日足球无剧透集锦",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:41:33.050Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:37:25.631Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:35:08.009Z",
+    "type": "error",
+    "message": "自动转写失败: 7594273310968499494",
+    "data": {
+      "error": "音频提取失败"
+    }
+  },
+  {
+    "time": "2026-01-19T06:34:34.825Z",
+    "type": "error",
+    "message": "自动转写失败: 7594279920042364169",
+    "data": {
+      "error": "音频提取失败"
+    }
+  },
+  {
+    "time": "2026-01-19T06:33:53.843Z",
+    "type": "transcribe",
+    "message": "自动转写成功: 7592440139775790387",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:33:53.842Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:33:07.670Z",
+    "type": "remove",
+    "message": "删除作者: 戏里戏外",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:33:05.437Z",
+    "type": "remove",
+    "message": "删除作者: 九号厅",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:32:46.687Z",
+    "type": "auto_transcribe",
+    "message": "准备转写 3 个近期视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        "7592440139775790387",
+        "7594279920042364169",
+        "7594273310968499494"
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T06:32:19.215Z",
+    "type": "add",
+    "message": "添加作者: 今日足球无剧透集锦",
+    "data": {
+      "authorId": null
+    }
+  },
+  {
+    "time": "2026-01-19T06:32:09.763Z",
+    "type": "remove",
+    "message": "删除作者: 今日足球无剧透集锦",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:31:39.661Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:27:25.443Z",
+    "type": "error",
+    "message": "自动转写失败: 7594273310968499494",
+    "data": {
+      "error": "音频提取失败"
+    }
+  },
+  {
+    "time": "2026-01-19T06:26:46.750Z",
+    "type": "error",
+    "message": "自动转写失败: 7594279920042364169",
+    "data": {
+      "error": "音频提取失败"
+    }
+  },
+  {
+    "time": "2026-01-19T06:26:04.561Z",
+    "type": "transcribe",
+    "message": "自动转写成功: 7592440139775790387",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:26:04.559Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:24:53.606Z",
+    "type": "auto_transcribe",
+    "message": "准备转写 3 个近期视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        "7592440139775790387",
+        "7594279920042364169",
+        "7594273310968499494"
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T06:24:53.604Z",
+    "type": "videos",
+    "message": "获取到 18 个视频",
+    "data": {
+      "authorId": null
+    }
+  },
+  {
+    "time": "2026-01-19T06:24:43.788Z",
+    "type": "add",
+    "message": "添加作者: 今日足球无剧透集锦",
+    "data": {
+      "authorId": null
+    }
+  },
+  {
+    "time": "2026-01-19T06:23:58.893Z",
+    "type": "add",
+    "message": "添加作者: 小张评球论",
+    "data": {
+      "authorId": null
+    }
+  },
+  {
+    "time": "2026-01-19T06:22:58.786Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:19:33.449Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:18:18.559Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:15:55.722Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:10:59.226Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:10:23.983Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:09:51.012Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:09:13.652Z",
+    "type": "transcribe",
+    "message": "转写成功: 7307115507541347595",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:09:13.650Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:06:36.551Z",
+    "type": "error",
+    "message": "转写失败: 7594030768800763176",
+    "data": {
+      "error": "音频提取失败"
+    }
+  },
+  {
+    "time": "2026-01-19T06:06:10.787Z",
+    "type": "transcribe",
+    "message": "转写成功: 7596563117732580553",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:06:10.786Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:04:57.796Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 15 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:04:57.688Z",
+    "type": "new_videos",
+    "message": "九号厅 有 7 个新视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        {
+          "id": "7590627129440734490",
+          "title": ""
+        },
+        {
+          "id": "7174719929663442234",
+          "title": ""
+        },
+        {
+          "id": "7303488769020267827",
+          "title": ""
+        },
+        {
+          "id": "7576847421851341647",
+          "title": ""
+        },
+        {
+          "id": "7494840978612686131",
+          "title": ""
+        },
+        {
+          "id": "7500166275467250980",
+          "title": ""
+        },
+        {
+          "id": "7270824602673089826",
+          "title": ""
+        }
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T06:04:40.009Z",
+    "type": "new_videos",
+    "message": "戏里戏外 有 8 个新视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        {
+          "id": "7596563117732580553",
+          "title": ""
+        },
+        {
+          "id": "7594030768800763176",
+          "title": ""
+        },
+        {
+          "id": "7307115507541347595",
+          "title": ""
+        },
+        {
+          "id": "7312468022084652339",
+          "title": ""
+        },
+        {
+          "id": "7569352354542226742",
+          "title": ""
+        },
+        {
+          "id": "7233704007548570895",
+          "title": ""
+        },
+        {
+          "id": "7456744881663397130",
+          "title": ""
+        },
+        {
+          "id": "7263872140179508514",
+          "title": ""
+        }
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T06:04:22.589Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T06:03:01.779Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T05:53:33.241Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T05:50:10.950Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T05:48:51.214Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 16 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T05:48:51.128Z",
+    "type": "new_videos",
+    "message": "九号厅 有 8 个新视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        {
+          "id": "7594684280391961906",
+          "title": ""
+        },
+        {
+          "id": "7574640690413812667",
+          "title": ""
+        },
+        {
+          "id": "7228342779968048440",
+          "title": ""
+        },
+        {
+          "id": "7225064302787431720",
+          "title": ""
+        },
+        {
+          "id": "7575830544039094504",
+          "title": ""
+        },
+        {
+          "id": "7022890018570046750",
+          "title": ""
+        },
+        {
+          "id": "7518425439245716775",
+          "title": ""
+        },
+        {
+          "id": "7540227463524240698",
+          "title": ""
+        }
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T05:48:32.995Z",
+    "type": "new_videos",
+    "message": "戏里戏外 有 8 个新视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        {
+          "id": "7596910694918901002",
+          "title": ""
+        },
+        {
+          "id": "7579600560714763571",
+          "title": ""
+        },
+        {
+          "id": "7337990594922302729",
+          "title": ""
+        },
+        {
+          "id": "7356569141500775714",
+          "title": ""
+        },
+        {
+          "id": "7587750168032991397",
+          "title": ""
+        },
+        {
+          "id": "7500756688762572072",
+          "title": ""
+        },
+        {
+          "id": "7562512301292850489",
+          "title": ""
+        },
+        {
+          "id": "7187196731115818301",
+          "title": ""
+        }
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T05:47:50.318Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T05:47:37.962Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T05:45:40.681Z",
+    "type": "transcribe",
+    "message": "转写成功: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T05:45:40.678Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T05:43:29.506Z",
+    "type": "transcribe",
+    "message": "转写成功: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T05:43:29.504Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T05:42:57.701Z",
+    "type": "new_videos",
+    "message": "戏里戏外 有 7 个新视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        {
+          "id": "7589086470783311525",
+          "title": ""
+        },
+        {
+          "id": "6972504476942863654",
+          "title": ""
+        },
+        {
+          "id": "7163063046481513728",
+          "title": ""
+        },
+        {
+          "id": "7576907366730581107",
+          "title": ""
+        },
+        {
+          "id": "7174573959453658405",
+          "title": ""
+        },
+        {
+          "id": "7429103033562221881",
+          "title": ""
+        },
+        {
+          "id": "7414315260099759370",
+          "title": ""
+        }
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T05:42:37.989Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T05:38:34.825Z",
+    "type": "transcribe",
+    "message": "转写成功: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T05:38:34.824Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T05:38:07.396Z",
+    "type": "transcribe",
+    "message": "转写成功: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T05:38:07.395Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T05:36:33.779Z",
+    "type": "new_videos",
+    "message": "戏里戏外 有 8 个新视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        {
+          "id": "7596890113511034148",
+          "title": ""
+        },
+        {
+          "id": "7587682399324998931",
+          "title": ""
+        },
+        {
+          "id": "7332704058148457765",
+          "title": ""
+        },
+        {
+          "id": "7332400123986611506",
+          "title": ""
+        },
+        {
+          "id": "7305334689252773160",
+          "title": ""
+        },
+        {
+          "id": "7222486791473974540",
+          "title": ""
+        },
+        {
+          "id": "7119805093607755019",
+          "title": ""
+        },
+        {
+          "id": "7540239769969134908",
+          "title": ""
+        }
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T05:36:17.119Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T05:34:19.749Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T05:31:59.101Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T05:31:52.780Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T05:28:38.824Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T05:24:15.921Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T05:06:24.706Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T05:00:28.213Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T05:00:19.436Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T04:33:34.411Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T04:29:48.318Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T04:26:28.298Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T04:25:46.021Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T04:21:53.419Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T04:18:30.135Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T04:14:44.276Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T04:11:02.857Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T04:08:25.192Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T04:08:05.464Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T04:04:15.913Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T04:01:14.221Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:59:34.317Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:56:33.419Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:53:23.914Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:47:09.555Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:46:12.299Z",
+    "type": "new_videos",
+    "message": "九号厅 有 7 个新视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        {
+          "id": "7587221457101393192",
+          "title": ""
+        },
+        {
+          "id": "7416626726131748159",
+          "title": ""
+        },
+        {
+          "id": "7417741136673967371",
+          "title": ""
+        },
+        {
+          "id": "7590233922899839439",
+          "title": ""
+        },
+        {
+          "id": "7394061696597331200",
+          "title": ""
+        },
+        {
+          "id": "7367208668275789066",
+          "title": ""
+        },
+        {
+          "id": "7451458731583278394",
+          "title": ""
+        }
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T03:45:43.747Z",
+    "type": "transcribe",
+    "message": "转写成功: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:45:43.740Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:44:10.587Z",
+    "type": "transcribe",
+    "message": "转写成功: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:44:10.584Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:43:20.229Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:42:40.894Z",
+    "type": "transcribe",
+    "message": "转写成功: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:42:40.886Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:40:11.743Z",
+    "type": "transcribe",
+    "message": "转写成功: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:40:11.742Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:39:38.748Z",
+    "type": "transcribe",
+    "message": "转写成功: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:39:38.746Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:39:15.945Z",
+    "type": "new_videos",
+    "message": "戏里戏外 有 8 个新视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        {
+          "id": "7596610009669327247",
+          "title": ""
+        },
+        {
+          "id": "7576112434198668874",
+          "title": ""
+        },
+        {
+          "id": "7223777085016395008",
+          "title": ""
+        },
+        {
+          "id": "7207333090186857731",
+          "title": ""
+        },
+        {
+          "id": "7518995004821277952",
+          "title": ""
+        },
+        {
+          "id": "7377044900501572900",
+          "title": ""
+        },
+        {
+          "id": "7218166587851869501",
+          "title": ""
+        },
+        {
+          "id": "7528005391456767292",
+          "title": ""
+        }
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T03:38:47.251Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:38:42.247Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:38:25.006Z",
+    "type": "new_videos",
+    "message": "戏里戏外 有 8 个新视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        {
+          "id": "7596386841197153545",
+          "title": ""
+        },
+        {
+          "id": "7583624995298446651",
+          "title": ""
+        },
+        {
+          "id": "7325685780498713896",
+          "title": ""
+        },
+        {
+          "id": "7335309122532855076",
+          "title": ""
+        },
+        {
+          "id": "7584865602930494747",
+          "title": ""
+        },
+        {
+          "id": "7229136021470842123",
+          "title": ""
+        },
+        {
+          "id": "7200952157623946556",
+          "title": ""
+        },
+        {
+          "id": "7230345070212402464",
+          "title": ""
+        }
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T03:37:40.155Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:37:35.152Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:34:49.026Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:31:50.143Z",
+    "type": "transcribe",
+    "message": "转写成功: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:31:50.142Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:31:20.976Z",
+    "type": "transcribe",
+    "message": "转写成功: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:31:20.975Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:30:50.295Z",
+    "type": "new_videos",
+    "message": "戏里戏外 有 8 个新视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        {
+          "id": "7595795227827309859",
+          "title": ""
+        },
+        {
+          "id": "7596214277862624575",
+          "title": ""
+        },
+        {
+          "id": "7365902002708073739",
+          "title": ""
+        },
+        {
+          "id": "7362427641078500647",
+          "title": ""
+        },
+        {
+          "id": "7540840940585733428",
+          "title": ""
+        },
+        {
+          "id": "7420574877515631884",
+          "title": ""
+        },
+        {
+          "id": "7363491110821350668",
+          "title": ""
+        },
+        {
+          "id": "7121294677042662687",
+          "title": ""
+        }
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T03:30:31.569Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:30:26.564Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:29:47.293Z",
+    "type": "new_videos",
+    "message": "戏里戏外 有 8 个新视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        {
+          "id": "7596583251197600948",
+          "title": ""
+        },
+        {
+          "id": "7583154882375519524",
+          "title": ""
+        },
+        {
+          "id": "7303895958805417243",
+          "title": ""
+        },
+        {
+          "id": "7299861551974993190",
+          "title": ""
+        },
+        {
+          "id": "7544227802213485866",
+          "title": ""
+        },
+        {
+          "id": "7495032607832411443",
+          "title": ""
+        },
+        {
+          "id": "7437849323146169641",
+          "title": ""
+        },
+        {
+          "id": "7562559324922465572",
+          "title": ""
+        }
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T03:28:59.454Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:28:54.451Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:28:11.335Z",
+    "type": "new_videos",
+    "message": "戏里戏外 有 8 个新视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        {
+          "id": "7596737901371624746",
+          "title": ""
+        },
+        {
+          "id": "7586562885209296179",
+          "title": ""
+        },
+        {
+          "id": "7279025154280262968",
+          "title": ""
+        },
+        {
+          "id": "7287566278632475958",
+          "title": ""
+        },
+        {
+          "id": "7526133798223219977",
+          "title": ""
+        },
+        {
+          "id": "7297956596087328034",
+          "title": ""
+        },
+        {
+          "id": "7418875945815149851",
+          "title": ""
+        },
+        {
+          "id": "7488234945744227595",
+          "title": ""
+        }
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T03:27:55.741Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:27:50.737Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:26:45.540Z",
+    "type": "transcribe",
+    "message": "转写成功: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:26:45.539Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:25:35.484Z",
+    "type": "transcribe",
+    "message": "转写成功: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:25:35.483Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:24:15.211Z",
+    "type": "transcribe",
+    "message": "转写成功: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:24:15.209Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:22:52.200Z",
+    "type": "transcribe",
+    "message": "转写成功: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:22:52.198Z",
+    "type": "transcript",
+    "message": "保存文案: ...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:21:57.520Z",
+    "type": "new_videos",
+    "message": "戏里戏外 有 8 个新视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        {
+          "id": "7596866728831782171",
+          "title": ""
+        },
+        {
+          "id": "7591099801647844671",
+          "title": ""
+        },
+        {
+          "id": "7310549432754343206",
+          "title": ""
+        },
+        {
+          "id": "7306497886106275113",
+          "title": ""
+        },
+        {
+          "id": "7550239273962818851",
+          "title": ""
+        },
+        {
+          "id": "7198845727060118839",
+          "title": ""
+        },
+        {
+          "id": "7358402666231352613",
+          "title": ""
+        },
+        {
+          "id": "7548017087348903206",
+          "title": ""
+        }
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T03:21:12.628Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:21:07.625Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:20:21.278Z",
+    "type": "new_videos",
+    "message": "九号厅 有 7 个新视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        {
+          "id": "7574003584170322298",
+          "title": ""
+        },
+        {
+          "id": "7076254274019167521",
+          "title": ""
+        },
+        {
+          "id": "7009186693492395294",
+          "title": ""
+        },
+        {
+          "id": "7589962325713587471",
+          "title": ""
+        },
+        {
+          "id": "7249102577755852065",
+          "title": ""
+        },
+        {
+          "id": "7472234105296457018",
+          "title": ""
+        },
+        {
+          "id": "7155014937981619463",
+          "title": ""
+        }
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T03:19:31.614Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:19:26.558Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:17:31.916Z",
+    "type": "new_videos",
+    "message": "戏里戏外 有 7 个新视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        {
+          "id": "7589150099314347315",
+          "title": ""
+        },
+        {
+          "id": "7131309741611044110",
+          "title": ""
+        },
+        {
+          "id": "7159587594366389504",
+          "title": ""
+        },
+        {
+          "id": "7495727413523975487",
+          "title": ""
+        },
+        {
+          "id": "7557302090146745627",
+          "title": ""
+        },
+        {
+          "id": "7532277128748404018",
+          "title": ""
+        },
+        {
+          "id": "7348751180417322278",
+          "title": ""
+        }
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T03:17:15.951Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:17:10.943Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:14:48.229Z",
+    "type": "new_videos",
+    "message": "戏里戏外 有 8 个新视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        {
+          "id": "7596882874844192106",
+          "title": ""
+        },
+        {
+          "id": "7596036040583195044",
+          "title": ""
+        },
+        {
+          "id": "7030970401895271680",
+          "title": ""
+        },
+        {
+          "id": "7208764131330051365",
+          "title": ""
+        },
+        {
+          "id": "7581808431725825318",
+          "title": ""
+        },
+        {
+          "id": "7522831670022589705",
+          "title": ""
+        },
+        {
+          "id": "7020713584560835877",
+          "title": ""
+        },
+        {
+          "id": "7265133512980778279",
+          "title": ""
+        }
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T03:14:12.476Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:14:07.472Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:13:47.011Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 16 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:13:03.921Z",
+    "type": "new_videos",
+    "message": "九号厅 有 8 个新视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        {
+          "id": "7596790995891539250",
+          "title": ""
+        },
+        {
+          "id": "7569852978204618738",
+          "title": ""
+        },
+        {
+          "id": "7280146442709159203",
+          "title": ""
+        },
+        {
+          "id": "7276994982177721637",
+          "title": ""
+        },
+        {
+          "id": "7576590996763348259",
+          "title": ""
+        },
+        {
+          "id": "7188437846246608183",
+          "title": ""
+        },
+        {
+          "id": "6930640462969703694",
+          "title": ""
+        },
+        {
+          "id": "7232606853891362108",
+          "title": ""
+        }
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T03:12:15.929Z",
+    "type": "new_videos",
+    "message": "戏里戏外 有 8 个新视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        {
+          "id": "7596573341079876326",
+          "title": ""
+        },
+        {
+          "id": "7579905466168266010",
+          "title": ""
+        },
+        {
+          "id": "7252923554080116025",
+          "title": ""
+        },
+        {
+          "id": "7274800100042476857",
+          "title": ""
+        },
+        {
+          "id": "7590758118116653029",
+          "title": ""
+        },
+        {
+          "id": "7193248699227721016",
+          "title": ""
+        },
+        {
+          "id": "7102769317887954190",
+          "title": ""
+        },
+        {
+          "id": "7501488082751933737",
+          "title": ""
+        }
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T03:11:55.889Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:11:50.887Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:09:06.428Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:09:04.406Z",
+    "type": "error",
+    "message": "获取视频列表失败: net::ERR_CONNECTION_CLOSED at https://www.douyin.com/user/MS4wLjABAAAAWFxstQZ8Beiyyih1Qe-lEQG2e4yQkHKGrC1pQeN9UTc",
+    "data": {
+      "secUid": "MS4wLjABAAAAWFxstQZ8Beiyyih1Qe-lEQG2e4yQkHKGrC1pQeN9UTc"
+    }
+  },
+  {
+    "time": "2026-01-19T03:09:02.158Z",
+    "type": "error",
+    "message": "获取视频列表失败: net::ERR_CONNECTION_CLOSED at https://www.douyin.com/user/MS4wLjABAAAA9Mie31bdJblg_JsZVowmin_SNKt4SIOWl_YeeXsjljXy9cKmOL2ruRUCJM611B7i",
+    "data": {
+      "secUid": "MS4wLjABAAAA9Mie31bdJblg_JsZVowmin_SNKt4SIOWl_YeeXsjljXy9cKmOL2ruRUCJM611B7i"
+    }
+  },
+  {
+    "time": "2026-01-19T03:09:01.187Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:08:56.178Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:08:15.906Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:08:13.883Z",
+    "type": "error",
+    "message": "获取视频列表失败: net::ERR_CONNECTION_CLOSED at https://www.douyin.com/user/MS4wLjABAAAAWFxstQZ8Beiyyih1Qe-lEQG2e4yQkHKGrC1pQeN9UTc",
+    "data": {
+      "secUid": "MS4wLjABAAAAWFxstQZ8Beiyyih1Qe-lEQG2e4yQkHKGrC1pQeN9UTc"
+    }
+  },
+  {
+    "time": "2026-01-19T03:08:11.661Z",
+    "type": "error",
+    "message": "获取视频列表失败: net::ERR_CONNECTION_CLOSED at https://www.douyin.com/user/MS4wLjABAAAA9Mie31bdJblg_JsZVowmin_SNKt4SIOWl_YeeXsjljXy9cKmOL2ruRUCJM611B7i",
+    "data": {
+      "secUid": "MS4wLjABAAAA9Mie31bdJblg_JsZVowmin_SNKt4SIOWl_YeeXsjljXy9cKmOL2ruRUCJM611B7i"
+    }
+  },
+  {
+    "time": "2026-01-19T03:08:10.520Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:08:05.517Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:07:29.132Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:07:27.126Z",
+    "type": "error",
+    "message": "获取视频列表失败: net::ERR_CONNECTION_CLOSED at https://www.douyin.com/user/MS4wLjABAAAAWFxstQZ8Beiyyih1Qe-lEQG2e4yQkHKGrC1pQeN9UTc",
+    "data": {
+      "secUid": "MS4wLjABAAAAWFxstQZ8Beiyyih1Qe-lEQG2e4yQkHKGrC1pQeN9UTc"
+    }
+  },
+  {
+    "time": "2026-01-19T03:07:24.933Z",
+    "type": "error",
+    "message": "获取视频列表失败: net::ERR_CONNECTION_CLOSED at https://www.douyin.com/user/MS4wLjABAAAA9Mie31bdJblg_JsZVowmin_SNKt4SIOWl_YeeXsjljXy9cKmOL2ruRUCJM611B7i",
+    "data": {
+      "secUid": "MS4wLjABAAAA9Mie31bdJblg_JsZVowmin_SNKt4SIOWl_YeeXsjljXy9cKmOL2ruRUCJM611B7i"
+    }
+  },
+  {
+    "time": "2026-01-19T03:07:23.904Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:07:18.901Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:04:10.834Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:04:08.829Z",
+    "type": "error",
+    "message": "获取视频列表失败: net::ERR_CONNECTION_CLOSED at https://www.douyin.com/user/MS4wLjABAAAAWFxstQZ8Beiyyih1Qe-lEQG2e4yQkHKGrC1pQeN9UTc",
+    "data": {
+      "secUid": "MS4wLjABAAAAWFxstQZ8Beiyyih1Qe-lEQG2e4yQkHKGrC1pQeN9UTc"
+    }
+  },
+  {
+    "time": "2026-01-19T03:04:06.634Z",
+    "type": "error",
+    "message": "获取视频列表失败: net::ERR_CONNECTION_CLOSED at https://www.douyin.com/user/MS4wLjABAAAA9Mie31bdJblg_JsZVowmin_SNKt4SIOWl_YeeXsjljXy9cKmOL2ruRUCJM611B7i",
+    "data": {
+      "secUid": "MS4wLjABAAAA9Mie31bdJblg_JsZVowmin_SNKt4SIOWl_YeeXsjljXy9cKmOL2ruRUCJM611B7i"
+    }
+  },
+  {
+    "time": "2026-01-19T03:04:05.158Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:04:00.154Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:00:07.176Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T03:00:05.167Z",
+    "type": "error",
+    "message": "获取视频列表失败: net::ERR_CONNECTION_CLOSED at https://www.douyin.com/user/MS4wLjABAAAAWFxstQZ8Beiyyih1Qe-lEQG2e4yQkHKGrC1pQeN9UTc",
+    "data": {
+      "secUid": "MS4wLjABAAAAWFxstQZ8Beiyyih1Qe-lEQG2e4yQkHKGrC1pQeN9UTc"
+    }
+  },
+  {
+    "time": "2026-01-19T03:00:02.787Z",
+    "type": "error",
+    "message": "获取视频列表失败: net::ERR_CONNECTION_CLOSED at https://www.douyin.com/user/MS4wLjABAAAA9Mie31bdJblg_JsZVowmin_SNKt4SIOWl_YeeXsjljXy9cKmOL2ruRUCJM611B7i",
+    "data": {
+      "secUid": "MS4wLjABAAAA9Mie31bdJblg_JsZVowmin_SNKt4SIOWl_YeeXsjljXy9cKmOL2ruRUCJM611B7i"
+    }
+  },
+  {
+    "time": "2026-01-19T03:00:01.633Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:59:56.629Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:54:59.639Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 7 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:54:57.634Z",
+    "type": "error",
+    "message": "获取视频列表失败: net::ERR_INTERNET_DISCONNECTED at https://www.douyin.com/user/MS4wLjABAAAAWFxstQZ8Beiyyih1Qe-lEQG2e4yQkHKGrC1pQeN9UTc",
+    "data": {
+      "secUid": "MS4wLjABAAAAWFxstQZ8Beiyyih1Qe-lEQG2e4yQkHKGrC1pQeN9UTc"
+    }
+  },
+  {
+    "time": "2026-01-19T02:54:06.735Z",
+    "type": "new_videos",
+    "message": "戏里戏外 有 7 个新视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        {
+          "id": "7595042305116097830",
+          "title": ""
+        },
+        {
+          "id": "7369764135363530021",
+          "title": ""
+        },
+        {
+          "id": "7358370242374028563",
+          "title": ""
+        },
+        {
+          "id": "7586243299213266225",
+          "title": ""
+        },
+        {
+          "id": "7508943097910267171",
+          "title": ""
+        },
+        {
+          "id": "7522819191533145380",
+          "title": ""
+        },
+        {
+          "id": "7508691695702248731",
+          "title": ""
+        }
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T02:53:41.747Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:53:36.744Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:50:20.224Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 15 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:49:47.096Z",
+    "type": "new_videos",
+    "message": "九号厅 有 7 个新视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        {
+          "id": "7591807361963068678",
+          "title": ""
+        },
+        {
+          "id": "7369148068790308132",
+          "title": ""
+        },
+        {
+          "id": "7367668749756828980",
+          "title": ""
+        },
+        {
+          "id": "7579511627347898058",
+          "title": ""
+        },
+        {
+          "id": "7384679765816429836",
+          "title": ""
+        },
+        {
+          "id": "7175712011618110735",
+          "title": ""
+        },
+        {
+          "id": "7386518308327132425",
+          "title": ""
+        }
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T02:48:34.831Z",
+    "type": "new_videos",
+    "message": "戏里戏外 有 8 个新视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        {
+          "id": "7595600844645600563",
+          "title": ""
+        },
+        {
+          "id": "7485265396929498403",
+          "title": ""
+        },
+        {
+          "id": "7147467663676165412",
+          "title": ""
+        },
+        {
+          "id": "7034865024514411813",
+          "title": ""
+        },
+        {
+          "id": "7281048179540282678",
+          "title": ""
+        },
+        {
+          "id": "7520180213297188137",
+          "title": ""
+        },
+        {
+          "id": "7554330362899631360",
+          "title": ""
+        },
+        {
+          "id": "6973210215470648613",
+          "title": ""
+        }
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T02:47:54.927Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:47:49.924Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:46:42.660Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 15 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:46:05.020Z",
+    "type": "new_videos",
+    "message": "九号厅 有 8 个新视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        {
+          "id": "7596897482764782889",
+          "title": ""
+        },
+        {
+          "id": "7590350651759119656",
+          "title": ""
+        },
+        {
+          "id": "7306031571855805759",
+          "title": ""
+        },
+        {
+          "id": "7297438803608751398",
+          "title": ""
+        },
+        {
+          "id": "7578787150251764544",
+          "title": ""
+        },
+        {
+          "id": "7257485266070293796",
+          "title": ""
+        },
+        {
+          "id": "7346471069047442738",
+          "title": ""
+        },
+        {
+          "id": "7448047878834113851",
+          "title": ""
+        }
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T02:45:18.089Z",
+    "type": "new_videos",
+    "message": "戏里戏外 有 7 个新视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        {
+          "id": "7576312234809314587",
+          "title": ""
+        },
+        {
+          "id": "7285982794809953588",
+          "title": ""
+        },
+        {
+          "id": "7278267034968902968",
+          "title": ""
+        },
+        {
+          "id": "7550106576381398332",
+          "title": ""
+        },
+        {
+          "id": "7015932190349364517",
+          "title": ""
+        },
+        {
+          "id": "7505774222493519155",
+          "title": ""
+        },
+        {
+          "id": "7495744150344633612",
+          "title": ""
+        }
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T02:44:18.798Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:44:13.795Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:43:22.502Z",
+    "type": "new_videos",
+    "message": "九号厅 有 7 个新视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        {
+          "id": "7595516477613165864",
+          "title": ""
+        },
+        {
+          "id": "7199850238020996355",
+          "title": ""
+        },
+        {
+          "id": "7228932992822021410",
+          "title": ""
+        },
+        {
+          "id": "7269743192038313272",
+          "title": ""
+        },
+        {
+          "id": "7456070084763634978",
+          "title": ""
+        },
+        {
+          "id": "7521974552546757947",
+          "title": ""
+        },
+        {
+          "id": "7189156055010577668",
+          "title": ""
+        }
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T02:42:18.907Z",
+    "type": "transcript",
+    "message": "保存文案: 经常看书的人和不看书的人差距有多大、 #阅读 #成长 #知识...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:42:15.231Z",
+    "type": "new_videos",
+    "message": "戏里戏外 有 8 个新视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        {
+          "id": "7596609036674403634",
+          "title": ""
+        },
+        {
+          "id": "7578398514281016945",
+          "title": ""
+        },
+        {
+          "id": "7289760614501600547",
+          "title": ""
+        },
+        {
+          "id": "7156908497165208867",
+          "title": ""
+        },
+        {
+          "id": "7535016597217529145",
+          "title": ""
+        },
+        {
+          "id": "7450107969867451686",
+          "title": ""
+        },
+        {
+          "id": "7523920720674458921",
+          "title": ""
+        },
+        {
+          "id": "7487606246862834994",
+          "title": ""
+        }
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T02:41:48.062Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:41:43.060Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:41:18.399Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 15 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:40:36.227Z",
+    "type": "new_videos",
+    "message": "九号厅 有 8 个新视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        {
+          "id": "7596527133087507112",
+          "title": ""
+        },
+        {
+          "id": "7596299770856049935",
+          "title": ""
+        },
+        {
+          "id": "7316693553889987880",
+          "title": ""
+        },
+        {
+          "id": "7321324467622366490",
+          "title": ""
+        },
+        {
+          "id": "7562546839078112547",
+          "title": ""
+        },
+        {
+          "id": "7387997682259774755",
+          "title": ""
+        },
+        {
+          "id": "7258578336648121657",
+          "title": ""
+        },
+        {
+          "id": "7490782189768969524",
+          "title": ""
+        }
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T02:39:56.269Z",
+    "type": "transcript",
+    "message": "保存文案: 今天必定会掀起一场腥风血雨！ #足球#法甲#大巴黎VS里尔#...",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:39:44.052Z",
+    "type": "new_videos",
+    "message": "戏里戏外 有 7 个新视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        {
+          "id": "7596560178179312896",
+          "title": ""
+        },
+        {
+          "id": "7255267685452369186",
+          "title": ""
+        },
+        {
+          "id": "7277904177345350967",
+          "title": ""
+        },
+        {
+          "id": "7581016675789821285",
+          "title": ""
+        },
+        {
+          "id": "7330939767858744603",
+          "title": ""
+        },
+        {
+          "id": "7501638832748514601",
+          "title": ""
+        },
+        {
+          "id": "7412048043157048591",
+          "title": ""
+        }
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T02:39:15.604Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:39:10.601Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:37:49.370Z",
+    "type": "new_videos",
+    "message": "九号厅 有 8 个新视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        {
+          "id": "7596633899242771099",
+          "title": ""
+        },
+        {
+          "id": "7578788041259552051",
+          "title": ""
+        },
+        {
+          "id": "7061170139512737055",
+          "title": ""
+        },
+        {
+          "id": "7043206342173003039",
+          "title": ""
+        },
+        {
+          "id": "7429479338505948454",
+          "title": ""
+        },
+        {
+          "id": "7083376860104527104",
+          "title": ""
+        },
+        {
+          "id": "7104603865697373476",
+          "title": ""
+        },
+        {
+          "id": "7306517050892045622",
+          "title": ""
+        }
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T02:37:39.233Z",
+    "type": "error",
+    "message": "获取视频列表失败: Navigation timeout of 30000 ms exceeded",
+    "data": {
+      "secUid": "MS4wLjABAAAA9Mie31bdJblg_JsZVowmin_SNKt4SIOWl_YeeXsjljXy9cKmOL2ruRUCJM611B7i"
+    }
+  },
+  {
+    "time": "2026-01-19T02:37:08.238Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:37:03.234Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:32:43.444Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:32:41.439Z",
+    "type": "error",
+    "message": "获取视频列表失败: net::ERR_CONNECTION_CLOSED at https://www.douyin.com/user/MS4wLjABAAAAWFxstQZ8Beiyyih1Qe-lEQG2e4yQkHKGrC1pQeN9UTc",
+    "data": {
+      "secUid": "MS4wLjABAAAAWFxstQZ8Beiyyih1Qe-lEQG2e4yQkHKGrC1pQeN9UTc"
+    }
+  },
+  {
+    "time": "2026-01-19T02:32:39.304Z",
+    "type": "error",
+    "message": "获取视频列表失败: net::ERR_CONNECTION_CLOSED at https://www.douyin.com/user/MS4wLjABAAAA9Mie31bdJblg_JsZVowmin_SNKt4SIOWl_YeeXsjljXy9cKmOL2ruRUCJM611B7i",
+    "data": {
+      "secUid": "MS4wLjABAAAA9Mie31bdJblg_JsZVowmin_SNKt4SIOWl_YeeXsjljXy9cKmOL2ruRUCJM611B7i"
+    }
+  },
+  {
+    "time": "2026-01-19T02:32:38.384Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:32:33.379Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:30:17.816Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:30:15.781Z",
+    "type": "error",
+    "message": "获取视频列表失败: net::ERR_CONNECTION_CLOSED at https://www.douyin.com/user/MS4wLjABAAAAWFxstQZ8Beiyyih1Qe-lEQG2e4yQkHKGrC1pQeN9UTc",
+    "data": {
+      "secUid": "MS4wLjABAAAAWFxstQZ8Beiyyih1Qe-lEQG2e4yQkHKGrC1pQeN9UTc"
+    }
+  },
+  {
+    "time": "2026-01-19T02:30:13.581Z",
+    "type": "error",
+    "message": "获取视频列表失败: net::ERR_CONNECTION_CLOSED at https://www.douyin.com/user/MS4wLjABAAAA9Mie31bdJblg_JsZVowmin_SNKt4SIOWl_YeeXsjljXy9cKmOL2ruRUCJM611B7i",
+    "data": {
+      "secUid": "MS4wLjABAAAA9Mie31bdJblg_JsZVowmin_SNKt4SIOWl_YeeXsjljXy9cKmOL2ruRUCJM611B7i"
+    }
+  },
+  {
+    "time": "2026-01-19T02:30:12.654Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:30:07.652Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:20:50.322Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 50 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:20:39.658Z",
+    "type": "new_videos",
+    "message": "九号厅 有 29 个新视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        {
+          "id": "7589152022427946249",
+          "title": ""
+        },
+        {
+          "id": "7474592479413685530",
+          "title": ""
+        },
+        {
+          "id": "7473056648198753572",
+          "title": ""
+        },
+        {
+          "id": "7594450170390623609",
+          "title": ""
+        },
+        {
+          "id": "7594395657152201649",
+          "title": ""
+        },
+        {
+          "id": "7594393037217336689",
+          "title": ""
+        },
+        {
+          "id": "7594275629927828787",
+          "title": ""
+        },
+        {
+          "id": "7594274060343708979",
+          "title": ""
+        },
+        {
+          "id": "7594059237425286409",
+          "title": ""
+        },
+        {
+          "id": "7594057785252334858",
+          "title": ""
+        },
+        {
+          "id": "7594056332454464794",
+          "title": ""
+        },
+        {
+          "id": "7594008652831362350",
+          "title": ""
+        },
+        {
+          "id": "7594006870654717230",
+          "title": ""
+        },
+        {
+          "id": "7594005048049323314",
+          "title": ""
+        },
+        {
+          "id": "7593596394993159467",
+          "title": ""
+        },
+        {
+          "id": "7593595278540786998",
+          "title": ""
+        },
+        {
+          "id": "7593593996706843967",
+          "title": ""
+        },
+        {
+          "id": "7593324189440855338",
+          "title": ""
+        },
+        {
+          "id": "7593323003488767286",
+          "title": ""
+        },
+        {
+          "id": "7593321856434752787",
+          "title": ""
+        },
+        {
+          "id": "7593320669799009578",
+          "title": ""
+        },
+        {
+          "id": "7596710191329816795",
+          "title": ""
+        },
+        {
+          "id": "7593152000326438150",
+          "title": ""
+        },
+        {
+          "id": "7035117815191391526",
+          "title": ""
+        },
+        {
+          "id": "6965427912501660965",
+          "title": ""
+        },
+        {
+          "id": "7495650849160875304",
+          "title": ""
+        },
+        {
+          "id": "7398394103865658636",
+          "title": ""
+        },
+        {
+          "id": "7443425794937916709",
+          "title": ""
+        },
+        {
+          "id": "7525467166297099566",
+          "title": ""
+        }
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T02:20:19.371Z",
+    "type": "new_videos",
+    "message": "戏里戏外 有 21 个新视频",
+    "data": {
+      "authorId": null,
+      "videos": [
+        {
+          "id": "7593308307150884134",
+          "title": ""
+        },
+        {
+          "id": "7592218509061459246",
+          "title": ""
+        },
+        {
+          "id": "7591413765376101658",
+          "title": ""
+        },
+        {
+          "id": "7589975915929537832",
+          "title": ""
+        },
+        {
+          "id": "7588856642519715113",
+          "title": ""
+        },
+        {
+          "id": "7588411406697893126",
+          "title": ""
+        },
+        {
+          "id": "7588150089294548233",
+          "title": ""
+        },
+        {
+          "id": "7588143961861082378",
+          "title": ""
+        },
+        {
+          "id": "7581367666506566947",
+          "title": ""
+        },
+        {
+          "id": "7568457063051971881",
+          "title": ""
+        },
+        {
+          "id": "7568377353768930614",
+          "title": ""
+        },
+        {
+          "id": "7565095664661630246",
+          "title": ""
+        },
+        {
+          "id": "7564617890280820018",
+          "title": ""
+        },
+        {
+          "id": "7563228899094662436",
+          "title": ""
+        },
+        {
+          "id": "7594385731833974016",
+          "title": ""
+        },
+        {
+          "id": "7409209010009787702",
+          "title": ""
+        },
+        {
+          "id": "7407065747094064420",
+          "title": ""
+        },
+        {
+          "id": "7584628352561597754",
+          "title": ""
+        },
+        {
+          "id": "7547655451586366766",
+          "title": ""
+        },
+        {
+          "id": "7252654756496166204",
+          "title": ""
+        },
+        {
+          "id": "7338653675839163698",
+          "title": ""
+        }
+      ]
+    }
+  },
+  {
+    "time": "2026-01-19T02:19:49.112Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:19:44.109Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:18:19.508Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:18:17.489Z",
+    "type": "error",
+    "message": "获取视频列表失败: page.waitForTimeout is not a function",
+    "data": {
+      "secUid": "MS4wLjABAAAAWFxstQZ8Beiyyih1Qe-lEQG2e4yQkHKGrC1pQeN9UTc"
+    }
+  },
+  {
+    "time": "2026-01-19T02:18:11.247Z",
+    "type": "error",
+    "message": "获取视频列表失败: page.waitForTimeout is not a function",
+    "data": {
+      "secUid": "MS4wLjABAAAA9Mie31bdJblg_JsZVowmin_SNKt4SIOWl_YeeXsjljXy9cKmOL2ruRUCJM611B7i"
+    }
+  },
+  {
+    "time": "2026-01-19T02:17:43.923Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:17:38.920Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:09:45.824Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:09:43.821Z",
+    "type": "warning",
+    "message": "无法获取 九号厅 的视频列表，可能被限制",
+    "data": {
+      "secUid": "MS4wLjABAAAAWFxstQZ8Beiyyih1Qe-lEQG2e4yQkHKGrC1pQeN9UTc"
+    }
+  },
+  {
+    "time": "2026-01-19T02:09:41.381Z",
+    "type": "warning",
+    "message": "无法获取 戏里戏外 的视频列表，可能被限制",
+    "data": {
+      "secUid": "MS4wLjABAAAA9Mie31bdJblg_JsZVowmin_SNKt4SIOWl_YeeXsjljXy9cKmOL2ruRUCJM611B7i"
+    }
+  },
+  {
+    "time": "2026-01-19T02:09:39.262Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:09:34.258Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:08:27.215Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:08:22.655Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:08:17.652Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:05:17.172Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-19T02:05:10.596Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-18T20:45:16.782Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-18T20:45:12.540Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-18T14:45:16.816Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-18T14:45:12.616Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-18T08:45:17.132Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-18T08:45:12.759Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-18T02:45:17.019Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-18T02:45:12.831Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-17T20:45:17.197Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-17T20:45:12.904Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-17T14:45:17.468Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-17T14:45:12.969Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-17T08:45:17.746Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-17T08:45:12.987Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-17T02:45:17.475Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-17T02:45:13.113Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-16T20:45:17.777Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-16T20:45:13.123Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-16T14:45:17.469Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-16T14:45:13.222Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-16T09:03:17.635Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-16T09:03:12.052Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-16T08:45:17.367Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-16T08:45:12.259Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-16T03:08:28.267Z",
+    "type": "transcript",
+    "message": "保存文案: 今天必定会掀起一场腥风血雨！ #足球#法甲#大巴黎VS里尔#...",
+    "data": null
+  },
+  {
+    "time": "2026-01-16T02:45:22.260Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-16T02:45:17.451Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-16T02:45:12.446Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-16T02:41:27.348Z",
+    "type": "transcript",
+    "message": "保存文案: 经常看书的人和不看书的人差距有多大、 #阅读 #成长 #知识...",
+    "data": null
+  },
+  {
+    "time": "2026-01-16T02:33:36.268Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-16T02:33:31.202Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-16T02:33:26.194Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-16T02:29:49.715Z",
+    "type": "transcript",
+    "message": "保存文案: 经常看书的人和不看书的人差距有多大、 #阅读 #成长 #知识...",
+    "data": null
+  },
+  {
+    "time": "2026-01-16T02:21:41.997Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-16T02:21:37.192Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-16T02:21:32.190Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-16T02:14:22.676Z",
+    "type": "transcript",
+    "message": "保存文案: 兄弟们，杨妈撑不住了，连续三天跌停 考虑了很久还是决定先跑路...",
+    "data": null
+  },
+  {
+    "time": "2026-01-16T02:12:59.393Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-16T02:12:54.329Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-16T02:12:49.327Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-16T02:10:56.256Z",
+    "type": "transcript",
+    "message": "保存文案: 兄弟们，杨妈撑不住了，连续三天跌停 考虑了很久还是决定先跑路...",
+    "data": null
+  },
+  {
+    "time": "2026-01-16T02:09:38.635Z",
+    "type": "transcript",
+    "message": "保存文案: 兄弟们，杨妈撑不住了，连续三天跌停 考虑了很久还是决定先跑路...",
+    "data": null
+  },
+  {
+    "time": "2026-01-16T02:08:36.954Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-16T02:08:30.030Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-16T02:08:25.023Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-16T02:03:14.732Z",
+    "type": "transcript",
+    "message": "保存文案: 兄弟们，杨妈撑不住了，连续三天跌停 考虑了很久还是决定先跑路...",
+    "data": null
+  },
+  {
+    "time": "2026-01-15T23:15:22.109Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-15T21:52:41.257Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-15T15:38:48.725Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-15T15:38:43.817Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-15T09:34:49.094Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-15T09:34:42.361Z",
+    "type": "check_start",
+    "message": "开始检查 2 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-15T09:34:37.358Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-15T09:25:41.555Z",
+    "type": "add",
+    "message": "添加作者: 九号厅",
+    "data": {
+      "authorId": null
+    }
+  },
+  {
+    "time": "2026-01-15T09:24:53.008Z",
+    "type": "add",
+    "message": "添加作者: 戏里戏外",
+    "data": {
+      "authorId": null
+    }
+  },
+  {
+    "time": "2026-01-15T09:24:43.441Z",
+    "type": "remove",
+    "message": "删除作者: 用户_MS4wLjAB",
+    "data": null
+  },
+  {
+    "time": "2026-01-15T09:24:19.582Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-15T09:24:16.822Z",
+    "type": "check_start",
+    "message": "开始检查 1 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-15T09:24:11.819Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-15T09:21:05.478Z",
+    "type": "add",
+    "message": "添加作者: 用户_MS4wLjAB",
+    "data": {
+      "authorId": null
+    }
+  },
+  {
+    "time": "2026-01-15T09:21:03.007Z",
+    "type": "remove",
+    "message": "删除作者: 用户_MS4wLjAB",
+    "data": null
+  },
+  {
+    "time": "2026-01-15T09:19:51.056Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-15T09:19:48.756Z",
+    "type": "check_start",
+    "message": "开始检查 1 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-15T09:19:46.521Z",
+    "type": "add",
+    "message": "添加作者: 用户_MS4wLjAB",
+    "data": {
+      "authorId": null
+    }
+  },
+  {
+    "time": "2026-01-15T09:19:43.754Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  },
+  {
+    "time": "2026-01-15T09:11:21.161Z",
+    "type": "check_complete",
+    "message": "检查完成，共发现 0 个新视频",
+    "data": null
+  },
+  {
+    "time": "2026-01-15T09:11:21.161Z",
+    "type": "check_start",
+    "message": "开始检查 0 个作者的更新",
+    "data": null
+  },
+  {
+    "time": "2026-01-15T09:11:16.154Z",
+    "type": "monitor_start",
+    "message": "监控服务已启动",
+    "data": null
+  }
+]

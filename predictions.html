@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚽ 球赛预测系统</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --bg-primary: #0a0f1a;
+            --bg-secondary: #111827;
+            --bg-card: #1a2332;
+            --accent-green: #10b981;
+            --accent-red: #ef4444;
+            --accent-blue: #3b82f6;
+            --accent-yellow: #f59e0b;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --border-color: #374151;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+        
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+        
+        header h1 { font-size: 24px; }
+        
+        .nav-links { display: flex; gap: 10px; }
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            background: var(--bg-card);
+            color: var(--text-primary);
+        }
+        
+        .tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+        .tab-btn {
+            padding: 8px 16px;
+            border: none;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .tab-btn.active { background: var(--accent-green); color: white; }
+        
+        .panel { display: none; }
+        .panel.active { display: block; }
+        
+        .card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .card-title { font-size: 16px; font-weight: 600; }
+        
+        .btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .btn-primary { background: var(--accent-green); color: white; }
+        .btn-secondary { background: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-color); }
+        .btn-sm { padding: 4px 8px; font-size: 11px; }
+        
+        /* 比赛网格 - 更紧凑 */
+        .match-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 12px;
+        }
+        
+        .match-card {
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s;
+        }
+        
+        .match-card:hover { border-color: var(--accent-blue); }
+        
+        .match-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .match-league {
+            font-size: 11px;
+            color: var(--accent-blue);
+            background: rgba(59, 130, 246, 0.15);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        
+        .match-time {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+        
+        .match-teams {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 0;
+        }
+        
+        .team-name {
+            font-size: 14px;
+            font-weight: 600;
+            flex: 1;
+        }
+        
+        .team-name.home { text-align: left; }
+        .team-name.away { text-align: right; }
+        
+        .vs {
+            font-size: 12px;
+            color: var(--accent-yellow);
+            padding: 0 10px;
+        }
+        
+        .match-handicap {
+            font-size: 11px;
+            color: var(--accent-yellow);
+            text-align: center;
+            margin-bottom: 8px;
+        }
+        
+        /* 预测 Banner */
+        .prediction-banner {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(59, 130, 246, 0.1));
+            border-radius: 8px;
+            padding: 10px;
+            margin-top: 8px;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        
+        .prediction-banner.loading {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+        
+        .prediction-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        
+        .prediction-item {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .prediction-label {
+            font-size: 10px;
+            color: var(--text-secondary);
+            margin-bottom: 3px;
+        }
+        
+        .prediction-value {
+            font-size: 13px;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        
+        .prediction-value.home { background: rgba(16, 185, 129, 0.2); color: var(--accent-green); }
+        .prediction-value.away { background: rgba(239, 68, 68, 0.2); color: var(--accent-red); }
+        .prediction-value.draw { background: rgba(245, 158, 11, 0.2); color: var(--accent-yellow); }
+        
+        .prediction-reason {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 6px;
+            line-height: 1.4;
+        }
+        
+        .prediction-actions {
+            display: flex;
+            gap: 6px;
+            margin-top: 8px;
+        }
+        
+        .prediction-actions .btn {
+            flex: 1;
+            justify-content: center;
+            font-size: 11px;
+            padding: 5px;
+        }
+        
+        .prediction-actions .btn.selected {
+            box-shadow: 0 0 0 3px #fff, 0 0 15px currentColor;
+            transform: scale(1.05);
+            font-weight: bold;
+        }
+        
+        /* 准确率统计 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value.green { color: var(--accent-green); }
+        .stat-value.blue { color: var(--accent-blue); }
+        .stat-value.yellow { color: var(--accent-yellow); }
+        
+        .stat-label { font-size: 12px; color: var(--text-secondary); }
+        
+        /* 表格 */
+        .accuracy-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        
+        .accuracy-table th, .accuracy-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .accuracy-table th { color: var(--text-secondary); font-weight: 500; }
+        
+        .toggle-switch {
+            position: relative;
+            width: 40px;
+            height: 20px;
+        }
+        
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background: var(--bg-primary);
+            border-radius: 20px;
+            transition: 0.3s;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 2px;
+            bottom: 2px;
+            background: white;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+        
+        input:checked + .toggle-slider { background: var(--accent-green); }
+        input:checked + .toggle-slider:before { transform: translateX(20px); }
+        
+        .loading {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-secondary);
+        }
+        
+        .loading::after {
+            content: '';
+            animation: dots 1.5s infinite;
+        }
+        
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background: var(--bg-card);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            z-index: 1000;
+            font-size: 13px;
+            animation: slideIn 0.3s ease;
+        }
+        
+        .toast.success { border-color: var(--accent-green); }
+        .toast.error { border-color: var(--accent-red); }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .modal.active { display: flex; }
+        
+        .modal-content {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 20px;
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+        
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; margin-bottom: 5px; font-size: 12px; color: var(--text-secondary); }
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 13px;
+        }
+        
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    </style>
+    <script src="auth-check.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚽ 球赛预测系统</h1>
+            <nav class="nav-links" style="display: flex; align-items: center; flex-wrap: wrap;">
+                <a href="index.html">🎬 文案提取</a>
+                <a href="authors.html">👤 作者监控</a>
+                <a href="transcripts.html">📝 文案库</a>
+                <a href="predictions.html" class="active">⚽ 球赛预测</a>
+                <span style="margin-left: auto; display: flex; align-items: center; gap: 10px;">
+                    <span id="user-info" style="color: var(--text-secondary); font-size: 13px;"></span>
+                    <button onclick="logout()" style="background: transparent; border: 1px solid var(--text-secondary); color: var(--text-secondary); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;">退出</button>
+                </span>
+            </nav>
+            <script>
+                window.addEventListener('authReady', (e) => {
+                    document.getElementById('user-info').textContent = '👤 ' + (e.detail.nickname || e.detail.username);
+                });
+            </script>
+        </header>
+        
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="matches">🏟️ 比赛列表</button>
+            <button class="tab-btn" data-tab="predictions">📊 预测记录</button>
+            <button class="tab-btn" data-tab="accuracy">📈 准确率</button>
+        </div>
+        
+        <!-- 比赛列表 -->
+        <div id="matches-panel" class="panel active">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">近期比赛</h2>
+                    <div style="display: flex; gap: 8px;">
+                        <button class="btn btn-secondary" onclick="addMatchManually()">➕ 添加</button>
+                        <button class="btn btn-primary" id="search-btn" onclick="searchMatches()">🔄 更新比赛</button>
+                    </div>
+                </div>
+                <div id="match-grid" class="match-grid">
+                    <div class="loading">加载中</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 预测记录 -->
+        <div id="predictions-panel" class="panel">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">预测记录</h2>
+                </div>
+                <div id="prediction-list">
+                    <div class="loading">加载中</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 准确率统计 -->
+        <div id="accuracy-panel" class="panel">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value green" id="doubao-accuracy">--%</div>
+                    <div class="stat-label">🤖 豆包准确率</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value blue" id="user-accuracy">--%</div>
+                    <div class="stat-label">👤 个人准确率</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value yellow" id="author-avg-accuracy">--%</div>
+                    <div class="stat-label">📺 博主平均</div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">自媒体准确率</h2>
+                </div>
+                <table class="accuracy-table">
+                    <thead>
+                        <tr>
+                            <th>自媒体</th>
+                            <th>预测</th>
+                            <th>正确</th>
+                            <th>准确率</th>
+                            <th>启用</th>
+                        </tr>
+                    </thead>
+                    <tbody id="author-accuracy-list"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 添加比赛模态框 -->
+    <div class="modal" id="add-match-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>添加比赛</h3>
+                <button class="modal-close" onclick="closeModal('add-match-modal')">&times;</button>
+            </div>
+            <form id="add-match-form">
+                <div class="form-group">
+                    <label>联赛</label>
+                    <input type="text" name="league" placeholder="如：英超、西甲" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>主队</label>
+                        <input type="text" name="homeTeam" required>
+                    </div>
+                    <div class="form-group">
+                        <label>客队</label>
+                        <input type="text" name="awayTeam" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>比赛时间</label>
+                    <input type="datetime-local" name="matchTime" required>
+                </div>
+                <div class="form-group">
+                    <label>盘口（可选）</label>
+                    <input type="text" name="handicap" placeholder="如：主队让0.5球">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 10px;">添加比赛</button>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        const API_BASE = window.location.origin; // 自动适配部署环境
+        let cachedMatches = []; // 缓存比赛数据
+        
+        // Tab 切换
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById(btn.dataset.tab + '-panel').classList.add('active');
+                
+                if (btn.dataset.tab === 'matches') loadMatches();
+                if (btn.dataset.tab === 'predictions') loadPredictions();
+                if (btn.dataset.tab === 'accuracy') loadAccuracy();
+            });
+        });
+        
+        // 加载比赛列表
+        async function loadMatches() {
+            const container = document.getElementById('match-grid');
+            try {
+                const res = await fetch(`${API_BASE}/api/matches`);
+                const data = await res.json();
+                
+                // 缓存比赛数据
+                cachedMatches = data.data || [];
+                
+                if (data.success && data.data.length > 0) {
+                    container.innerHTML = data.data.map(m => `
+                        <div class="match-card" id="match-${m.matchId.replace(/[^a-zA-Z0-9]/g, '_')}">
+                            <div class="match-header">
+                                <span class="match-league">${m.league}</span>
+                                <span class="match-time">${m.matchTime || '时间待定'}</span>
+                            </div>
+                            <div class="match-teams">
+                                <span class="team-name home">${m.homeTeam}</span>
+                                <span class="vs">VS</span>
+                                <span class="team-name away">${m.awayTeam}</span>
+                            </div>
+                            ${m.handicap ? `<div class="match-handicap">📊 ${m.handicap}</div>` : ''}
+                            <div class="prediction-banner" id="pred-${m.matchId.replace(/[^a-zA-Z0-9]/g, '_')}">
+                                ${renderPredictionBanner(m)}
+                            </div>
+                        </div>
+                    `).join('');
+                } else {
+                    container.innerHTML = `
+                        <div class="empty-state" style="grid-column: 1/-1;">
+                            🏟️ 暂无比赛，点击"更新比赛"获取
+                        </div>
+                    `;
+                }
+            } catch (e) {
+                container.innerHTML = '<div class="empty-state">加载失败</div>';
+            }
+        }
+        
+        // 渲染预测 banner（支持已保存的预测）
+        function renderPredictionBanner(m) {
+            if (m.doubaoPrediction) {
+                const pred = m.doubaoPrediction;
+                const predLabel = {
+                    'home': m.homeTeam + '胜',
+                    'away': m.awayTeam + '胜',
+                    'draw': '平局'
+                };
+                return `
+                    <div class="prediction-row">
+                        <div class="prediction-item">
+                            <div class="prediction-label">🤖 豆包预测</div>
+                            <span class="prediction-value ${pred.prediction}">${predLabel[pred.prediction] || '?'}</span>
+                        </div>
+                        <div class="prediction-item">
+                            <div class="prediction-label">预测比分</div>
+                            <span class="prediction-value">${pred.score || '-'}</span>
+                        </div>
+                        <div class="prediction-item">
+                            <div class="prediction-label">置信度</div>
+                            <span class="prediction-value">${pred.confidence || '-'}</span>
+                        </div>
+                    </div>
+                    <div class="prediction-reason">${pred.reason || ''}</div>
+                    <div class="prediction-actions">
+                        <button class="btn ${m.userPrediction === 'home' ? 'selected' : ''}" style="background: var(--accent-green);" 
+                                onclick="saveUserPrediction('${m.matchId}', 'home', this)">${m.homeTeam}胜</button>
+                        <button class="btn ${m.userPrediction === 'draw' ? 'selected' : ''}" style="background: var(--accent-yellow);" 
+                                onclick="saveUserPrediction('${m.matchId}', 'draw', this)">平局</button>
+                        <button class="btn ${m.userPrediction === 'away' ? 'selected' : ''}" style="background: var(--accent-red);" 
+                                onclick="saveUserPrediction('${m.matchId}', 'away', this)">${m.awayTeam}胜</button>
+                    </div>
+                `;
+            }
+            return `
+                <button class="btn btn-primary btn-sm" style="width: 100%;" 
+                        onclick="getPrediction('${m.matchId}')">
+                    🤖 获取豆包预测
+                </button>
+            `;
+        }
+        
+        // 搜索比赛
+        async function searchMatches() {
+            const container = document.getElementById('match-grid');
+            const btn = document.getElementById('search-btn');
+            
+            container.innerHTML = '<div class="loading" style="grid-column: 1/-1;">🔄 豆包AI正在更新比赛信息</div>';
+            btn.disabled = true;
+            btn.textContent = '⏳ 更新中...';
+            
+            try {
+                const res = await fetch(`${API_BASE}/api/matches/search`, { method: 'POST' });
+                const data = await res.json();
+                
+                if (data.success) {
+                    showToast(`✅ 找到 ${data.matches?.length || 0} 场比赛`, 'success');
+                    loadMatches();
+                } else {
+                    showToast('更新失败: ' + (data.error || '未知错误'), 'error');
+                    loadMatches();
+                }
+            } catch (e) {
+                showToast('更新失败', 'error');
+                loadMatches();
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '🔄 更新比赛';
+            }
+        }
+        
+        // 获取豆包预测（独立预测，不参考博主）
+        async function getPrediction(matchId) {
+            const bannerId = `pred-${matchId.replace(/[^a-zA-Z0-9]/g, '_')}`;
+            const banner = document.getElementById(bannerId);
+            
+            banner.innerHTML = '<div class="loading" style="padding: 5px;">🤖 豆包分析中</div>';
+            
+            try {
+                const res = await fetch(`${API_BASE}/api/predictions/doubao`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ matchId })
+                });
+                const data = await res.json();
+                
+                if (data.success) {
+                    const pred = data.prediction;
+                    const match = data.match;
+                    const predLabel = {
+                        'home': match.homeTeam + '胜',
+                        'away': match.awayTeam + '胜',
+                        'draw': '平局'
+                    };
+                    
+                    banner.innerHTML = `
+                        <div class="prediction-row">
+                            <div class="prediction-item">
+                                <div class="prediction-label">🤖 豆包预测</div>
+                                <span class="prediction-value ${pred.prediction}">${predLabel[pred.prediction] || '?'}</span>
+                            </div>
+                            <div class="prediction-item">
+                                <div class="prediction-label">预测比分</div>
+                                <span class="prediction-value">${pred.score || '-'}</span>
+                            </div>
+                            <div class="prediction-item">
+                                <div class="prediction-label">置信度</div>
+                                <span class="prediction-value">${pred.confidence || '-'}</span>
+                            </div>
+                        </div>
+                        <div class="prediction-reason">${pred.reason || ''}</div>
+                        <div class="prediction-actions">
+                            <button class="btn" style="background: var(--accent-green);" 
+                                    onclick="saveUserPrediction('${matchId}', 'home', this)">${match.homeTeam}胜</button>
+                            <button class="btn" style="background: var(--accent-yellow);" 
+                                    onclick="saveUserPrediction('${matchId}', 'draw', this)">平局</button>
+                            <button class="btn" style="background: var(--accent-red);" 
+                                    onclick="saveUserPrediction('${matchId}', 'away', this)">${match.awayTeam}胜</button>
+                        </div>
+                    `;
+                    
+                    // 保存豆包预测到记录
+                    fetch(`${API_BASE}/api/predictions`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            matchId,
+                            analysis: { predictions: [], summary: {}, doubaoPrediction: pred },
+                            userPrediction: null
+                        })
+                    });
+                } else {
+                    banner.innerHTML = `
+                        <div style="color: var(--accent-red); font-size: 12px; text-align: center;">
+                            预测失败: ${data.error}
+                            <button class="btn btn-sm btn-secondary" style="margin-left: 10px;" 
+                                    onclick="getPrediction('${matchId}')">重试</button>
+                        </div>
+                    `;
+                }
+            } catch (e) {
+                banner.innerHTML = `<div style="color: var(--accent-red); font-size: 12px;">预测失败</div>`;
+            }
+        }
+        
+        // 保存用户预测
+        async function saveUserPrediction(matchId, prediction, btn) {
+            // 高亮选中的按钮
+            const parent = btn.parentElement;
+            parent.querySelectorAll('.btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            
+            try {
+                // 保存到比赛数据
+                const res = await fetch(`${API_BASE}/api/matches/user-prediction`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ matchId, prediction })
+                });
+                const data = await res.json();
+                
+                if (data.success) {
+                    showToast('✅ 预测已保存', 'success');
+                    // 更新本地缓存的比赛数据以便刷新后显示正确状态
+                    cachedMatches = cachedMatches || [];
+                    const match = cachedMatches.find(m => m.matchId === matchId);
+                    if (match) match.userPrediction = prediction;
+                } else {
+                    showToast('保存失败: ' + data.error, 'error');
+                    btn.classList.remove('selected'); // 失败时取消选中
+                }
+            } catch (e) {
+                showToast('保存失败', 'error');
+                btn.classList.remove('selected'); // 失败时取消选中
+            }
+        }
+        
+        
+        // 加载预测记录（从比赛数据中获取有预测的比赛）
+        async function loadPredictions() {
+            const container = document.getElementById('prediction-list');
+            try {
+                const res = await fetch(`${API_BASE}/api/matches`);
+                const data = await res.json();
+                
+                // 只显示有豆包预测或用户预测的比赛
+                const matchesWithPrediction = data.data.filter(m => m.doubaoPrediction || m.userPrediction);
+                
+                if (matchesWithPrediction.length > 0) {
+                    container.innerHTML = matchesWithPrediction.map(m => {
+                        const predLabel = {
+                            'home': m.homeTeam + '胜',
+                            'away': m.awayTeam + '胜',
+                            'draw': '平局'
+                        };
+                        
+                        return `
+                            <div class="match-card" style="margin-bottom: 10px;">
+                                <div class="match-header">
+                                    <span class="match-league">${m.league}</span>
+                                    <span class="match-time">${m.matchTime}</span>
+                                </div>
+                                <div class="match-teams">
+                                    <span class="team-name home">${m.homeTeam}</span>
+                                    <span class="vs">VS</span>
+                                    <span class="team-name away">${m.awayTeam}</span>
+                                </div>
+                                <div class="prediction-row" style="margin-top: 10px;">
+                                    <div class="prediction-item">
+                                        <div class="prediction-label">🤖 豆包</div>
+                                        <span class="prediction-value ${m.doubaoPrediction?.prediction || ''}">${predLabel[m.doubaoPrediction?.prediction] || '-'}</span>
+                                    </div>
+                                    <div class="prediction-item">
+                                        <div class="prediction-label">👤 我的预测</div>
+                                        <span class="prediction-value ${m.userPrediction || ''}">${predLabel[m.userPrediction] || '-'}</span>
+                                    </div>
+                                    <div class="prediction-item">
+                                        <div class="prediction-label">结果</div>
+                                        ${m.result ? 
+                                            `<span class="prediction-value ${m.result.winner}">${predLabel[m.result.winner]}</span>` :
+                                            `<button class="btn btn-sm btn-secondary" onclick="setResult('${m.matchId}')">录入</button>`
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                } else {
+                    container.innerHTML = '<div class="empty-state">暂无预测记录</div>';
+                }
+            } catch (e) {
+                container.innerHTML = '<div class="empty-state">加载失败</div>';
+            }
+        }
+        
+        // 录入结果
+        async function setResult(matchId) {
+            const r = prompt('请输入结果:\n1 = 主队胜\n2 = 平局\n3 = 客队胜');
+            const map = { '1': 'home', '2': 'draw', '3': 'away' };
+            if (!map[r]) return;
+            
+            try {
+                await fetch(`${API_BASE}/api/matches/${encodeURIComponent(matchId)}/result`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ result: { winner: map[r] } })
+                });
+                showToast('✅ 结果已录入', 'success');
+                loadPredictions();
+            } catch (e) {
+                showToast('录入失败', 'error');
+            }
+        }
+        
+        // 加载准确率
+        async function loadAccuracy() {
+            try {
+                const res = await fetch(`${API_BASE}/api/accuracy`);
+                const data = await res.json();
+                
+                if (data.success) {
+                    const acc = data.data;
+                    
+                    const doubaoRate = acc.doubao.total > 0 ? Math.round((acc.doubao.wins / acc.doubao.total) * 100) : 0;
+                    document.getElementById('doubao-accuracy').textContent = acc.doubao.total > 0 ? `${doubaoRate}%` : '--%';
+                    
+                    const userRate = acc.user.total > 0 ? Math.round((acc.user.wins / acc.user.total) * 100) : 0;
+                    document.getElementById('user-accuracy').textContent = acc.user.total > 0 ? `${userRate}%` : '--%';
+                    
+                    const authors = Object.values(acc.authors);
+                    if (authors.length > 0) {
+                        const totalWins = authors.reduce((s, a) => s + a.wins, 0);
+                        const totalCount = authors.reduce((s, a) => s + a.total, 0);
+                        const avgRate = totalCount > 0 ? Math.round((totalWins / totalCount) * 100) : 0;
+                        document.getElementById('author-avg-accuracy').textContent = `${avgRate}%`;
+                    }
+                    
+                    const tbody = document.getElementById('author-accuracy-list');
+                    const sorted = Object.entries(acc.authors)
+                        .map(([id, a]) => ({ id, ...a }))
+                        .sort((a, b) => (b.total > 0 ? b.wins/b.total : 0) - (a.total > 0 ? a.wins/a.total : 0));
+                    
+                    tbody.innerHTML = sorted.map(a => {
+                        const rate = a.total > 0 ? Math.round((a.wins / a.total) * 100) : 0;
+                        return `
+                            <tr style="${a.disabled ? 'opacity: 0.5;' : ''}">
+                                <td>${a.name || a.id}</td>
+                                <td>${a.total}</td>
+                                <td>${a.wins}</td>
+                                <td>${rate}%</td>
+                                <td>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" ${!a.disabled ? 'checked' : ''} 
+                                               onchange="toggleAuthor('${a.id}', !this.checked)">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                        `;
+                    }).join('');
+                }
+            } catch (e) {
+                console.error('加载准确率失败:', e);
+            }
+        }
+        
+        async function toggleAuthor(authorId, disabled) {
+            await fetch(`${API_BASE}/api/accuracy/author/${encodeURIComponent(authorId)}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ disabled })
+            });
+        }
+        
+        function addMatchManually() {
+            document.getElementById('add-match-modal').classList.add('active');
+        }
+        
+        document.getElementById('add-match-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const fd = new FormData(e.target);
+            
+            try {
+                await fetch(`${API_BASE}/api/matches`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        league: fd.get('league'),
+                        homeTeam: fd.get('homeTeam'),
+                        awayTeam: fd.get('awayTeam'),
+                        matchTime: fd.get('matchTime'),
+                        handicap: fd.get('handicap')
+                    })
+                });
+                showToast('✅ 比赛已添加', 'success');
+                closeModal('add-match-modal');
+                loadMatches();
+                e.target.reset();
+            } catch (e) {
+                showToast('添加失败', 'error');
+            }
+        });
+        
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+        
+        function showToast(msg, type = 'info') {
+            const t = document.createElement('div');
+            t.className = `toast ${type}`;
+            t.textContent = msg;
+            document.body.appendChild(t);
+            setTimeout(() => t.remove(), 3000);
+        }
+        
+        loadMatches();
+    </script>
+</body>
+</html>

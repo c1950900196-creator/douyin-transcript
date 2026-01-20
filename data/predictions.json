@@ -1,0 +1,138 @@
+[
+  {
+    "id": "1768879673177",
+    "matchId": "欧冠_2026-01-21_皇家马德里vs拜仁慕尼黑",
+    "match": {
+      "league": "欧洲冠军联赛",
+      "homeTeam": "皇家马德里",
+      "awayTeam": "拜仁慕尼黑",
+      "matchTime": "2026-01-21 22:00",
+      "handicap": "皇家马德里让0.5球"
+    },
+    "createdAt": "2026-01-20T03:27:53.177Z",
+    "authorPredictions": [],
+    "summary": {},
+    "doubaoPrediction": {
+      "prediction": "home",
+      "confidence": "medium",
+      "reason": "皇马主场优势显著，历史交锋占优，盘口支持，关键球员（维尼修斯、贝林厄姆）压阵，拜仁客场承压，皇马更易取胜。",
+      "score": "2-1"
+    },
+    "userPrediction": null,
+    "result": null
+  },
+  {
+    "id": "1768879521497",
+    "matchId": "英超_2026-01-21_曼城vs切尔西",
+    "match": {
+      "league": "英格兰超级联赛",
+      "homeTeam": "曼城",
+      "awayTeam": "切尔西",
+      "matchTime": "2026-01-21 20:00",
+      "handicap": "曼城让0.75球"
+    },
+    "createdAt": "2026-01-20T03:25:21.497Z",
+    "authorPredictions": [],
+    "summary": {},
+    "doubaoPrediction": {
+      "prediction": "home",
+      "confidence": "high",
+      "reason": "曼城主场优势显著，盘口0.75球让步深，机构看好其净胜1球以上。两队近期曼城状态更佳，切尔西客场承压，历史交锋曼城占优。",
+      "score": "2-1"
+    },
+    "userPrediction": null,
+    "result": null
+  },
+  {
+    "id": "1768878969638",
+    "matchId": "法甲_2026-01-22_巴黎圣日耳曼vs马赛",
+    "match": {
+      "league": "法国足球甲级联赛",
+      "homeTeam": "巴黎圣日耳曼",
+      "awayTeam": "马赛",
+      "matchTime": "2026-01-22 20:00",
+      "handicap": "巴黎圣日耳曼让1.0球"
+    },
+    "createdAt": "2026-01-20T03:16:09.638Z",
+    "authorPredictions": [],
+    "summary": {},
+    "doubaoPrediction": {
+      "prediction": "home",
+      "confidence": "high",
+      "reason": "巴黎主场优势显著，历史交锋占优，关键球员（姆巴佩等）状态稳定，盘口深盘（1.0球）支持，马赛客场弱势，巴黎胜面大。",
+      "score": "2-1"
+    },
+    "userPrediction": null,
+    "result": null
+  },
+  {
+    "id": "1768878957399",
+    "matchId": "欧冠_2026-01-21_皇家马德里vs拜仁慕尼黑",
+    "match": {
+      "league": "欧洲冠军联赛",
+      "homeTeam": "皇家马德里",
+      "awayTeam": "拜仁慕尼黑",
+      "matchTime": "2026-01-21 22:00",
+      "handicap": "皇家马德里让0.5球"
+    },
+    "createdAt": "2026-01-20T03:15:57.399Z",
+    "authorPredictions": [],
+    "summary": {},
+    "doubaoPrediction": {
+      "prediction": "home",
+      "confidence": "medium",
+      "reason": "皇马主场优势明显，历史交锋占优，维尼修斯、贝林厄姆等核心状态佳。盘口让0.5球支持其小胜，拜仁客场有威胁但难破局。",
+      "score": "2-1"
+    },
+    "userPrediction": null,
+    "result": null
+  },
+  {
+    "id": "1768878866490",
+    "matchId": "欧冠_2026-01-21_皇家马德里vs拜仁慕尼黑",
+    "match": {
+      "league": "欧洲冠军联赛",
+      "homeTeam": "皇家马德里",
+      "awayTeam": "拜仁慕尼黑",
+      "matchTime": "2026-01-21 22:00",
+      "handicap": "皇家马德里让0.5球"
+    },
+    "createdAt": "2026-01-20T03:14:26.490Z",
+    "authorPredictions": [],
+    "summary": {},
+    "doubaoPrediction": {
+      "prediction": "home",
+      "confidence": "high",
+      "reason": "皇马主场优势明显，历史交锋占优，近期状态稳定，盘口0.5球支持其小胜，综合看好皇马取胜。",
+      "score": "2-1"
+    },
+    "userPrediction": null,
+    "result": null
+  },
+  {
+    "id": "1768878426340",
+    "matchId": "欧冠_2026-01-21_皇家马德里vs拜仁慕尼黑",
+    "match": {
+      "league": "欧洲冠军联赛",
+      "homeTeam": "皇家马德里",
+      "awayTeam": "拜仁慕尼黑",
+      "matchTime": "2026-01-21 22:00",
+      "handicap": "皇家马德里让0.5球"
+    },
+    "createdAt": "2026-01-20T03:07:06.340Z",
+    "authorPredictions": [],
+    "summary": {
+      "homeWin": 0,
+      "awayWin": 0,
+      "draw": 0,
+      "unclear": 0
+    },
+    "doubaoPrediction": {
+      "prediction": "unclear",
+      "confidence": "low",
+      "reason": "缺少具体足球预测文案，无法分析博主预测倾向及判断胜负。需提供实际文案内容以完成分析。"
+    },
+    "userPrediction": "home",
+    "result": null
+  }
+]

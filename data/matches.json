@@ -1,0 +1,132 @@
+[
+  {
+    "matchId": "欧冠_2026-01-21_皇家马德里vs拜仁慕尼黑",
+    "league": "欧洲冠军联赛",
+    "matchTime": "2026-01-21 22:00",
+    "homeTeam": "皇家马德里",
+    "awayTeam": "拜仁慕尼黑",
+    "handicap": "皇家马德里让0.5球",
+    "odds": {
+      "home": "2.10",
+      "away": "3.40"
+    },
+    "createdAt": "2026-01-20T03:04:05.305Z",
+    "status": "upcoming",
+    "result": null,
+    "doubaoPrediction": {
+      "prediction": "home",
+      "confidence": "medium",
+      "reason": "皇马主场优势显著，历史交锋占优，盘口支持，关键球员（维尼修斯、贝林厄姆）压阵，拜仁客场承压，皇马更易取胜。",
+      "score": "2-1"
+    },
+    "predictionTime": "2026-01-20T03:27:53.169Z",
+    "userPrediction": "home",
+    "userPredictionTime": "2026-01-20T03:35:56.956Z"
+  },
+  {
+    "matchId": "法甲_2026-01-22_巴黎圣日耳曼vs马赛",
+    "league": "法国足球甲级联赛",
+    "matchTime": "2026-01-22 20:00",
+    "homeTeam": "巴黎圣日耳曼",
+    "awayTeam": "马赛",
+    "handicap": "巴黎圣日耳曼让1.0球",
+    "odds": {
+      "home": "1.55",
+      "away": "4.50"
+    },
+    "createdAt": "2026-01-20T03:04:05.305Z",
+    "status": "upcoming",
+    "result": null
+  },
+  {
+    "matchId": "意甲_2026-01-20_尤文图斯vs国际米兰",
+    "league": "意大利足球甲级联赛",
+    "matchTime": "2026-01-20 22:00",
+    "homeTeam": "尤文图斯",
+    "awayTeam": "国际米兰",
+    "handicap": "尤文图斯让0球",
+    "odds": {
+      "home": "2.20",
+      "away": "3.25"
+    },
+    "createdAt": "2026-01-20T03:04:05.305Z",
+    "status": "upcoming",
+    "result": null
+  },
+  {
+    "matchId": "德甲_2026-01-21_拜仁慕尼黑vs多特蒙德",
+    "league": "德国足球甲级联赛",
+    "matchTime": "2026-01-21 19:30",
+    "homeTeam": "拜仁慕尼黑",
+    "awayTeam": "多特蒙德",
+    "handicap": "拜仁让0.25球",
+    "odds": {
+      "home": "1.78",
+      "away": "3.60"
+    },
+    "createdAt": "2026-01-20T03:04:05.305Z",
+    "status": "upcoming",
+    "result": null
+  },
+  {
+    "matchId": "西甲_2026-01-22_皇家马德里vs巴塞罗那",
+    "league": "西班牙足球甲级联赛",
+    "matchTime": "2026-01-22 21:30",
+    "homeTeam": "皇家马德里",
+    "awayTeam": "巴塞罗那",
+    "handicap": "皇马让0.5球",
+    "odds": {
+      "home": "2.05",
+      "away": "3.50"
+    },
+    "createdAt": "2026-01-20T03:04:05.305Z",
+    "status": "upcoming",
+    "result": null
+  },
+  {
+    "matchId": "英超_2026-01-21_曼城vs切尔西",
+    "league": "英格兰超级联赛",
+    "matchTime": "2026-01-21 20:00",
+    "homeTeam": "曼城",
+    "awayTeam": "切尔西",
+    "handicap": "曼城让0.75球",
+    "odds": {
+      "home": "1.65",
+      "away": "4.10"
+    },
+    "createdAt": "2026-01-20T03:04:05.305Z",
+    "status": "upcoming",
+    "result": null,
+    "doubaoPrediction": {
+      "prediction": "home",
+      "confidence": "high",
+      "reason": "曼城主场优势显著，盘口0.75球让步深，机构看好其净胜1球以上。两队近期曼城状态更佳，切尔西客场承压，历史交锋曼城占优。",
+      "score": "2-1"
+    },
+    "predictionTime": "2026-01-20T03:25:21.490Z"
+  },
+  {
+    "matchId": "西甲_2026-01-22 21:00_皇马vs巴萨",
+    "league": "西甲",
+    "matchTime": "2026-01-22 21:00",
+    "homeTeam": "皇马",
+    "awayTeam": "巴萨",
+    "handicap": "皇马让0.5球",
+    "odds": {},
+    "createdAt": "2026-01-20T03:03:05.457Z",
+    "status": "upcoming",
+    "result": null
+  },
+  {
+    "matchId": "英超_2026-01-21 20:00_曼城vs利物浦",
+    "league": "英超",
+    "matchTime": "2026-01-21 20:00",
+    "homeTeam": "曼城",
+    "awayTeam": "利物浦",
+    "handicap": "曼城让0.25球",
+    "odds": {},
+    "createdAt": "2026-01-20T03:03:05.412Z",
+    "status": "upcoming",
+    "result": null
+  }
+]

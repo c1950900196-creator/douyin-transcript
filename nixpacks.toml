@@ -1,0 +1,21 @@
+# Nixpacks 配置 - Railway 自动构建
+[phases.setup]
+nixPkgs = [
+    "nodejs_18",
+    "python311",
+    "ffmpeg",
+    "chromium"
+]
+
+[phases.install]
+cmds = [
+    "npm install",
+    "pip install openai-whisper"
+]
+
+[start]
+cmd = "node server.js"
+
+[variables]
+PUPPETEER_SKIP_CHROMIUM_DOWNLOAD = "true"
+PUPPETEER_EXECUTABLE_PATH = "/nix/store/chromium/bin/chromium"
