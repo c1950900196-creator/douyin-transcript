@@ -26,8 +26,8 @@ RUN mkdir -p data
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
 ENV NODE_ENV=production
 
-# 暴露端口
-EXPOSE 3456
+# Railway 会自动设置 PORT 环境变量
+# EXPOSE $PORT
 
 # 启动应用
 CMD ["node", "server.js"]

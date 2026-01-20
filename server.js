@@ -59,8 +59,15 @@ const DOUBAO_CONFIG = {
 待修复的文案：`
 };
 
-// Chrome 路径（Mac）
+// Chrome 路径（支持 Mac/Linux/Railway）
 const CHROME_PATHS = [
+    // 环境变量优先
+    process.env.PUPPETEER_EXECUTABLE_PATH,
+    // Linux / Railway
+    '/usr/bin/chromium',
+    '/usr/bin/chromium-browser',
+    '/usr/bin/google-chrome',
+    // Mac
     '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
     '/Applications/Chromium.app/Contents/MacOS/Chromium',
     '/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge',
