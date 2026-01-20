@@ -62,6 +62,6 @@ const server = http.createServer((req, res) => {
     res.end('Not Found');
 });
 
-server.listen(PORT, () => {
-    console.log(`✅ 简化版服务器启动成功！端口: ${PORT}`);
+server.listen(PORT, '0.0.0.0', () => {
+    console.log(`✅ 简化版服务器启动成功！端口: ${PORT}，监听地址: 0.0.0.0`);
 });
