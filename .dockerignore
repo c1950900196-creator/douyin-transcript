@@ -1,0 +1,10 @@
+node_modules
+data
+.git
+*.log
+*.md
+chrome-user-data
+temp
+debug_temp
+test_temp
+*.zip
