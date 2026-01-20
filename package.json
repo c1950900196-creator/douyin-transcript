@@ -2,11 +2,15 @@
   "name": "douyin-transcript-extractor",
   "version": "2.0.0",
   "description": "抖音视频文案提取器",
-  "main": "server-simple.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node server-simple.js"
+    "start": "node server.js"
   },
-  "dependencies": {},
+  "dependencies": {
+    "puppeteer": "^21.0.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
+  },
   "engines": {
     "node": ">=18"
   }

@@ -3153,8 +3153,8 @@ const server = http.createServer(async (req, res) => {
     });
 });
 
-// 启动服务器
-server.listen(PORT, async () => {
+// 启动服务器（Railway 需要监听 0.0.0.0）
+server.listen(PORT, '0.0.0.0', async () => {
     const hasFfmpeg = await checkFfmpeg();
     const pythonCmd = await checkPython();
     const hasWhisper = pythonCmd ? await checkWhisper(pythonCmd) : false;
