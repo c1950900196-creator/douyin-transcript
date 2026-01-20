@@ -4,17 +4,26 @@
  * 不包含：Puppeteer、Whisper（云端不可用）
  */
 
+console.log('🚀 正在启动云端服务器...');
+console.log('📦 加载依赖模块...');
+
 const http = require('http');
 const https = require('https');
 const url = require('url');
 const fs = require('fs');
 const path = require('path');
 
+console.log('✅ Node.js 核心模块加载完成');
+
 // 比赛预测模块
+console.log('📥 加载 match-predictor.js...');
 const matchPredictor = require('./match-predictor');
+console.log('✅ match-predictor.js 加载成功');
 
 // 用户认证模块
+console.log('📥 加载 auth.js...');
 const auth = require('./auth');
+console.log('✅ auth.js 加载成功');
 
 // 豆包 AI 配置
 const DOUBAO_CONFIG = {
@@ -26,6 +35,12 @@ const DOUBAO_CONFIG = {
 };
 
 const PORT = process.env.PORT || 3456;
+
+console.log(`🔧 配置信息:`);
+console.log(`   - PORT: ${PORT}`);
+console.log(`   - NODE_ENV: ${process.env.NODE_ENV || 'development'}`);
+console.log(`   - DOUBAO_API_KEY: ${DOUBAO_CONFIG.apiKey ? '已设置' : '未设置'}`);
+console.log('');
 
 // MIME类型映射
 const mimeTypes = {
@@ -212,6 +227,8 @@ server.listen(PORT, '0.0.0.0', async () => {
     console.log('║     🎬 抖音文案提取器（云端版）                                 ║');
     console.log('║                                                                ║');
     console.log(`║     📡 服务地址: ${process.env.RAILWAY_STATIC_URL || 'http://localhost:' + PORT}    ║`);
+    console.log(`║     🔌 监听端口: ${PORT}                                         ║`);
+    console.log(`║     🌍 监听地址: 0.0.0.0                                        ║`);
     console.log('║                                                                ║');
     console.log('║     📋 可用功能:                                               ║');
     console.log('║        • 用户注册/登录                                          ║');
@@ -226,7 +243,12 @@ server.listen(PORT, '0.0.0.0', async () => {
     console.log('');
     
     // 初始化比赛预测模块
-    matchPredictor.setDoubaoConfig(DOUBAO_CONFIG);
+    try {
+        matchPredictor.setDoubaoConfig(DOUBAO_CONFIG);
+        console.log('✅ 比赛预测模块初始化成功');
+    } catch (e) {
+        console.error('❌ 比赛预测模块初始化失败:', e.message);
+    }
 });
 
 server.on('error', (err) => {
