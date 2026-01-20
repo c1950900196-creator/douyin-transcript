@@ -3,14 +3,15 @@
 nixPkgs = [
     "nodejs_18",
     "python311",
-    "ffmpeg",
+    "python311Packages.pip",
+    "ffmpeg-full",
     "chromium"
 ]
 
 [phases.install]
 cmds = [
     "npm install",
-    "pip install openai-whisper"
+    "python3 -m pip install --user openai-whisper || echo 'Whisper install skipped'"
 ]
 
 [start]
@@ -18,4 +19,5 @@ cmd = "node server.js"
 
 [variables]
 PUPPETEER_SKIP_CHROMIUM_DOWNLOAD = "true"
-PUPPETEER_EXECUTABLE_PATH = "/nix/store/chromium/bin/chromium"
+PUPPETEER_EXECUTABLE_PATH = "/usr/bin/chromium"
+PYTHONUNBUFFERED = "1"
