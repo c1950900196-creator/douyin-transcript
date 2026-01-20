@@ -10,6 +10,10 @@ RUN apt-get update && apt-get install -y \
 # 设置工作目录
 WORKDIR /app
 
+# 设置环境变量 - 跳过 Puppeteer 内置 Chromium 下载，使用系统 Chromium
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+
 # 复制 package.json
 COPY package*.json ./
 
@@ -22,12 +26,8 @@ COPY . .
 # 创建数据目录
 RUN mkdir -p data
 
-# 设置环境变量
-ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+# 设置生产环境
 ENV NODE_ENV=production
-
-# Railway 会自动设置 PORT 环境变量
-# EXPOSE $PORT
 
 # 启动应用
 CMD ["node", "server.js"]

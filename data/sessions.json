@@ -6,5 +6,13 @@
     "nickname": "测试用户",
     "createdAt": "2026-01-20T05:40:55.179Z",
     "expiresAt": "2026-01-27T05:40:55.179Z"
+  },
+  {
+    "token": "fb2563d13c0f1d16d2d92f6bcfdc2679df2408f04ac5fd4c99abca65fb744026",
+    "userId": "75476046-6f81-46dc-b8c1-2db111814d04",
+    "username": "1950600196",
+    "nickname": "塔菲",
+    "createdAt": "2026-01-20T06:36:19.147Z",
+    "expiresAt": "2026-01-27T06:36:19.147Z"
   }
 ]
