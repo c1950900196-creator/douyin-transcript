@@ -6,15 +6,15 @@
 - **项目路径**: `/Users/huhaotian/未命名文件夹/抖音文案提取器`
 
 ## 当前状态
-**完整版服务器正在部署中**
+**云端版服务器部署中** - 使用无依赖版本
 
 最新更新：
-- ✅ 修改 server.js 监听地址为 `0.0.0.0`
-- ✅ 添加 puppeteer 相关依赖到 package.json
-- ✅ 更新 Dockerfile 安装 Chromium
-- ✅ 更新启动命令指向 server.js
+- ✅ 创建 server-cloud.js（云端专用版本）
+- ✅ 移除 Puppeteer 依赖（云端不需要）
+- ✅ 简化 Dockerfile（只需 Node.js）
+- ✅ 保留核心功能：用户认证、球赛预测
 
-正在等待 Railway 部署完成...
+正在部署...
 
 ## 已解决的问题
 
