@@ -4,9 +4,7 @@
   "description": "抖音视频文案提取器 - 支持语音转写和球赛预测",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js",
-    "postinstall": "echo 'Skipping Chromium download, using system Chromium'"
+    "start": "node server.js"
   },
   "dependencies": {
     "puppeteer-core": "^21.5.2",
