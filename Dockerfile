@@ -29,5 +29,5 @@ RUN mkdir -p data
 # 设置生产环境
 ENV NODE_ENV=production
 
-# 启动应用
-CMD ["node", "server.js"]
+# 启动应用（先用简化版测试）
+CMD ["node", "server-simple.js"]
