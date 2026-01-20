@@ -16,8 +16,14 @@ const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 // 使用 Stealth 插件隐藏自动化特征
 puppeteer.use(StealthPlugin());
 
-// Chrome 路径（Mac）
+// Chrome 路径（支持 Mac/Linux/Railway）
 const CHROME_PATHS = [
+    // Railway / Linux
+    process.env.PUPPETEER_EXECUTABLE_PATH,
+    '/usr/bin/chromium',
+    '/usr/bin/chromium-browser',
+    '/usr/bin/google-chrome',
+    // Mac
     '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
     '/Applications/Chromium.app/Contents/MacOS/Chromium',
     '/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge',
