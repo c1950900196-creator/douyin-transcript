@@ -1,17 +1,21 @@
-# Nixpacks 配置 - Railway 自动构建
+# Nixpacks 配置 - Railway 自动构建（完整功能版）
+
 [phases.setup]
 nixPkgs = [
     "nodejs_18",
     "python311",
     "python311Packages.pip",
+    "python311Packages.setuptools",
+    "python311Packages.wheel",
     "ffmpeg-full",
     "chromium"
 ]
 
 [phases.install]
+dependsOn = ["setup"]
 cmds = [
     "npm install",
-    "python3 -m pip install --user openai-whisper || echo 'Whisper install skipped'"
+    "pip3 install --user openai-whisper || true"
 ]
 
 [start]
@@ -19,5 +23,6 @@ cmd = "node server.js"
 
 [variables]
 PUPPETEER_SKIP_CHROMIUM_DOWNLOAD = "true"
-PUPPETEER_EXECUTABLE_PATH = "/usr/bin/chromium"
+PUPPETEER_EXECUTABLE_PATH = "/nix/var/nix/profiles/default/bin/chromium"
 PYTHONUNBUFFERED = "1"
+PATH = "/root/.local/bin:$PATH"
