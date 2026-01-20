@@ -1,16 +1,12 @@
 {
   "name": "douyin-transcript-extractor",
   "version": "2.0.0",
-  "description": "抖音视频文案提取器 - 支持语音转写和球赛预测",
-  "main": "server.js",
+  "description": "抖音视频文案提取器",
+  "main": "server-simple.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server-simple.js"
   },
-  "dependencies": {
-    "puppeteer": "^21.5.2",
-    "puppeteer-extra": "^3.3.6",
-    "puppeteer-extra-plugin-stealth": "^2.11.2"
-  },
+  "dependencies": {},
   "engines": {
     "node": ">=18"
   }
