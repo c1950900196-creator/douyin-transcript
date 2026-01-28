@@ -1,12 +1,18 @@
 {
   "name": "douyin-transcript-extractor",
   "version": "2.0.0",
-  "description": "抖音视频文案提取器",
-  "main": "server-cloud.js",
+  "description": "抖音视频文案提取器 - 本地完整版",
+  "main": "server.js",
   "scripts": {
-    "start": "node server-cloud.js"
+    "start": "node server-cloud.js",
+    "dev": "node server-cloud.js",
+    "start:local": "node server.js"
   },
-  "dependencies": {},
+  "dependencies": {
+    "puppeteer-core": "^24.0.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
+  },
   "engines": {
     "node": ">=18"
   }
