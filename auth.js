@@ -5,10 +5,11 @@
 
 const fs = require('fs');
 const path = require('path');
+const { getDataDir } = require('./runtime-paths');
 const crypto = require('crypto');
 
 // 数据文件路径
-const DATA_DIR = path.join(__dirname, 'data');
+const DATA_DIR = getDataDir();
 const USERS_FILE = path.join(DATA_DIR, 'users.json');
 const SESSIONS_FILE = path.join(DATA_DIR, 'sessions.json');
 

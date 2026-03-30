@@ -207,6 +207,54 @@
             border-color: var(--primary);
         }
 
+        /* Tab 切换 */
+        .tab-bar {
+            display: flex;
+            gap: 0;
+            margin-bottom: 20px;
+            background: var(--bg-card);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 14px 20px;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+            background: var(--bg-input);
+        }
+
+        .tab-btn.active {
+            color: var(--text-primary);
+            background: var(--primary);
+        }
+
+        .tab-btn .tab-count {
+            background: rgba(255,255,255,0.2);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+        }
+
+        .tab-btn.active .tab-count {
+            background: rgba(255,255,255,0.3);
+        }
+
         /* 文案列表 */
         .transcript-list {
             display: flex;
@@ -214,48 +262,61 @@
             gap: 16px;
         }
 
+        /* 文案网格布局 */
+        .transcript-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 16px;
+            max-height: calc(100vh - 250px);
+            overflow-y: auto;
+            padding-right: 8px;
+        }
+        
+        .transcript-grid::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .transcript-grid::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
         .transcript-item {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 20px;
+            border-radius: 12px;
+            padding: 14px;
             transition: all 0.3s;
+            cursor: pointer;
         }
 
         .transcript-item:hover {
             border-color: var(--primary);
-            transform: translateX(5px);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(254, 44, 85, 0.15);
         }
 
         .transcript-header {
             display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 12px;
-            gap: 15px;
-        }
-
-        .transcript-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            flex: 1;
+            justify-content: flex-end;
+            align-items: center;
+            margin-bottom: 8px;
         }
 
         /* 作者信息卡片 */
         .author-info {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 12px;
+            gap: 10px;
+            padding: 8px;
             background: var(--bg-input);
-            border-radius: 12px;
-            margin-bottom: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
         }
 
         .author-avatar {
-            width: 48px;
-            height: 48px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid var(--primary);
@@ -263,26 +324,30 @@
         }
 
         .author-avatar-placeholder {
-            width: 48px;
-            height: 48px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             background: linear-gradient(135deg, var(--primary), var(--accent));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1rem;
             color: white;
         }
 
         .author-details {
             flex: 1;
+            min-width: 0;
         }
 
         .author-name {
             font-weight: 600;
             color: var(--text-primary);
-            font-size: 1rem;
-            margin-bottom: 3px;
+            font-size: 0.9rem;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .author-name a {
@@ -366,14 +431,17 @@
 
         .transcript-content {
             background: var(--bg-input);
-            border-radius: 12px;
-            padding: 15px;
-            font-size: 0.95rem;
-            line-height: 1.8;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 0.85rem;
+            line-height: 1.6;
             color: var(--text-primary);
-            max-height: 200px;
+            max-height: 120px;
             overflow-y: auto;
             white-space: pre-wrap;
+            display: -webkit-box;
+            -webkit-line-clamp: 5;
+            -webkit-box-orient: vertical;
         }
 
         .transcript-content::-webkit-scrollbar {
@@ -574,30 +642,80 @@
                 flex-direction: column;
             }
         }
+
+        /* 自定义快速 tooltip */
+        .quick-tooltip {
+            position: fixed;
+            background: rgba(30, 30, 35, 0.95);
+            color: #e5e5e5;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            max-width: 300px;
+            line-height: 1.5;
+            z-index: 10000;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.1s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .quick-tooltip.show {
+            opacity: 1;
+        }
+        
+        .match-dialog-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.8);
+            display: none; align-items: center; justify-content: center; z-index: 2000;
+        }
+        .match-dialog-overlay.active { display: flex; }
+        .match-dialog {
+            background: var(--bg-card, #1a1a2e); border-radius: 12px; padding: 20px;
+            max-width: 560px; width: 92%; max-height: 85vh; display: flex; flex-direction: column;
+        }
+        .match-dialog-header {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
+        }
+        .match-dialog-header h3 { margin: 0; font-size: 16px; color: #e0e0e0; }
+        .match-dialog-close {
+            background: none; border: none; font-size: 20px; color: #999; cursor: pointer;
+        }
+        .match-dialog-search {
+            width: 100%; padding: 10px 12px; background: #16162a; border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px; color: #e0e0e0; font-size: 13px; margin-bottom: 10px; box-sizing: border-box;
+        }
+        .match-dialog-list {
+            flex: 1; overflow-y: auto; max-height: 320px; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;
+        }
+        .match-dialog-item {
+            padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.05); cursor: pointer; font-size: 13px;
+            color: #e0e0e0; transition: background 0.15s;
+        }
+        .match-dialog-item:hover { background: rgba(255,255,255,0.05); }
+        .match-dialog-item.selected { background: rgba(59,130,246,0.2); border-left: 3px solid #3b82f6; }
+        .match-dialog-item .match-meta { font-size: 11px; color: #999; margin-top: 2px; }
+        .match-dialog-prediction {
+            display: flex; gap: 8px; margin-top: 12px; justify-content: center;
+        }
+        .match-dialog-prediction button {
+            padding: 8px 20px; border-radius: 8px; border: 2px solid rgba(255,255,255,0.1);
+            background: #16162a; color: #e0e0e0; cursor: pointer; font-size: 13px; font-weight: 600;
+        }
+        .match-dialog-prediction button.active {
+            border-color: #3b82f6; background: rgba(59,130,246,0.2); color: #3b82f6;
+        }
+        .match-dialog-submit {
+            margin-top: 12px; width: 100%; padding: 10px; border-radius: 8px; border: none;
+            background: #3b82f6; color: white; font-size: 14px; font-weight: 600; cursor: pointer;
+        }
+        .match-dialog-submit:disabled { opacity: 0.4; cursor: not-allowed; }
     </style>
-    <script src="auth-check.js"></script>
+    <script src="sidebar.js"></script>
 </head>
 <body>
     <div class="container">
-        <!-- 导航 -->
-        <nav class="nav" style="display: flex; align-items: center; flex-wrap: wrap;">
-            <a href="index.html">🎬 文案提取</a>
-            <a href="authors.html">👤 作者监控</a>
-            <a href="transcripts.html" class="active">📝 文案库</a>
-            <a href="predictions.html">⚽ 球赛预测</a>
-            <span style="margin-left: auto; display: flex; align-items: center; gap: 10px;">
-                <span id="user-info" style="color: var(--text-secondary); font-size: 13px;"></span>
-                <button onclick="logout()" style="background: transparent; border: 1px solid var(--text-secondary); color: var(--text-secondary); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;">退出</button>
-            </span>
-        </nav>
-        <script>
-            window.addEventListener('authReady', (e) => {
-                document.getElementById('user-info').textContent = '👤 ' + (e.detail.nickname || e.detail.username);
-            });
-        </script>
-
         <!-- 头部 -->
-        <header class="header">
+        <header class="header" style="margin-bottom: 20px;">
             <h1>📝 文案库</h1>
             <p>所有提取的文案都会自动保存在这里</p>
         </header>
@@ -616,6 +734,9 @@
             </div>
 
             <div class="actions">
+                <button class="btn" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);" onclick="analyzePredictions()">
+                    ⚽ 分析预测
+                </button>
                 <button class="btn btn-success" onclick="showExportModal()">
                     📤 导出全部
                 </button>
@@ -626,6 +747,16 @@
                     🗑️ 清空
                 </button>
             </div>
+        </div>
+
+        <!-- Tab 切换 -->
+        <div class="tab-bar">
+            <button class="tab-btn active" onclick="switchTab('predicted')" id="tabPredicted">
+                ⚽ 已入库文案 <span class="tab-count" id="predictedCount">0</span>
+            </button>
+            <button class="tab-btn" onclick="switchTab('unpredicted')" id="tabUnpredicted">
+                📋 未入库文案 <span class="tab-count" id="unpredictedCount">0</span>
+            </button>
         </div>
 
         <!-- 文案列表 -->
@@ -674,6 +805,7 @@
 
     <script>
         let allTranscripts = [];
+        let currentTab = 'predicted';
 
         // 页面加载
         document.addEventListener('DOMContentLoaded', () => {
@@ -685,16 +817,73 @@
             });
         });
 
+        function switchTab(tab) {
+            currentTab = tab;
+            document.getElementById('tabPredicted').classList.toggle('active', tab === 'predicted');
+            document.getElementById('tabUnpredicted').classList.toggle('active', tab === 'unpredicted');
+            filterTranscripts(document.getElementById('searchInput').value);
+        }
+
+        function getFilteredByTab(transcripts) {
+            if (currentTab === 'predicted') {
+                return transcripts.filter(t => t.hasPrediction === true);
+            } else {
+                return transcripts.filter(t => t.hasPrediction !== true);
+            }
+        }
+
         // 加载文案列表
+        // 作者头像缓存（优先使用本地头像）
+        let authorAvatars = {};
+        
+        async function loadAuthorAvatars() {
+            try {
+                const response = await fetch('/api/authors');
+                const data = await response.json();
+                if (data.success && data.data) {
+                    for (const author of data.data) {
+                        // 优先使用本地头像
+                        const avatar = author.localAvatar || author.avatar;
+                        if (author.nickname && avatar) {
+                            authorAvatars[author.nickname] = avatar;
+                        }
+                        if (author.secUid && avatar) {
+                            authorAvatars[author.secUid] = avatar;
+                        }
+                    }
+                }
+            } catch (e) {
+                console.error('加载作者头像失败:', e);
+            }
+        }
+        
         async function loadTranscripts() {
             try {
+                // 先加载最新的作者头像
+                await loadAuthorAvatars();
+                
                 const response = await fetch('/api/transcripts');
                 const data = await response.json();
                 
                 if (data.success) {
                     allTranscripts = data.data;
-                    document.getElementById('totalCount').textContent = data.count;
-                    renderTranscripts(allTranscripts);
+                    
+                    // 用最新的作者头像替换文案中的旧头像（优先本地头像）
+                    for (const t of allTranscripts) {
+                        if (t.author && authorAvatars[t.author]) {
+                            t.authorAvatar = authorAvatars[t.author];
+                        } else if (t.authorSecUid && authorAvatars[t.authorSecUid]) {
+                            t.authorAvatar = authorAvatars[t.authorSecUid];
+                        }
+                    }
+                    
+                    const predicted = allTranscripts.filter(t => t.hasPrediction === true);
+                    const unpredicted = allTranscripts.filter(t => t.hasPrediction !== true);
+                    document.getElementById('totalCount').textContent = allTranscripts.length;
+                    document.getElementById('predictedCount').textContent = predicted.length;
+                    document.getElementById('unpredictedCount').textContent = unpredicted.length;
+                    
+                    renderTranscripts(getFilteredByTab(allTranscripts));
                 }
             } catch (error) {
                 console.error('加载文案失败:', error);
@@ -717,17 +906,17 @@
                 return;
             }
 
+            container.className = 'transcript-grid';
             container.innerHTML = transcripts.map(t => `
                 <div class="transcript-item" data-id="${t.id || t.videoId}">
                     <div class="transcript-header">
-                        <div class="transcript-title">${escapeHtml(t.title) || '无标题'}</div>
-                        ${t.url ? `<a href="${escapeHtml(t.url)}" target="_blank" class="video-link">🎬 查看原视频</a>` : ''}
+                        ${t.url ? `<a href="${escapeHtml(t.url)}" target="_blank" class="video-link">🎬 原视频</a>` : ''}
                     </div>
                     
                     <!-- 作者信息卡片 -->
                     <div class="author-info">
                         ${t.authorAvatar 
-                            ? `<img src="${escapeHtml(t.authorAvatar)}" alt="头像" class="author-avatar" onerror="this.outerHTML='<div class=\\'author-avatar-placeholder\\'>👤</div>'">`
+                            ? `<img src="${escapeHtml(t.authorAvatar.startsWith('/avatars/') ? t.authorAvatar : t.authorAvatar)}" alt="头像" class="author-avatar" referrerpolicy="no-referrer" crossorigin="anonymous" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"><div class="author-avatar-placeholder" style="display:none">👤</div>`
                             : `<div class="author-avatar-placeholder">👤</div>`
                         }
                         <div class="author-details">
@@ -748,10 +937,11 @@
                     </div>
                     
                     <div class="transcript-meta">
-                        <span>🕐 ${formatDate(t.createdAt)}</span>
+                        <span>🕐 ${formatDate(t.videoPublishTime || t.createdAt)}${t.videoPublishTime ? '' : ' (提取)'}</span>
                         <span>🎯 ${t.modelUsed || 'small'} 模型</span>
                     </div>
                     <div class="transcript-content">${escapeHtml(t.transcript) || '(无文案内容)'}</div>
+                    ${renderPredictions(t.predictions, t.hasPrediction, t)}
                     ${t.hashtags && t.hashtags.length > 0 ? `
                         <div class="transcript-tags">
                             ${t.hashtags.map(tag => `<span class="tag">#${escapeHtml(tag)}</span>`).join('')}
@@ -771,19 +961,105 @@
 
         // 搜索过滤
         function filterTranscripts(keyword) {
-            if (!keyword.trim()) {
-                renderTranscripts(allTranscripts);
-                return;
+            let filtered = getFilteredByTab(allTranscripts);
+            
+            if (keyword && keyword.trim()) {
+                const kw = keyword.toLowerCase();
+                filtered = filtered.filter(t => {
+                    const searchText = `${t.title || ''} ${t.author || ''} ${t.transcript || ''} ${(t.hashtags || []).join(' ')}`.toLowerCase();
+                    return searchText.includes(kw);
+                });
             }
-
-            const filtered = allTranscripts.filter(t => {
-                const searchText = `${t.title || ''} ${t.author || ''} ${t.transcript || ''} ${(t.hashtags || []).join(' ')}`.toLowerCase();
-                return searchText.includes(keyword.toLowerCase());
-            });
 
             renderTranscripts(filtered);
         }
 
+        // 分析文案预测信息
+        let analysisInterval = null;
+        
+        async function analyzePredictions() {
+            if (!confirm('确定要分析所有文案的比赛预测信息吗？\n这可能需要几分钟时间。')) return;
+            
+            try {
+                const res = await fetch('/api/transcripts/analyze-predictions', {
+                    method: 'POST'
+                });
+                const data = await res.json();
+                
+                if (data.success) {
+                    showAnalysisProgress();
+                    showToast(`开始分析 ${data.total || 0} 条文案...`, 'info');
+                    
+                    // 开始轮询进度
+                    if (analysisInterval) clearInterval(analysisInterval);
+                    analysisInterval = setInterval(checkAnalysisProgress, 1000);
+                } else {
+                    showToast('分析失败: ' + (data.error || '未知错误'), 'error');
+                }
+            } catch (e) {
+                showToast('分析请求失败', 'error');
+            }
+        }
+        
+        // 显示分析进度条
+        function showAnalysisProgress() {
+            let progressBar = document.getElementById('analysisProgressBar');
+            if (!progressBar) {
+                progressBar = document.createElement('div');
+                progressBar.id = 'analysisProgressBar';
+                progressBar.innerHTML = `
+                    <div style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%); border: 1px solid rgba(102, 126, 234, 0.3); border-radius: 12px; padding: 15px 20px; margin-bottom: 20px;">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
+                            <span style="font-size: 18px;" id="analysisIcon">⏳</span>
+                            <span style="flex: 1; font-size: 14px;" id="analysisMessage">正在分析...</span>
+                            <span style="font-size: 14px; color: var(--primary);" id="analysisPercent">0%</span>
+                        </div>
+                        <div style="height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden;">
+                            <div id="analysisProgressFill" style="height: 100%; background: linear-gradient(90deg, #667eea, #764ba2); width: 0%; transition: width 0.3s;"></div>
+                        </div>
+                        <div style="margin-top: 8px; font-size: 12px; color: var(--text-secondary);" id="analysisDetail"></div>
+                    </div>
+                `;
+                const toolbar = document.querySelector('.toolbar');
+                toolbar.parentNode.insertBefore(progressBar, toolbar.nextSibling);
+            }
+            progressBar.style.display = 'block';
+        }
+        
+        // 检查分析进度
+        async function checkAnalysisProgress() {
+            try {
+                const res = await fetch('/api/transcripts/analyze-predictions/status');
+                const data = await res.json();
+                
+                if (data.success && data.data) {
+                    const status = data.data;
+                    const percent = status.total > 0 ? Math.round((status.current / status.total) * 100) : 0;
+                    
+                    document.getElementById('analysisMessage').textContent = status.message || '分析中...';
+                    document.getElementById('analysisPercent').textContent = percent + '%';
+                    document.getElementById('analysisProgressFill').style.width = percent + '%';
+                    document.getElementById('analysisDetail').textContent = 
+                        `已分析 ${status.current || 0}/${status.total || 0} 条，发现 ${status.analyzed || 0} 条预测`;
+                    
+                    if (!status.isRunning) {
+                        document.getElementById('analysisIcon').textContent = '✅';
+                        clearInterval(analysisInterval);
+                        analysisInterval = null;
+                        
+                        // 3秒后隐藏进度条并刷新
+                        setTimeout(() => {
+                            const progressBar = document.getElementById('analysisProgressBar');
+                            if (progressBar) progressBar.style.display = 'none';
+                            loadTranscripts();
+                        }, 3000);
+                    }
+                }
+            } catch (e) {
+                console.error('获取分析进度失败:', e);
+            }
+        }
+        
         // 刷新列表
         function refreshList() {
             loadTranscripts();
@@ -830,6 +1106,37 @@
                 btn.disabled = false;
                 btn.textContent = originalText;
             }
+        }
+
+        function manualMatchTranscript(transcriptId, authorId, authorName) {
+            openMatchDialog({
+                title: '手动匹配比赛',
+                mode: 'full',
+                extraData: { transcriptId, authorId, authorName },
+                callback: async (data) => {
+                    try {
+                        const res = await fetch(`/api/transcripts/${encodeURIComponent(data.transcriptId)}/manual-match`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                matchId: data.matchId,
+                                prediction: data.prediction,
+                                authorId: data.authorId,
+                                authorName: data.authorName
+                            })
+                        });
+                        const result = await res.json();
+                        if (result.success) {
+                            alert('匹配成功！');
+                            loadTranscripts();
+                        } else {
+                            alert('匹配失败: ' + (result.error || '未知错误'));
+                        }
+                    } catch (e) {
+                        alert('请求失败: ' + e.message);
+                    }
+                }
+            });
         }
 
         // 删除单个文案
@@ -921,6 +1228,81 @@
         }
 
         // HTML 转义
+        // 渲染预测信息
+        function renderPredictions(predictions, hasPrediction, transcript) {
+            const tid = transcript?.id || transcript?.videoId || '';
+            const tAuthor = transcript?.author || '';
+            const tAuthorId = transcript?.authorId || transcript?.authorSecUid || '';
+            
+            if (hasPrediction === false) {
+                return `
+                    <div style="margin-top: 12px; padding: 10px 12px; background: rgba(100, 100, 100, 0.1); border-radius: 8px; border: 1px solid rgba(100, 100, 100, 0.2); display: flex; align-items: center; justify-content: space-between;">
+                        <span style="font-size: 13px; color: var(--text-secondary);">⚽ 未检测到比赛预测信息</span>
+                        <button onclick="manualMatchTranscript('${tid}', '${escapeHtml(tAuthorId)}', '${escapeHtml(tAuthor)}')" style="padding: 4px 10px; border-radius: 6px; border: 1px solid #3b82f6; background: rgba(59,130,246,0.15); color: #3b82f6; cursor: pointer; font-size: 11px; white-space: nowrap;">✏️ 手动标注</button>
+                    </div>
+                `;
+            }
+            
+            if (!predictions || predictions.length === 0) {
+                return `
+                    <div style="margin-top: 12px;">
+                        <button onclick="manualMatchTranscript('${tid}', '${escapeHtml(tAuthorId)}', '${escapeHtml(tAuthor)}')" style="padding: 6px 12px; border-radius: 6px; border: 1px solid #3b82f6; background: rgba(59,130,246,0.15); color: #3b82f6; cursor: pointer; font-size: 12px;">✏️ 手动标注预测</button>
+                    </div>
+                `;
+            }
+            
+            const predictionLabels = {
+                'home': '主胜',
+                'away': '客胜',
+                'draw': '平局'
+            };
+            
+            const predictionColors = {
+                'home': 'background: rgba(59, 130, 246, 0.2); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.3);',
+                'away': 'background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3);',
+                'draw': 'background: rgba(156, 163, 175, 0.2); color: #9ca3af; border: 1px solid rgba(156, 163, 175, 0.3);'
+            };
+            
+            const items = predictions.map(p => {
+                const match = p.match || {};
+                const homeTeam = match.homeTeam || p.homeTeam || '主队';
+                const awayTeam = match.awayTeam || p.awayTeam || '客队';
+                const league = match.league || p.league || '';
+                const prediction = p.prediction || 'unclear';
+                const reason = p.reason || '';
+                const confidence = p.confidence || 'low';
+                
+                const confidenceIcon = confidence === 'high' ? '🔥' : (confidence === 'medium' ? '⚡' : '💭');
+                
+                return `
+                    <div style="display: flex; align-items: center; gap: 10px; padding: 8px 10px; background: var(--bg-dark); border-radius: 6px; flex-wrap: wrap;">
+                        <div style="flex-shrink: 0; min-width: 140px;">
+                            <span style="font-size: 12px; color: var(--text-secondary);">${league ? `[${league}]` : ''}</span>
+                            <span style="font-size: 13px; font-weight: 500; margin-left: 4px;">${homeTeam} vs ${awayTeam}</span>
+                        </div>
+                        <span style="flex-shrink: 0; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; white-space: nowrap; ${predictionColors[prediction] || predictionColors['draw']}">
+                            ${confidenceIcon} ${predictionLabels[prediction] || '未知'}
+                        </span>
+                        ${reason ? `<span data-tip="${escapeHtml(reason)}" style="font-size: 11px; color: var(--text-secondary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: help;">${reason}</span>` : ''}
+                        ${p.manualMatch ? '<span style="font-size: 10px; color: #f59e0b;">手动</span>' : ''}
+                    </div>
+                `;
+            }).join('');
+            
+            return `
+                <div style="margin-top: 12px; padding: 10px; background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.08) 100%); border-radius: 8px; border: 1px solid rgba(102, 126, 234, 0.15);">
+                    <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
+                        <span style="font-size: 13px;">⚽ 比赛预测</span>
+                        <span style="font-size: 11px; color: var(--text-secondary);">(${predictions.length}场)</span>
+                        <button onclick="manualMatchTranscript('${tid}', '${escapeHtml(tAuthorId)}', '${escapeHtml(tAuthor)}')" style="margin-left: auto; padding: 2px 8px; border-radius: 4px; border: 1px solid rgba(59,130,246,0.3); background: transparent; color: #3b82f6; cursor: pointer; font-size: 10px;">✏️ 修改匹配</button>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 6px;">
+                        ${items}
+                    </div>
+                </div>
+            `;
+        }
+
         function escapeHtml(text) {
             if (!text) return '';
             const div = document.createElement('div');
@@ -945,7 +1327,74 @@
                 hideExportModal();
             }
         });
+
+        // 快速 tooltip 功能
+        (function() {
+            const tooltip = document.createElement('div');
+            tooltip.className = 'quick-tooltip';
+            document.body.appendChild(tooltip);
+            
+            let showTimeout = null;
+            
+            document.addEventListener('mouseenter', (e) => {
+                if (!(e.target instanceof Element)) return;
+                const target = e.target.closest('[data-tip]');
+                if (!target) return;
+                
+                const text = target.getAttribute('data-tip');
+                if (!text) return;
+                
+                clearTimeout(showTimeout);
+                showTimeout = setTimeout(() => {
+                    tooltip.textContent = text;
+                    tooltip.classList.add('show');
+                    
+                    const rect = target.getBoundingClientRect();
+                    let left = rect.left;
+                    let top = rect.bottom + 6;
+                    
+                    // 确保不超出屏幕
+                    if (left + 300 > window.innerWidth) {
+                        left = window.innerWidth - 310;
+                    }
+                    if (top + 100 > window.innerHeight) {
+                        top = rect.top - tooltip.offsetHeight - 6;
+                    }
+                    
+                    tooltip.style.left = left + 'px';
+                    tooltip.style.top = top + 'px';
+                }, 100); // 0.1秒延迟
+            }, true);
+            
+            document.addEventListener('mouseleave', (e) => {
+                if (!(e.target instanceof Element)) return;
+                const target = e.target.closest('[data-tip]');
+                if (!target) return;
+                
+                clearTimeout(showTimeout);
+                tooltip.classList.remove('show');
+            }, true);
+        })();
     </script>
+
+    <!-- 匹配比赛对话框 -->
+    <div class="match-dialog-overlay" id="match-dialog-overlay">
+        <div class="match-dialog">
+            <div class="match-dialog-header">
+                <h3 id="match-dialog-title">选择比赛</h3>
+                <button class="match-dialog-close" onclick="closeMatchDialog()">✕</button>
+            </div>
+            <input class="match-dialog-search" id="match-dialog-search" placeholder="搜索球队名称..." oninput="filterMatchList(this.value)">
+            <div class="match-dialog-list" id="match-dialog-list"></div>
+            <div class="match-dialog-prediction" id="match-dialog-prediction" style="display:none;">
+                <button onclick="selectPredDirection('home')" id="pred-btn-home">主胜</button>
+                <button onclick="selectPredDirection('draw')" id="pred-btn-draw">平局</button>
+                <button onclick="selectPredDirection('away')" id="pred-btn-away">客胜</button>
+            </div>
+            <button class="match-dialog-submit" id="match-dialog-submit" disabled onclick="submitMatchDialog()">确认提交</button>
+        </div>
+    </div>
+    <script src="match-dialog.js"></script>
 </body>
 </html>
 

@@ -1,5 +1,6 @@
 node_modules
-data
+data/*.json
+!data/.gitkeep
 .git
 *.log
 *.md

@@ -10,11 +10,41 @@ const fs = require('fs');
 const path = require('path');
 const https = require('https');
 const http = require('http');
+const { getDataDir, getRuntimePath } = require('./runtime-paths');
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 
-// 使用 Stealth 插件隐藏自动化特征
-puppeteer.use(StealthPlugin());
+// 延迟加载 match-predictor 避免循环依赖
+let matchPredictor = null;
+function getMatchPredictor() {
+    if (!matchPredictor) {
+        matchPredictor = require('./match-predictor');
+    }
+    return matchPredictor;
+}
+
+// 使用 Stealth 插件隐藏自动化特征（启用所有反检测功能）
+const stealth = StealthPlugin();
+// 启用所有 evasions
+stealth.enabledEvasions.add('chrome.app');
+stealth.enabledEvasions.add('chrome.csi');
+stealth.enabledEvasions.add('chrome.loadTimes');
+stealth.enabledEvasions.add('chrome.runtime');
+stealth.enabledEvasions.add('iframe.contentWindow');
+stealth.enabledEvasions.add('media.codecs');
+stealth.enabledEvasions.add('navigator.hardwareConcurrency');
+stealth.enabledEvasions.add('navigator.languages');
+stealth.enabledEvasions.add('navigator.permissions');
+stealth.enabledEvasions.add('navigator.plugins');
+stealth.enabledEvasions.add('navigator.webdriver');
+stealth.enabledEvasions.add('sourceurl');
+stealth.enabledEvasions.add('user-agent-override');
+stealth.enabledEvasions.add('webgl.vendor');
+stealth.enabledEvasions.add('window.outerdimensions');
+
+puppeteer.use(stealth);
+
+console.log('✅ Puppeteer Stealth 插件已启用，反检测功能已激活');
 
 // Chrome 路径（支持 Mac/Linux/Railway）
 const CHROME_PATHS = [
@@ -45,7 +75,7 @@ let browserInstance = null;
 let browserLock = false; // 浏览器锁，防止并发
 
 // 用户数据目录（保存登录状态）
-const USER_DATA_DIR = path.join(__dirname, 'chrome-user-data');
+const USER_DATA_DIR = getRuntimePath('chrome-user-data');
 
 // 确保用户数据目录存在
 if (!fs.existsSync(USER_DATA_DIR)) {
@@ -89,10 +119,12 @@ async function processQueue() {
 }
 
 // 获取或创建浏览器实例（带锁，使用用户数据目录保存登录状态）
-async function getBrowser(headless = true) {
-    // 等待锁释放
-    while (browserLock) {
+async function getBrowser(headless = true, retryCount = 0) {
+    // 等待锁释放（最多等10秒）
+    let waitTime = 0;
+    while (browserLock && waitTime < 10000) {
         await new Promise(r => setTimeout(r, 100));
+        waitTime += 100;
     }
     
     if (browserInstance && browserInstance.connected) {
@@ -110,47 +142,15 @@ async function getBrowser(headless = true) {
         console.log('启动浏览器:', chromePath);
         console.log('用户数据目录:', USER_DATA_DIR);
         
+        // 随机窗口大小，模拟真实用户
+        const widths = [1280, 1366, 1440, 1536, 1920];
+        const heights = [720, 768, 800, 864, 900, 1080];
+        const width = widths[Math.floor(Math.random() * widths.length)];
+        const height = heights[Math.floor(Math.random() * heights.length)];
+        
         browserInstance = await puppeteer.launch({
             executablePath: chromePath,
-            headless: headless ? 'new' : false, // 登录时需要显示窗口
-            userDataDir: USER_DATA_DIR, // 使用用户数据目录保存登录状态
-            args: [
-                '--no-sandbox',
-                '--disable-setuid-sandbox',
-                '--disable-dev-shm-usage',
-                '--disable-blink-features=AutomationControlled',
-                '--disable-infobars',
-                '--window-size=1280,800',
-                '--no-proxy-server',  // 禁用代理，避免网络问题
-                '--disable-extensions'  // 禁用扩展，避免干扰
-            ],
-            ignoreDefaultArgs: ['--enable-automation'],
-            defaultViewport: { width: 1280, height: 800 }
-        });
-        
-        return browserInstance;
-    } finally {
-        browserLock = false;
-    }
-}
-
-// 打开浏览器让用户登录抖音
-async function openLoginBrowser() {
-    console.log('打开浏览器进行抖音登录...');
-    
-    // 先关闭现有浏览器
-    await closeBrowser();
-    
-    try {
-        const chromePath = findChromePath();
-        if (!chromePath) {
-            throw new Error('未找到 Chrome 浏览器');
-        }
-        
-        // 以非无头模式打开浏览器
-        const browser = await puppeteer.launch({
-            executablePath: chromePath,
-            headless: false, // 显示窗口让用户登录
+            headless: headless ? 'new' : false,
             userDataDir: USER_DATA_DIR,
             args: [
                 '--no-sandbox',
@@ -158,75 +158,240 @@ async function openLoginBrowser() {
                 '--disable-dev-shm-usage',
                 '--disable-blink-features=AutomationControlled',
                 '--disable-infobars',
-                '--window-size=1280,800',
-                '--start-maximized',
-                '--no-proxy-server',  // 禁用代理
-                '--disable-extensions'
+                `--window-size=${width},${height}`,
+                '--no-proxy-server',
+                '--disable-extensions',
+                '--disable-web-security',
+                '--disable-features=IsolateOrigins,site-per-process',
+                '--lang=zh-CN',
+                '--accept-lang=zh-CN,zh;q=0.9',
+                // 模拟真实用户
+                '--disable-background-networking',
+                '--disable-default-apps',
+                '--disable-hang-monitor',
+                '--disable-prompt-on-repost',
+                '--disable-sync',
+                '--disable-translate',
+                '--metrics-recording-only',
+                '--no-first-run',
+                '--safebrowsing-disable-auto-update'
+            ],
+            ignoreDefaultArgs: ['--enable-automation', '--enable-blink-features=AutomationControlled'],
+            defaultViewport: { width, height }
+        });
+        
+        return browserInstance;
+    } catch (e) {
+        browserLock = false;
+        
+        // 如果是浏览器已运行的错误，尝试清理并重试
+        if (e.message.includes('already running') && retryCount < 2) {
+            console.log('检测到浏览器冲突，尝试清理...');
+            cleanupBrowserLocks();
+            browserInstance = null;
+            
+            // 尝试杀死残留的Chrome进程
+            try {
+                const { execSync } = require('child_process');
+                execSync('pkill -f "chrome-user-data" 2>/dev/null || true', { timeout: 5000 });
+            } catch (killErr) {
+                // 忽略
+            }
+            
+            await new Promise(r => setTimeout(r, 2000));
+            console.log(`重试启动浏览器 (第${retryCount + 1}次)...`);
+            return getBrowser(headless, retryCount + 1);
+        }
+        
+        throw e;
+    } finally {
+        browserLock = false;
+    }
+}
+
+// 打开浏览器让用户登录抖音（改进版：自动关闭浏览器）
+async function openLoginBrowser() {
+    console.log('打开浏览器进行抖音登录...');
+    
+    // 先关闭现有浏览器
+    await closeBrowser();
+    
+    let browser = null;
+    
+    try {
+        const chromePath = findChromePath();
+        if (!chromePath) {
+            throw new Error('未找到 Chrome 浏览器');
+        }
+        
+        console.log('正在启动浏览器...');
+        console.log('Chrome 路径:', chromePath);
+        console.log('用户数据目录:', USER_DATA_DIR);
+        
+        // 以非无头模式打开浏览器
+        browser = await puppeteer.launch({
+            executablePath: chromePath,
+            headless: false, // 显示窗口让用户登录
+            userDataDir: USER_DATA_DIR,
+            args: [
+                '--no-sandbox',
+                '--disable-dev-shm-usage',
+                '--disable-blink-features=AutomationControlled',
+                '--disable-infobars',
+                '--window-size=1280,900',
+                '--disable-notifications',  // 禁用通知
+                '--disable-popup-blocking', // 禁用弹窗拦截
+                '--no-default-browser-check',
+                '--no-first-run'
             ],
             ignoreDefaultArgs: ['--enable-automation'],
             defaultViewport: null // 使用窗口大小
         });
         
+        console.log('浏览器已启动，正在打开抖音页面...');
+        
         const page = await browser.newPage();
-        await page.goto('https://www.douyin.com/', { waitUntil: 'domcontentloaded' });
         
-        console.log('浏览器已打开，请在浏览器中登录抖音账号');
-        console.log('登录完成后关闭浏览器窗口即可');
+        // 设置更长的超时时间
+        page.setDefaultTimeout(60000);
         
-        // 等待浏览器关闭
-        await new Promise(resolve => {
-            browser.on('disconnected', resolve);
+        // 打开抖音首页
+        await page.goto('https://www.douyin.com/', { 
+            waitUntil: 'domcontentloaded',
+            timeout: 30000 
+        }).catch(e => {
+            console.log('页面加载警告:', e.message);
         });
         
-        console.log('登录窗口已关闭，登录状态已保存');
-        return { success: true, message: '登录状态已保存' };
+        console.log('');
+        console.log('╔════════════════════════════════════════════════════════════════╗');
+        console.log('║                                                                ║');
+        console.log('║     🌐 浏览器已打开，请在浏览器中登录抖音账号                 ║');
+        console.log('║                                                                ║');
+        console.log('║     登录步骤：                                                 ║');
+        console.log('║     1️⃣  点击页面右上角的「登录」按钮                            ║');
+        console.log('║     2️⃣  扫码或使用手机号登录                                    ║');
+        console.log('║     3️⃣  登录成功后，浏览器会在 60 秒后自动关闭                  ║');
+        console.log('║                                                                ║');
+        console.log('║     💡 如需提前结束，直接关闭浏览器窗口即可                     ║');
+        console.log('║                                                                ║');
+        console.log('╚════════════════════════════════════════════════════════════════╝');
+        console.log('');
+        
+        // 等待浏览器关闭或 60 秒超时
+        await Promise.race([
+            new Promise(resolve => {
+                browser.on('disconnected', resolve);
+            }),
+            new Promise(resolve => setTimeout(resolve, 60000))
+        ]);
+        
+        // 如果浏览器还在运行，强制关闭
+        if (browser && browser.connected) {
+            console.log('⏰ 60 秒已到，自动关闭浏览器...');
+            await browser.close().catch(() => {});
+        }
+        
+        console.log('✅ 浏览器已关闭，登录状态已保存');
+        console.log('');
+        
+        // 等待一下让文件系统同步
+        await new Promise(r => setTimeout(r, 1000));
+        
+        return { success: true, message: '登录完成！请刷新页面查看状态' };
         
     } catch (error) {
-        console.error('打开登录浏览器失败:', error.message);
+        console.error('❌ 打开登录浏览器失败:', error.message);
+        
+        // 确保浏览器被关闭
+        if (browser) {
+            try {
+                await browser.close();
+            } catch (e) {}
+        }
+        
         return { success: false, error: error.message };
     }
 }
 
-// 检查是否已登录（通过检查 cookie 文件）
+// 检查是否已登录（通过检查 cookie 文件和用户数据）
 function checkLoginStatus() {
     try {
         // 检查用户数据目录是否存在
-        const cookiesPath = path.join(USER_DATA_DIR, 'Default', 'Cookies');
-        const localStatePath = path.join(USER_DATA_DIR, 'Local State');
-        
-        // 如果存在 Cookies 文件且有一定大小，认为已登录
-        if (fs.existsSync(cookiesPath)) {
-            const stats = fs.statSync(cookiesPath);
-            // Cookies 文件大于 10KB 通常意味着有登录状态
-            const isLoggedIn = stats.size > 10000;
+        if (!fs.existsSync(USER_DATA_DIR)) {
             return { 
                 success: true, 
-                isLoggedIn,
-                message: isLoggedIn ? '已保存登录状态' : '未检测到登录状态'
+                isLoggedIn: false,
+                message: '未登录，请点击登录按钮'
             };
+        }
+        
+        const cookiesPath = path.join(USER_DATA_DIR, 'Default', 'Cookies');
+        const localStatePath = path.join(USER_DATA_DIR, 'Local State');
+        const preferencesPath = path.join(USER_DATA_DIR, 'Default', 'Preferences');
+        
+        // 详细检查文件状态
+        let hasValidData = false;
+        let details = [];
+        
+        // 检查 Cookies 文件
+        if (fs.existsSync(cookiesPath)) {
+            const stats = fs.statSync(cookiesPath);
+            details.push(`Cookies: ${(stats.size / 1024).toFixed(1)}KB`);
+            // Cookies 文件大于 10KB 通常意味着有登录状态
+            if (stats.size > 10000) {
+                hasValidData = true;
+            }
+        } else {
+            details.push('Cookies: 不存在');
         }
         
         // 检查 Local State 文件
         if (fs.existsSync(localStatePath)) {
-            return { 
-                success: true, 
-                isLoggedIn: true,
-                message: '已保存浏览器数据'
-            };
+            const stats = fs.statSync(localStatePath);
+            details.push(`Local State: ${(stats.size / 1024).toFixed(1)}KB`);
+            if (stats.size > 100) {
+                hasValidData = true;
+            }
+        } else {
+            details.push('Local State: 不存在');
         }
+        
+        // 检查 Preferences 文件
+        if (fs.existsSync(preferencesPath)) {
+            const stats = fs.statSync(preferencesPath);
+            details.push(`Preferences: ${(stats.size / 1024).toFixed(1)}KB`);
+        } else {
+            details.push('Preferences: 不存在');
+        }
+        
+        const message = hasValidData 
+            ? `已保存登录状态 (${details.join(', ')})` 
+            : `未检测到登录状态 (${details.join(', ')})`;
+        
+        console.log('登录状态检查:', message);
         
         return { 
             success: true, 
-            isLoggedIn: false,
-            message: '未登录，请点击登录按钮'
+            isLoggedIn: hasValidData,
+            message,
+            details: details.join(', ')
         };
+        
     } catch (error) {
-        return { success: false, isLoggedIn: false, error: error.message };
+        console.error('检查登录状态失败:', error.message);
+        return { 
+            success: false, 
+            isLoggedIn: false, 
+            error: error.message,
+            message: '检查失败: ' + error.message
+        };
     }
 }
 
 // 关闭浏览器
 async function closeBrowser() {
+    browserLock = false; // 先释放锁
     if (browserInstance) {
         try {
             await browserInstance.close();
@@ -235,14 +400,128 @@ async function closeBrowser() {
         }
         browserInstance = null;
     }
+    // 清理锁文件
+    cleanupBrowserLocks();
+}
+
+// 清理浏览器锁文件
+function cleanupBrowserLocks() {
+    const lockFiles = ['SingletonLock', 'SingletonSocket', 'SingletonCookie'];
+    for (const file of lockFiles) {
+        const lockPath = path.join(USER_DATA_DIR, file);
+        try {
+            if (fs.existsSync(lockPath)) {
+                fs.unlinkSync(lockPath);
+                console.log(`已删除锁文件: ${file}`);
+            }
+        } catch (e) {
+            // 忽略删除失败
+        }
+    }
 }
 
 // 数据文件路径
-const DATA_DIR = path.join(__dirname, 'data');
+const DATA_DIR = getDataDir();
 const AUTHORS_FILE = path.join(DATA_DIR, 'authors.json');
 const VIDEOS_FILE = path.join(DATA_DIR, 'videos.json');
 const LOGS_FILE = path.join(DATA_DIR, 'monitor-logs.json');
 const TRANSCRIPTS_FILE = path.join(DATA_DIR, 'transcripts.json');
+const AVATARS_DIR = path.join(DATA_DIR, 'avatars');
+
+// 确保头像目录存在
+if (!fs.existsSync(AVATARS_DIR)) {
+    fs.mkdirSync(AVATARS_DIR, { recursive: true });
+}
+
+/**
+ * 从页面中提取并保存头像（在已打开的页面中执行）
+ * @param {Page} page - Puppeteer 页面对象
+ * @param {string} authorId - 作者ID（用于文件名）
+ * @returns {string|null} - 本地头像路径或null
+ */
+async function extractAvatarFromPage(page, authorId) {
+    if (!page || !authorId) return null;
+    
+    try {
+        const fileName = `${authorId}.jpg`;
+        const localPath = path.join(AVATARS_DIR, fileName);
+        
+        // 如果已存在且不太旧（7天内），跳过
+        if (fs.existsSync(localPath)) {
+            const stat = fs.statSync(localPath);
+            const ageInDays = (Date.now() - stat.mtimeMs) / (1000 * 60 * 60 * 24);
+            if (ageInDays < 7) {
+                return `/avatars/${fileName}`;
+            }
+        }
+        
+        // 在页面中找到作者头像元素并转换为 base64
+        const avatarBase64 = await page.evaluate(() => {
+            // 优先找作者主页的大头像（排除右上角用户自己的小头像）
+            // 作者头像通常在主内容区域，尺寸较大
+            const allAvatars = document.querySelectorAll('img[src*="aweme-avatar"]');
+            let authorAvatar = null;
+            
+            for (const img of allAvatars) {
+                // 跳过太小的头像（可能是用户自己的头像或评论头像）
+                const rect = img.getBoundingClientRect();
+                if (rect.width >= 60 && rect.height >= 60) {
+                    // 跳过右上角区域的头像（那是用户自己的）
+                    if (rect.left > window.innerWidth - 200 && rect.top < 100) {
+                        continue;
+                    }
+                    authorAvatar = img;
+                    break;
+                }
+            }
+            
+            // 备用：尝试其他选择器
+            if (!authorAvatar) {
+                authorAvatar = document.querySelector('[data-e2e="user-avatar"] img') ||
+                              document.querySelector('.author-card img[src*="avatar"]') ||
+                              document.querySelector('[class*="authorInfo"] img');
+            }
+            
+            if (!authorAvatar) return null;
+            
+            // 创建 canvas 获取图片数据
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = authorAvatar.naturalWidth || 100;
+            canvas.height = authorAvatar.naturalHeight || 100;
+            
+            try {
+                ctx.drawImage(authorAvatar, 0, 0);
+                return canvas.toDataURL('image/jpeg', 0.9);
+            } catch (e) {
+                // 跨域图片无法绘制
+                return null;
+            }
+        });
+        
+        if (avatarBase64 && avatarBase64.startsWith('data:image')) {
+            // 保存 base64 为文件
+            const base64Data = avatarBase64.replace(/^data:image\/\w+;base64,/, '');
+            fs.writeFileSync(localPath, Buffer.from(base64Data, 'base64'));
+            console.log(`✅ 头像已保存: ${fileName}`);
+            return `/avatars/${fileName}`;
+        }
+        
+        return null;
+    } catch (e) {
+        console.error(`提取头像失败:`, e.message);
+        return null;
+    }
+}
+
+/**
+ * 下载头像到本地（备用方法，标记为需要从页面提取）
+ */
+async function downloadAvatar(avatarUrl, authorId) {
+    // 这个函数现在只是标记作者需要头像
+    // 实际头像会在 getAuthorVideos 时通过 extractAvatarFromPage 获取
+    return null;
+}
 
 // 确保数据目录存在
 if (!fs.existsSync(DATA_DIR)) {
@@ -414,7 +693,72 @@ function saveTranscript(transcriptData) {
     fs.writeFileSync(TRANSCRIPTS_FILE, JSON.stringify(transcripts, null, 2), 'utf-8');
     addLog('transcript', `保存文案: ${record.title.substring(0, 30)}...`);
     
+    // 异步分析文案是否包含比赛预测
+    analyzePredictionAsync(record).catch(err => {
+        console.error('预测分析失败:', err.message);
+    });
+    
     return record;
+}
+
+/**
+ * 异步分析文案是否包含比赛预测（支持多场比赛）
+ * 同时将预测结果保存到文案记录中
+ */
+async function analyzePredictionAsync(transcriptData) {
+    try {
+        const predictor = getMatchPredictor();
+        
+        // 分析文案
+        const result = await predictor.analyzeTranscriptForPrediction(transcriptData);
+        
+        if (result.success && result.analysis) {
+            const analysis = result.analysis;
+            
+            if (analysis.hasPrediction) {
+                // 将预测添加到比赛记录（支持多场比赛）
+                const addResult = predictor.addAuthorPrediction(transcriptData, analysis);
+                
+                if (addResult.success) {
+                    const count = addResult.added || 1;
+                    if (count === 1) {
+                        const firstResult = addResult.results?.[0];
+                        addLog('prediction', `检测到比赛预测: ${transcriptData.author} -> ${firstResult?.prediction || '未知'} (${firstResult?.match || ''})`);
+                    } else {
+                        addLog('prediction', `检测到 ${count} 场比赛预测: ${transcriptData.author}`);
+                    }
+                }
+            }
+            
+            // 无论是否有预测，都将分析结果保存到文案记录中
+            updateTranscriptWithPredictions(transcriptData.videoId || transcriptData.id, analysis);
+        }
+    } catch (err) {
+        console.error('预测分析异常:', err.message);
+    }
+}
+
+/**
+ * 更新文案记录，添加预测信息
+ */
+function updateTranscriptWithPredictions(transcriptId, analysis) {
+    if (!transcriptId || !analysis) return;
+    
+    try {
+        const transcripts = getTranscripts();
+        const index = transcripts.findIndex(t => t.id === transcriptId || t.videoId === transcriptId);
+        
+        if (index >= 0) {
+            // 保存预测信息到文案记录
+            transcripts[index].predictions = analysis.predictions || [];
+            transcripts[index].hasPrediction = analysis.hasPrediction || false;
+            
+            fs.writeFileSync(TRANSCRIPTS_FILE, JSON.stringify(transcripts, null, 2), 'utf-8');
+            console.log(`✅ 预测信息已保存到文案: ${transcriptId}`);
+        }
+    } catch (err) {
+        console.error('更新文案预测信息失败:', err.message);
+    }
 }
 
 /**
@@ -725,40 +1069,100 @@ async function getAuthorVideos(author, retryCount = 0) {
         
         page = await browser.newPage();
         
-        // 反检测：隐藏 webdriver 属性
-        await page.evaluateOnNewDocument(() => {
-            Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
-            Object.defineProperty(navigator, 'plugins', { get: () => [1, 2, 3, 4, 5] });
-            Object.defineProperty(navigator, 'languages', { get: () => ['zh-CN', 'zh', 'en'] });
-            window.chrome = { runtime: {} };
-        });
-        
-        // 设置用户代理
-        await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
-        
-        // 设置额外的请求头
+        // Stealth 插件已处理大部分反检测，这里只添加额外的请求头
         await page.setExtraHTTPHeaders({
-            'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
+            'Accept-Language': 'zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8'
         });
         
-        // 访问用户主页
+        // 策略：先访问抖音首页建立会话，再跳转到用户页面
         const userUrl = `https://www.douyin.com/user/${secUid}`;
-        console.log('使用浏览器访问:', userUrl);
+        
+        // 第一步：先访问抖音首页
+        console.log('第一步：访问抖音首页建立会话...');
+        try {
+            await page.goto('https://www.douyin.com/', { 
+                waitUntil: 'domcontentloaded',
+                timeout: 30000
+            });
+            
+            // 等待首页加载，模拟用户浏览
+            const homeWait = 3000 + Math.random() * 4000;
+            console.log(`首页加载中，等待 ${Math.round(homeWait/1000)} 秒...`);
+            await new Promise(r => setTimeout(r, homeWait));
+            
+            // 模拟在首页的交互
+            const viewport = page.viewport();
+            if (viewport) {
+                // 随机移动鼠标
+                await page.mouse.move(
+                    Math.floor(Math.random() * viewport.width * 0.5) + 100,
+                    Math.floor(Math.random() * viewport.height * 0.3) + 100,
+                    { steps: 10 }
+                );
+                await new Promise(r => setTimeout(r, 500 + Math.random() * 500));
+                
+                // 滚动一下
+                await page.evaluate(() => {
+                    window.scrollBy({ top: 200 + Math.random() * 300, behavior: 'smooth' });
+                });
+                await new Promise(r => setTimeout(r, 1000 + Math.random() * 1000));
+            }
+        } catch (e) {
+            console.log('首页访问出现问题，继续尝试:', e.message);
+        }
+        
+        // 第二步：跳转到用户主页
+        console.log('第二步：跳转到用户主页:', userUrl);
+        await new Promise(r => setTimeout(r, 1000 + Math.random() * 2000));
         
         await page.goto(userUrl, { 
             waitUntil: 'domcontentloaded',
-            timeout: 90000 // 增加超时时间到90秒
+            timeout: 90000
         });
         
-        // 等待页面加载更多内容
-        await new Promise(r => setTimeout(r, 3000));
+        // 模拟真实用户行为：随机等待
+        const waitTime = 3000 + Math.random() * 3000;
+        console.log(`等待页面加载 ${Math.round(waitTime/1000)} 秒...`);
+        await new Promise(r => setTimeout(r, waitTime));
         
-        // 尝试滚动页面加载更多视频
+        // 模拟鼠标移动
+        const viewport = page.viewport();
+        if (viewport) {
+            const x = Math.floor(Math.random() * viewport.width * 0.5) + viewport.width * 0.25;
+            const y = Math.floor(Math.random() * viewport.height * 0.3) + 100;
+            await page.mouse.move(x, y, { steps: 10 });
+            await new Promise(r => setTimeout(r, 500 + Math.random() * 500));
+        }
+        
+        // 模拟真实用户滚动行为（增加滚动次数确保加载所有视频）
+        console.log('模拟用户滚动浏览...');
+        for (let i = 0; i < 6; i++) {
+            // 随机滚动距离（增大滚动距离）
+            const scrollDistance = 400 + Math.floor(Math.random() * 600);
+            await page.evaluate((distance) => {
+                window.scrollBy({ top: distance, behavior: 'smooth' });
+            }, scrollDistance);
+            
+            // 随机等待（稍微增加等待时间确保内容加载）
+            await new Promise(r => setTimeout(r, 1000 + Math.random() * 1500));
+            
+            // 偶尔移动鼠标
+            if (Math.random() > 0.5) {
+                const viewport = page.viewport();
+                if (viewport) {
+                    const x = Math.floor(Math.random() * viewport.width * 0.6) + viewport.width * 0.2;
+                    const y = Math.floor(Math.random() * viewport.height * 0.5) + viewport.height * 0.25;
+                    await page.mouse.move(x, y, { steps: 5 });
+                }
+            }
+        }
+        
+        // 滚动回顶部
         await page.evaluate(() => {
-            window.scrollBy(0, 500);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
-        await new Promise(r => setTimeout(r, 1000));
+        await new Promise(r => setTimeout(r, 1000 + Math.random() * 1000));
         
         // 从页面中提取视频数据，只提取当前作者的视频
         const videos = await page.evaluate((authorSecUid) => {
@@ -854,6 +1258,20 @@ async function getAuthorVideos(author, retryCount = 0) {
         if (videos && videos.length > 0) {
             console.log(`✅ 从浏览器获取到 ${videos.length} 个视频`);
             
+            // 顺便提取头像到本地
+            if (!author.localAvatar) {
+                const localAvatar = await extractAvatarFromPage(page, secUid);
+                if (localAvatar) {
+                    // 更新作者的本地头像
+                    const authors = getAuthors();
+                    const idx = authors.findIndex(a => a.secUid === secUid);
+                    if (idx >= 0) {
+                        authors[idx].localAvatar = localAvatar;
+                        saveAuthors(authors);
+                    }
+                }
+            }
+            
             return videos.map(v => ({
                 videoId: v.videoId,
                 title: v.title || '',
@@ -869,17 +1287,65 @@ async function getAuthorVideos(author, retryCount = 0) {
             })).filter(v => v.videoId);
         }
         
+        // 视频获取失败，尝试再滚动一下重新获取
+        console.log('⚠️ 未能获取视频，尝试再次滚动...');
+        
+        // 再次滚动尝试加载
+        for (let i = 0; i < 3; i++) {
+            await page.evaluate(() => {
+                window.scrollBy({ top: 500, behavior: 'smooth' });
+            });
+            await new Promise(r => setTimeout(r, 1500));
+        }
+        
+        // 再次尝试获取
+        const retryVideos = await page.evaluate(() => {
+            const results = [];
+            const videoLinks = document.querySelectorAll('a[href*="/video/"]');
+            const seen = new Set();
+            
+            videoLinks.forEach(link => {
+                const match = link.href.match(/\/video\/(\d+)/);
+                if (match && !seen.has(match[1])) {
+                    seen.add(match[1]);
+                    results.push({ videoId: match[1], title: '', createTime: null });
+                }
+            });
+            
+            return results;
+        });
+        
+        if (retryVideos && retryVideos.length > 0) {
+            console.log(`✅ 重试成功，获取到 ${retryVideos.length} 个视频`);
+            return retryVideos.map(v => ({
+                videoId: v.videoId,
+                title: v.title || '',
+                createTime: null,
+                authorUid: author.uid || secUid,
+                authorNickname: author.nickname
+            }));
+        }
+        
         console.log('⚠️ 未能从页面获取到视频列表');
         return [];
         
     } catch (error) {
         console.error('获取作者视频列表失败:', error.message);
         
-        // 如果是超时或浏览器错误，尝试重试（最多重试2次）
-        if (retryCount < 2 && (error.message.includes('timeout') || error.message.includes('browser') || error.message.includes('Target closed') || error.message.includes('detached'))) {
-            console.log(`第 ${retryCount + 1} 次重试获取视频列表...`);
+        // 如果是网络错误或浏览器错误，尝试重试（最多重试3次）
+        const isRetryable = error.message.includes('timeout') || 
+                           error.message.includes('browser') || 
+                           error.message.includes('Target closed') || 
+                           error.message.includes('detached') ||
+                           error.message.includes('CONNECTION_CLOSED') ||
+                           error.message.includes('net::ERR');
+        
+        if (retryCount < 3 && isRetryable) {
+            // 随机延迟 10-20 秒后重试，避免被检测
+            const delay = 10000 + Math.random() * 10000;
+            console.log(`第 ${retryCount + 1} 次重试获取视频列表，等待 ${Math.round(delay/1000)} 秒...`);
             await closeBrowser();
-            await new Promise(r => setTimeout(r, 2000));
+            await new Promise(r => setTimeout(r, delay));
             return getAuthorVideos(author, retryCount + 1);
         }
         
@@ -919,6 +1385,15 @@ async function addAuthor(authorUrl, transcribeCallback) {
             ...authorInfo,
             addedAt: authors[existingIndex].addedAt // 保留原添加时间
         };
+        
+        // 下载头像到本地
+        if (authorInfo.avatar) {
+            const localAvatar = await downloadAvatar(authorInfo.avatar, authorInfo.secUid || authorInfo.uid);
+            if (localAvatar) {
+                updatedAuthor.localAvatar = localAvatar;
+            }
+        }
+        
         authors[existingIndex] = updatedAuthor;
         saveAuthors(authors);
         addLog('update', `更新作者: ${authorInfo.nickname || authorInfo.uid}`);
@@ -930,6 +1405,14 @@ async function addAuthor(authorUrl, transcribeCallback) {
         }
         
         return { success: true, message: '作者信息已更新', author: updatedAuthor, isNew: false };
+    }
+    
+    // 下载头像到本地
+    if (authorInfo.avatar) {
+        const localAvatar = await downloadAvatar(authorInfo.avatar, authorInfo.secUid || authorInfo.uid);
+        if (localAvatar) {
+            authorInfo.localAvatar = localAvatar;
+        }
     }
     
     // 添加新作者
@@ -960,12 +1443,20 @@ async function addAuthor(authorUrl, transcribeCallback) {
  * @param {function} transcribeCallback - 转写回调函数
  */
 async function fetchAndTranscribeForAuthor(authorInfo, transcribeCallback) {
-    console.log(`开始获取作者 ${authorInfo.nickname || authorInfo.uid} 的视频列表...`);
+    const authorName = authorInfo.nickname || authorInfo.uid || '未知作者';
+    console.log(`开始获取作者 ${authorName} 的视频列表...`);
     
     // 异步执行，不阻塞返回
     addToQueue({
-        name: `获取视频-${authorInfo.nickname || authorInfo.secUid}`,
+        name: `获取视频-${authorName}`,
         execute: async () => {
+            // 更新任务状态：正在获取视频列表
+            currentTask.isRunning = true;
+            currentTask.type = 'fetch_videos';
+            currentTask.message = `正在获取 ${authorName} 的视频列表...`;
+            currentTask.currentAuthor = authorName;
+            currentTask.progress = 10;
+            
             try {
                 const videos = await getAuthorVideos(authorInfo);
                 let videosToTranscribe = [];
@@ -996,6 +1487,12 @@ async function fetchAndTranscribeForAuthor(authorInfo, transcribeCallback) {
                         authorId: authorInfo.uid,
                         videos: videosToTranscribe.map(v => v.videoId)
                     });
+                    
+                    // 更新任务状态：获取成功，准备转写
+                    currentTask.message = `✅ 获取到 ${videos.length} 个视频，准备转写 ${videosToTranscribe.length} 个`;
+                    currentTask.progress = 20;
+                    currentTask.totalVideos = videosToTranscribe.length;
+                    currentTask.completedVideos = 0;
                     
                     // 添加转写任务到队列
                     for (let i = 0; i < videosToTranscribe.length; i++) {
@@ -1030,6 +1527,10 @@ async function fetchAndTranscribeForAuthor(authorInfo, transcribeCallback) {
                                     addLog('error', `自动转写失败: ${video.videoId}`, { error: e.message });
                                 }
                                 
+                                // 更新已完成数量
+                                currentTask.completedVideos = taskIndex;
+                                currentTask.message = `自动转写: ${taskIndex}/${totalTasks}`;
+                                
                                 if (taskIndex === totalTasks) {
                                     currentTask.isRunning = false;
                                     currentTask.progress = 100;
@@ -1041,11 +1542,19 @@ async function fetchAndTranscribeForAuthor(authorInfo, transcribeCallback) {
                     }
                 } else {
                     console.log('未获取到视频列表');
-                    addLog('error', `获取 ${authorInfo.nickname || authorInfo.uid} 的视频列表失败`);
+                    addLog('error', `获取 ${authorName} 的视频列表失败`);
+                    // 更新任务状态为失败
+                    currentTask.isRunning = false;
+                    currentTask.progress = 0;
+                    currentTask.message = `❌ 获取 ${authorName} 的视频列表失败`;
                 }
             } catch (e) {
                 console.error('获取视频列表失败:', e.message);
                 addLog('error', `获取视频列表失败: ${e.message}`);
+                // 更新任务状态为失败
+                currentTask.isRunning = false;
+                currentTask.progress = 0;
+                currentTask.message = `❌ 获取视频失败: ${e.message.substring(0, 50)}`;
             }
         }
     });
@@ -1127,7 +1636,8 @@ async function checkAuthorUpdate(author, transcribeCallback) {
         return {
             success: true,
             newVideosCount: newVideos.length,
-            newVideos
+            newVideos,
+            totalVideos: videos.length
         };
         
     } catch (error) {
@@ -1187,12 +1697,21 @@ async function checkAllUpdates(transcribeCallback) {
         
         try {
             const result = await checkAuthorUpdate(author, null); // 检查时不立即转写
+            const authorName = author.nickname || author.uid || '未知';
             if (result && result.success) {
                 totalNewVideos += result.newVideosCount;
                 if (result.newVideos) {
                     allNewVideos.push(...result.newVideos);
                 }
                 console.log(`[${i + 1}/${authors.length}] 发现 ${result.newVideosCount} 个新视频`);
+                // 为每个作者添加检查结果日志
+                if (result.newVideosCount > 0) {
+                    addLog('new_video', `${authorName}: 发现 ${result.newVideosCount} 个新视频`);
+                } else {
+                    addLog('check_author', `${authorName}: 无新视频 (共 ${result.totalVideos || 0} 个视频)`);
+                }
+            } else {
+                addLog('check_author', `${authorName}: 获取失败`);
             }
         } catch (e) {
             console.error(`[${i + 1}/${authors.length}] 检查作者更新失败:`, e.message);
@@ -1202,7 +1721,10 @@ async function checkAllUpdates(transcribeCallback) {
         }
         
         if (i < authors.length - 1) {
-            await new Promise(resolve => setTimeout(resolve, 3000));
+            // 随机延迟 3-6 秒（减少等待时间）
+            const delay = 3000 + Math.random() * 3000;
+            console.log(`等待 ${Math.round(delay/1000)} 秒后检查下一个作者...`);
+            await new Promise(resolve => setTimeout(resolve, delay));
         }
     }
     
@@ -1475,6 +1997,31 @@ async function updateVideoTitles(progressCallback) {
     return { total: videosWithoutTitle.length, updated };
 }
 
+/**
+ * 下载所有作者的头像到本地
+ */
+async function downloadAllAvatars() {
+    const authors = getAuthors();
+    let downloaded = 0;
+    
+    for (const author of authors) {
+        if (author.avatar && !author.localAvatar) {
+            const localAvatar = await downloadAvatar(author.avatar, author.secUid || author.uid);
+            if (localAvatar) {
+                author.localAvatar = localAvatar;
+                downloaded++;
+            }
+        }
+    }
+    
+    if (downloaded > 0) {
+        saveAuthors(authors);
+        console.log(`✅ 已下载 ${downloaded} 个作者头像到本地`);
+    }
+    
+    return downloaded;
+}
+
 module.exports = {
     getAuthors,
     addAuthor,
@@ -1501,6 +2048,8 @@ module.exports = {
     saveTranscript,
     deleteTranscript,
     clearTranscripts,
-    exportTranscripts
+    exportTranscripts,
+    // 头像相关
+    downloadAllAvatars
 };
 

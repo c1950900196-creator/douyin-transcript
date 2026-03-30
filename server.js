@@ -1,10 +1,10 @@
 /**
  * 抖音视频文案提取器 - 服务端（本地版）
- * 支持：视频下载 + 音频提取 + 本地语音转文字
+ * 支持：视频下载 + 基础信息提取
  * 
  * 依赖：
  * - ffmpeg（需要系统安装）
- * - Python 3 + openai-whisper（自动安装）
+ * - Python 3（可选）
  * 
  * 完全离线运行，不需要任何API
  * 
@@ -18,6 +18,7 @@ const url = require('url');
 const fs = require('fs');
 const path = require('path');
 const { spawn, exec } = require('child_process');
+const { getDataDir, getRuntimePath } = require('./runtime-paths');
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 
@@ -33,9 +34,16 @@ const matchPredictor = require('./match-predictor');
 // 用户认证模块
 const auth = require('./auth');
 
+// 语音转写功能已移除
+const TRANSCRIBE_ENABLED = false;
+
+// 本地文件托管模块（ngrok内网穿透）
+const localFileServer = require('./local-file-server');
+
 // ==================== 豆包 AI 文案修复配置 ====================
+// 注意：现在使用豆包语音识别API，已自带标点和文本规范化，无需再润色
 const DOUBAO_CONFIG = {
-    enabled: true,  // 是否启用修复功能
+    enabled: false,  // 已禁用，豆包ASR自带标点
     apiKey: process.env.DOUBAO_API_KEY || 'e68d0560-b1b7-4fee-afbc-13c528c14bcd',  // 豆包 API Key
     modelId: process.env.DOUBAO_MODEL_ID || 'doubao-seed-1-6-flash-250828',  // 模型 ID
     baseUrl: 'https://ark.cn-beijing.volces.com/api/v3/chat/completions',
@@ -58,6 +66,55 @@ const DOUBAO_CONFIG = {
 
 待修复的文案：`
 };
+
+// ==================== 终端日志捕获 ====================
+const terminalLogs = [];
+const MAX_TERMINAL_LOGS = 200;
+
+// 捕获 console.log 输出
+const originalLog = console.log;
+const originalError = console.error;
+const originalWarn = console.warn;
+
+function addTerminalLog(type, ...args) {
+    const message = args.map(arg => 
+        typeof arg === 'object' ? JSON.stringify(arg) : String(arg)
+    ).join(' ');
+    
+    terminalLogs.push({
+        time: new Date().toISOString(),
+        type,
+        message
+    });
+    
+    // 保持日志数量限制
+    while (terminalLogs.length > MAX_TERMINAL_LOGS) {
+        terminalLogs.shift();
+    }
+}
+
+console.log = (...args) => {
+    addTerminalLog('log', ...args);
+    originalLog.apply(console, args);
+};
+
+console.error = (...args) => {
+    addTerminalLog('error', ...args);
+    originalError.apply(console, args);
+};
+
+console.warn = (...args) => {
+    addTerminalLog('warn', ...args);
+    originalWarn.apply(console, args);
+};
+
+// 获取终端日志
+function getTerminalLogs(since = null) {
+    if (since) {
+        return terminalLogs.filter(log => new Date(log.time) > new Date(since));
+    }
+    return terminalLogs.slice(-50); // 默认返回最近50条
+}
 
 // Chrome 路径（支持 Mac/Linux/Railway）
 const CHROME_PATHS = [
@@ -131,20 +188,51 @@ async function closeBrowser() {
 
 const PORT = process.env.PORT || 3456;
 
+// 启动前清理占用端口的进程
+async function killPortProcess(port) {
+    return new Promise((resolve) => {
+        const { exec } = require('child_process');
+        // macOS/Linux: 查找并杀死占用端口的进程
+        exec(`lsof -ti:${port}`, (error, stdout) => {
+            if (stdout && stdout.trim()) {
+                const pids = stdout.trim().split('\n');
+                console.log(`⚠️ 端口 ${port} 被占用，正在清理进程: ${pids.join(', ')}`);
+                exec(`kill -9 ${pids.join(' ')}`, (killError) => {
+                    if (killError) {
+                        console.error('清理进程失败:', killError.message);
+                    } else {
+                        console.log(`✅ 已清理占用端口 ${port} 的进程`);
+                    }
+                    // 等待一下让端口释放
+                    setTimeout(resolve, 500);
+                });
+            } else {
+                resolve();
+            }
+        });
+    });
+}
+
 // 临时文件目录
-const TEMP_DIR = path.join(__dirname, 'temp');
+const TEMP_DIR = getRuntimePath('temp');
 if (!fs.existsSync(TEMP_DIR)) {
     fs.mkdirSync(TEMP_DIR, { recursive: true });
 }
 
-// 配置文件路径
-const CONFIG_FILE = path.join(__dirname, 'config.json');
+// 配置文件路径（打包后写到运行目录）
+const RUNTIME_CONFIG_FILE = getRuntimePath('config.json');
+const BUNDLED_CONFIG_FILE = path.join(__dirname, 'config.json');
 
 // 读取配置
 function getConfig() {
     try {
-        if (fs.existsSync(CONFIG_FILE)) {
-            return JSON.parse(fs.readFileSync(CONFIG_FILE, 'utf8'));
+        if (fs.existsSync(RUNTIME_CONFIG_FILE)) {
+            return JSON.parse(fs.readFileSync(RUNTIME_CONFIG_FILE, 'utf8'));
+        }
+        if (fs.existsSync(BUNDLED_CONFIG_FILE)) {
+            const bundled = JSON.parse(fs.readFileSync(BUNDLED_CONFIG_FILE, 'utf8'));
+            fs.writeFileSync(RUNTIME_CONFIG_FILE, JSON.stringify(bundled, null, 2));
+            return bundled;
         }
     } catch (e) {
         console.log('读取配置失败:', e.message);
@@ -154,7 +242,7 @@ function getConfig() {
 
 // 保存配置
 function saveConfig(config) {
-    fs.writeFileSync(CONFIG_FILE, JSON.stringify(config, null, 2));
+    fs.writeFileSync(RUNTIME_CONFIG_FILE, JSON.stringify(config, null, 2));
 }
 
 // MIME类型映射
@@ -270,6 +358,25 @@ function makeRequest(requestUrl, options = {}, retryCount = 0) {
             req.write(options.body);
         }
         req.end();
+    });
+}
+
+// 启动后自动打开浏览器（可通过 AUTO_OPEN_BROWSER=0 关闭）
+function openBrowser(url) {
+    if (process.env.AUTO_OPEN_BROWSER === '0') return;
+    const platform = process.platform;
+    let command = '';
+    if (platform === 'win32') {
+        command = `start "" "${url}"`;
+    } else if (platform === 'darwin') {
+        command = `open "${url}"`;
+    } else {
+        command = `xdg-open "${url}"`;
+    }
+    exec(command, (error) => {
+        if (error) {
+            console.log('自动打开浏览器失败，请手动访问:', url);
+        }
     });
 }
 
@@ -738,18 +845,12 @@ async function getVideoInfoWithPuppeteer(videoUrl) {
                 }
                 
                 if (!result.authorAvatar) {
-                    // 尝试多种头像选择器 - 优先视频作者区域
+                    // 尝试多种头像选择器 - 优先视频作者区域，排除导航栏用户头像
                     const avatarSelectors = [
                         '[data-e2e="video-author-avatar"] img',
-                        '[data-e2e="user-info"] img',
+                        '[data-e2e="user-info"] img:not([class*="login"])',
                         '.author-card-avatar img',
-                        '.account-avatar img',
-                        '.author-info img',
-                        '[class*="avatar"] img',
-                        '[class*="Avatar"] img',
-                        'img[src*="douyinpic"][src*="aweme"]',
-                        'img[src*="p3.douyinpic"]',
-                        'img[src*="p6.douyinpic"]'
+                        '.author-info img'
                     ];
                     
                     for (const selector of avatarSelectors) {
@@ -758,10 +859,30 @@ async function getVideoInfoWithPuppeteer(videoUrl) {
                             if (el && el.src && 
                                 (el.src.includes('douyinpic') || el.src.includes('bytednsdoc')) &&
                                 !el.src.includes('default_avatar')) {
+                                // 检查元素是否在导航栏区域（右上角）
+                                const rect = el.getBoundingClientRect();
+                                if (rect.right > window.innerWidth - 150 && rect.top < 80) {
+                                    // 跳过右上角的头像（可能是登录用户的）
+                                    continue;
+                                }
                                 result.authorAvatar = el.src;
                                 break;
                             }
                         } catch (e) {}
+                    }
+                    
+                    // 如果还没找到，尝试查找所有头像图片，选择主内容区域的
+                    if (!result.authorAvatar) {
+                        const allAvatars = document.querySelectorAll('img[src*="aweme-avatar"]');
+                        for (const img of allAvatars) {
+                            const rect = img.getBoundingClientRect();
+                            // 跳过太小的（可能是评论头像）和右上角的（登录用户头像）
+                            if (rect.width >= 40 && rect.height >= 40 &&
+                                !(rect.right > window.innerWidth - 150 && rect.top < 80)) {
+                                result.authorAvatar = img.src;
+                                break;
+                            }
+                        }
                     }
                 }
                 
@@ -921,6 +1042,252 @@ async function downloadFile(fileUrl, savePath) {
     }
     
     throw new Error('下载失败：未获取到文件数据');
+}
+
+// 上传文件到临时托管服务（用于豆包API）
+async function uploadToTempHost(filePath) {
+    console.log('📤 准备音频托管...');
+    
+    // 优先使用本地托管 + ngrok（最稳定）
+    try {
+        console.log('   尝试本地托管 (ngrok)...');
+        const localUrl = await localFileServer.hostFile(filePath);
+        if (localUrl) {
+            console.log(`✅ 本地托管成功: ${localUrl}`);
+            return localUrl;
+        }
+    } catch (err) {
+        console.log(`   本地托管失败: ${err.message}`);
+    }
+    
+    // 备选：使用第三方托管服务
+    console.log('   切换到第三方托管服务...');
+    const fileData = fs.readFileSync(filePath);
+    const fileName = path.basename(filePath);
+    
+    // 尝试多个文件托管服务（catbox.moe经常连接失败，已移除）
+    const services = [
+        { name: 'uguu.se', upload: () => uploadToUguu(fileData, fileName) },
+        { name: 'transfer.sh', upload: () => uploadToTransferSh(fileData, fileName) }
+    ];
+    
+    for (const service of services) {
+        try {
+            console.log(`   尝试 ${service.name}...`);
+            const url = await service.upload();
+            if (url) {
+                console.log(`✅ 文件上传成功 (${service.name}):`, url);
+                return url;
+            }
+        } catch (err) {
+            console.log(`   ${service.name} 失败:`, err.message);
+        }
+    }
+    
+    throw new Error('所有文件托管服务都失败了');
+}
+
+// 上传到 catbox.moe（永久存储，更稳定）
+function uploadToCatbox(fileData, fileName) {
+    const boundary = '----WebKitFormBoundary' + Math.random().toString(36).substring(2);
+    
+    // reqtype=fileupload, userhash 为空表示匿名上传
+    const parts = [
+        `--${boundary}\r\nContent-Disposition: form-data; name="reqtype"\r\n\r\nfileupload`,
+        `--${boundary}\r\nContent-Disposition: form-data; name="fileToUpload"; filename="${fileName}"\r\nContent-Type: audio/mpeg\r\n\r\n`
+    ];
+    
+    const body = Buffer.concat([
+        Buffer.from(parts[0] + '\r\n'),
+        Buffer.from(parts[1]),
+        fileData,
+        Buffer.from(`\r\n--${boundary}--\r\n`)
+    ]);
+    
+    return new Promise((resolve, reject) => {
+        const options = {
+            hostname: 'catbox.moe',
+            port: 443,
+            path: '/user/api.php',
+            method: 'POST',
+            headers: {
+                'Content-Type': `multipart/form-data; boundary=${boundary}`,
+                'Content-Length': body.length,
+                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36'
+            }
+        };
+        
+        const req = https.request(options, (res) => {
+            let data = '';
+            res.on('data', chunk => data += chunk);
+            res.on('end', () => {
+                const url = data.trim();
+                if (res.statusCode === 200 && url.startsWith('https://')) {
+                    resolve(url);
+                } else {
+                    reject(new Error(`HTTP ${res.statusCode}: ${data.substring(0, 100)}`));
+                }
+            });
+        });
+        
+        req.on('error', reject);
+        req.setTimeout(180000, () => {
+            req.destroy();
+            reject(new Error('超时'));
+        });
+        
+        req.write(body);
+        req.end();
+    });
+}
+
+// 上传到 uguu.se（24小时临时存储）
+function uploadToUguu(fileData, fileName) {
+    const boundary = '----WebKitFormBoundary' + Math.random().toString(36).substring(2);
+    const prefix = `--${boundary}\r\nContent-Disposition: form-data; name="files[]"; filename="${fileName}"\r\nContent-Type: audio/mpeg\r\n\r\n`;
+    const suffix = `\r\n--${boundary}--\r\n`;
+    
+    const body = Buffer.concat([
+        Buffer.from(prefix),
+        fileData,
+        Buffer.from(suffix)
+    ]);
+    
+    return new Promise((resolve, reject) => {
+        const options = {
+            hostname: 'uguu.se',
+            port: 443,
+            path: '/upload.php',
+            method: 'POST',
+            headers: {
+                'Content-Type': `multipart/form-data; boundary=${boundary}`,
+                'Content-Length': body.length,
+                'User-Agent': 'Mozilla/5.0'
+            }
+        };
+        
+        const req = https.request(options, (res) => {
+            let data = '';
+            res.on('data', chunk => data += chunk);
+            res.on('end', () => {
+                try {
+                    const json = JSON.parse(data);
+                    if (json.files && json.files[0] && json.files[0].url) {
+                        resolve(json.files[0].url);
+                    } else {
+                        reject(new Error('无效响应'));
+                    }
+                } catch (e) {
+                    // 可能直接返回URL
+                    if (data.startsWith('https://')) {
+                        resolve(data.trim());
+                    } else {
+                        reject(new Error('解析失败'));
+                    }
+                }
+            });
+        });
+        
+        req.on('error', reject);
+        req.setTimeout(120000, () => {
+            req.destroy();
+            reject(new Error('超时'));
+        });
+        
+        req.write(body);
+        req.end();
+    });
+}
+
+// 上传到 transfer.sh
+function uploadToTransferSh(fileData, fileName) {
+    return new Promise((resolve, reject) => {
+        const options = {
+            hostname: 'transfer.sh',
+            port: 443,
+            path: '/' + fileName,
+            method: 'PUT',
+            headers: {
+                'Content-Length': fileData.length,
+                'Content-Type': 'audio/mp4',
+                'User-Agent': 'curl/7.64.1'
+            }
+        };
+        
+        const req = https.request(options, (res) => {
+            let data = '';
+            res.on('data', chunk => data += chunk);
+            res.on('end', () => {
+                if (res.statusCode === 200) {
+                    resolve(data.trim());
+                } else {
+                    reject(new Error(`HTTP ${res.statusCode}`));
+                }
+            });
+        });
+        
+        req.on('error', reject);
+        req.setTimeout(120000, () => {
+            req.destroy();
+            reject(new Error('超时'));
+        });
+        
+        req.write(fileData);
+        req.end();
+    });
+}
+
+// 上传到 tmpfiles.org
+function uploadToTmpfiles(fileData, fileName) {
+    const boundary = '----WebKitFormBoundary' + Math.random().toString(36).substring(2);
+    const prefix = `--${boundary}\r\nContent-Disposition: form-data; name="file"; filename="${fileName}"\r\nContent-Type: audio/mp4\r\n\r\n`;
+    const suffix = `\r\n--${boundary}--\r\n`;
+    
+    const body = Buffer.concat([
+        Buffer.from(prefix),
+        fileData,
+        Buffer.from(suffix)
+    ]);
+    
+    return new Promise((resolve, reject) => {
+        const options = {
+            hostname: 'tmpfiles.org',
+            port: 443,
+            path: '/api/v1/upload',
+            method: 'POST',
+            headers: {
+                'Content-Type': `multipart/form-data; boundary=${boundary}`,
+                'Content-Length': body.length,
+                'User-Agent': 'Mozilla/5.0'
+            }
+        };
+        
+        const req = https.request(options, (res) => {
+            let data = '';
+            res.on('data', chunk => data += chunk);
+            res.on('end', () => {
+                try {
+                    const json = JSON.parse(data);
+                    if (json.data && json.data.url) {
+                        resolve(json.data.url);
+                    } else {
+                        reject(new Error('无效响应'));
+                    }
+                } catch (e) {
+                    reject(new Error('解析失败'));
+                }
+            });
+        });
+        
+        req.on('error', reject);
+        req.setTimeout(120000, () => {
+            req.destroy();
+            reject(new Error('超时'));
+        });
+        
+        req.write(body);
+        req.end();
+    });
 }
 
 // 检查ffmpeg是否可用
@@ -1099,6 +1466,44 @@ function extractAudioToWav(videoPath, audioPath) {
     });
 }
 
+// 转换音频为MP3格式（豆包API需要）
+function convertToMp3(inputPath, outputPath) {
+    return new Promise((resolve, reject) => {
+        const ffmpegPath = getFfmpegPath();
+        console.log('转换音频为MP3:', inputPath, '->', outputPath);
+        
+        const ffmpeg = spawn(ffmpegPath, [
+            '-y',           // 覆盖输出文件
+            '-i', inputPath,
+            '-vn',          // 不要视频
+            '-acodec', 'libmp3lame',  // MP3 编码
+            '-ar', '16000', // 16kHz 采样率
+            '-ac', '1',     // 单声道
+            '-b:a', '64k',  // 64kbps 比特率
+            outputPath
+        ]);
+        
+        let stderr = '';
+        ffmpeg.stderr.on('data', (data) => {
+            stderr += data.toString();
+        });
+        
+        ffmpeg.on('close', (code) => {
+            if (code === 0) {
+                console.log('MP3转换成功');
+                resolve(outputPath);
+            } else {
+                console.error('ffmpeg错误:', stderr);
+                reject(new Error('MP3转换失败'));
+            }
+        });
+        
+        ffmpeg.on('error', (err) => {
+            reject(new Error('无法启动ffmpeg: ' + err.message));
+        });
+    });
+}
+
 // 使用本地Whisper模型进行语音转文字（支持进度回调）
 function transcribeAudioLocal(audioPath, modelSize = 'small', progressCallback = null) {
     return new Promise(async (resolve, reject) => {
@@ -1166,6 +1571,33 @@ function transcribeAudioLocal(audioPath, modelSize = 'small', progressCallback =
             reject(new Error('无法启动Python: ' + err.message));
         });
     });
+}
+
+// 使用豆包API进行语音转写（优先使用）
+async function transcribeWithDoubaoAPI(audioUrl, format = 'mp3', progressCallback = null) {
+    console.log('🔊 使用豆包语音识别API进行转写...');
+    console.log('   音频URL:', audioUrl.substring(0, 80) + '...');
+    
+    try {
+        const result = await doubaoASR.transcribeAudio(audioUrl, format, (msg) => {
+            console.log('   豆包ASR:', msg);
+            if (progressCallback) {
+                progressCallback(msg);
+            }
+        });
+        
+        if (result.success) {
+            console.log('✅ 豆包语音识别成功');
+            console.log('   识别结果长度:', result.text?.length || 0, '字');
+            return result.text;
+        } else {
+            console.error('❌ 豆包语音识别失败:', result.error);
+            throw new Error(result.error);
+        }
+    } catch (error) {
+        console.error('豆包ASR错误:', error.message);
+        throw error;
+    }
 }
 
 // 清理临时文件
@@ -1436,6 +1868,7 @@ async function handleTranscribe(requestBody, presetInfo = null) {
                     if (puppeteerInfo.authorSignature) videoInfo.authorSignature = puppeteerInfo.authorSignature;
                     if (puppeteerInfo.authorFollowers) videoInfo.authorFollowers = puppeteerInfo.authorFollowers;
                     if (puppeteerInfo.videoUrl && !videoInfo.videoUrl) videoInfo.videoUrl = puppeteerInfo.videoUrl;
+                    if (puppeteerInfo.audioUrl) videoInfo.audioUrl = puppeteerInfo.audioUrl; // 独立音频流（DASH格式）
                     if (puppeteerInfo.coverUrl && !videoInfo.coverUrl) videoInfo.coverUrl = puppeteerInfo.coverUrl;
                     if (puppeteerInfo.description && !videoInfo.description) videoInfo.description = puppeteerInfo.description;
                 }
@@ -1501,62 +1934,64 @@ async function handleTranscribe(requestBody, presetInfo = null) {
         let audioPath;
         
         // 抖音使用 DASH 格式，视频和音频可能是分开的
-        if (videoInfo.audioUrl) {
-            // 优先使用独立音频流
-            console.log('步骤2: 下载独立音频流...');
+        // 使用豆包语音识别API进行转写（需要先下载再上传到公网）
+        let audioSourceUrl = videoInfo.audioUrl || videoInfo.videoUrl;
+        if (audioSourceUrl) {
+            console.log('步骤2: 下载音频到本地...');
             const tempAudioPath = path.join(TEMP_DIR, `audio_temp_${Date.now()}.mp4`);
             tempFiles.push(tempAudioPath);
-            await downloadFile(videoInfo.audioUrl, tempAudioPath);
-            console.log('音频流下载完成');
+            await downloadFile(audioSourceUrl, tempAudioPath);
+            console.log('音频下载完成');
             
-            // 转换为 WAV 格式
-            console.log('步骤3: 转换音频格式...');
-            audioPath = path.join(TEMP_DIR, `audio_${Date.now()}.wav`);
-            tempFiles.push(audioPath);
-            await extractAudioToWav(tempAudioPath, audioPath);
-        } else {
-            // 没有独立音频流，下载视频并提取音频
-            console.log('步骤2: 下载视频...');
-            const videoPath = path.join(TEMP_DIR, `video_${Date.now()}.mp4`);
-            tempFiles.push(videoPath);
+            // 转换为MP3格式（豆包API需要）
+            console.log('步骤3: 转换为MP3格式...');
+            const mp3Path = path.join(TEMP_DIR, `audio_${Date.now()}.mp3`);
+            tempFiles.push(mp3Path);
+            await convertToMp3(tempAudioPath, mp3Path);
+            console.log('MP3转换完成');
             
-            await downloadFile(videoInfo.videoUrl, videoPath);
+            console.log('步骤4: 上传到临时托管服务...');
+            const publicUrl = await uploadToTempHost(mp3Path);
             
-            const stats = fs.statSync(videoPath);
-            if (stats.size < 1000) {
-                throw new Error('下载的视频文件无效');
-            }
-            console.log('视频大小:', (stats.size / 1024 / 1024).toFixed(2), 'MB');
+            console.log('步骤5: 使用豆包语音识别API转写...');
+            const transcript = await transcribeWithDoubaoAPI(publicUrl, 'mp3');
             
-            // 提取音频（使用 WAV 格式确保兼容性）
-            console.log('步骤3: 提取音频...');
-            audioPath = path.join(TEMP_DIR, `audio_${Date.now()}.wav`);
-            tempFiles.push(audioPath);
+            // 豆包API已经包含标点，不需要再润色
+            console.log('========== 处理完成 ==========\n');
             
-            await extractAudioToWav(videoPath, audioPath);
-        }
-        
-        // 4. 语音转文字（本地Whisper）
-        console.log('步骤4: 本地语音转文字 (模型:', modelSize, ')...');
-        console.log('首次运行会自动下载模型，请耐心等待...');
-        
-        let transcript = await transcribeAudioLocal(audioPath, modelSize);
-        let rawTranscript = transcript; // 保存原始转写结果
-        
-        // 5. 豆包 AI 润色（添加标点、修正错误）
-        if (DOUBAO_CONFIG.enabled && transcript && transcript.trim().length > 0) {
-            console.log('步骤5: 豆包 AI 润色...');
-            try {
-                const polishResult = await polishTranscriptWithDoubao(transcript);
-                if (polishResult.success && polishResult.polished) {
-                    transcript = polishResult.polished;
-                    console.log('✅ 润色成功');
-                } else {
-                    console.log('⚠️ 润色失败，使用原始转写:', polishResult.error);
+            // 合并预设信息
+            if (presetInfo) {
+                console.log('使用预设信息:', presetInfo.author || presetInfo.authorNickname, presetInfo.title);
+                if (!videoInfo.title && presetInfo.title) videoInfo.title = presetInfo.title;
+                if (!videoInfo.author && (presetInfo.author || presetInfo.authorNickname)) {
+                    videoInfo.author = presetInfo.author || presetInfo.authorNickname;
                 }
-            } catch (polishError) {
-                console.log('⚠️ 润色出错，使用原始转写:', polishError.message);
+                if (!videoInfo.authorId && presetInfo.authorId) videoInfo.authorId = presetInfo.authorId;
+                if (!videoInfo.authorAvatar && presetInfo.authorAvatar) videoInfo.authorAvatar = presetInfo.authorAvatar;
+                if (!videoInfo.authorSecUid && presetInfo.authorSecUid) videoInfo.authorSecUid = presetInfo.authorSecUid;
             }
+            
+            return {
+                success: true,
+                data: {
+                    title: videoInfo.title,
+                    description: videoInfo.description,
+                    author: videoInfo.author,
+                    authorId: videoInfo.authorId,
+                    authorAvatar: videoInfo.authorAvatar,
+                    authorSecUid: videoInfo.authorSecUid,
+                    authorSignature: videoInfo.authorSignature,
+                    authorFollowers: videoInfo.authorFollowers,
+                    hashtags: videoInfo.hashtags,
+                    transcript: transcript,
+                    videoId: videoInfo.videoId,
+                    coverUrl: videoInfo.coverUrl,
+                    modelUsed: '豆包ASR',
+                    url: cleanUrl
+                }
+            };
+        } else {
+            throw new Error('无法获取视频或音频URL');
         }
         
         console.log('========== 处理完成 ==========\n');
@@ -1783,96 +2218,69 @@ async function handleTranscribeWithProgress(requestBody, progressCallback) {
         let audioPath;
         
         // 抖音使用 DASH 格式，视频和音频可能是分开的
-        // 如果有独立音频流，直接下载音频
-        if (videoInfo.audioUrl) {
-            progressCallback(8, '下载音频流...');
-            console.log('检测到独立音频流，直接下载音频');
+        // 使用豆包语音识别API进行转写（需要先下载再上传到公网）
+        let audioSourceUrl = videoInfo.audioUrl || videoInfo.videoUrl;
+        if (audioSourceUrl) {
+            progressCallback(5, '下载音频...');
+            console.log('步骤2: 下载音频到本地...');
             const tempAudioPath = path.join(TEMP_DIR, `audio_temp_${Date.now()}.mp4`);
             tempFiles.push(tempAudioPath);
-            await downloadFile(videoInfo.audioUrl, tempAudioPath);
-            console.log('音频流下载完成:', tempAudioPath);
+            await downloadFile(audioSourceUrl, tempAudioPath);
+            console.log('音频下载完成');
             
-            // 转换为 WAV 格式
-            progressCallback(15, '转换音频格式...');
-            audioPath = path.join(TEMP_DIR, `audio_${Date.now()}.wav`);
-            tempFiles.push(audioPath);
-            await extractAudioToWav(tempAudioPath, audioPath);
-        } else {
-            // 没有独立音频流，下载视频并提取音频
-            progressCallback(8, '下载视频...');
-            const videoPath = path.join(TEMP_DIR, `video_${Date.now()}.mp4`);
-            tempFiles.push(videoPath);
-            await downloadFile(videoInfo.videoUrl, videoPath);
+            // 转换为MP3格式（豆包API需要）
+            progressCallback(10, '转换格式...');
+            console.log('步骤3: 转换为MP3格式...');
+            const mp3Path = path.join(TEMP_DIR, `audio_${Date.now()}.mp3`);
+            tempFiles.push(mp3Path);
+            await convertToMp3(tempAudioPath, mp3Path);
+            console.log('MP3转换完成');
             
-            progressCallback(15, '提取音频...');
-            audioPath = path.join(TEMP_DIR, `audio_${Date.now()}.wav`);
-            tempFiles.push(audioPath);
+            progressCallback(15, '上传到云端...');
+            console.log('步骤4: 上传到临时托管服务...');
+            const publicUrl = await uploadToTempHost(mp3Path);
             
-            await extractAudioToWav(videoPath, audioPath);
-        }
-        
-        progressCallback(20, '正在转写，请稍候...');
-        console.log('使用音频文件进行转写:', audioPath);
-        
-        // 4. 语音转文字（带进度）
-        let transcript = await transcribeAudioLocal(audioPath, modelSize, (whisperProgress) => {
-            // Whisper 进度从 20% 到 85%
-            const mappedProgress = 20 + Math.floor(whisperProgress * 0.65);
-            let message = '正在转写...';
-            if (whisperProgress < 15) message = '加载模型...';
-            else if (whisperProgress < 25) message = '处理音频...';
-            else if (whisperProgress < 90) message = `正在转写... ${whisperProgress}%`;
-            else if (whisperProgress < 97) message = '优化文本...';
-            else message = '转写完成...';
-            progressCallback(mappedProgress, message);
-        });
-        
-        // 5. 豆包 AI 润色（添加标点、修正错误）
-        if (DOUBAO_CONFIG.enabled && transcript && transcript.trim().length > 0) {
-            progressCallback(88, '润色文案...');
-            console.log('开始豆包 AI 润色...');
+            progressCallback(25, '语音识别中...');
+            console.log('步骤5: 使用豆包语音识别API转写...');
+            const transcript = await transcribeWithDoubaoAPI(publicUrl, 'mp3', (msg) => {
+                progressCallback(50, msg);
+            });
+            
+            progressCallback(90, '保存结果...');
+            
+            const resultData = {
+                title: videoInfo.title,
+                description: videoInfo.description,
+                author: videoInfo.author,
+                authorId: videoInfo.authorId,
+                authorAvatar: videoInfo.authorAvatar,
+                authorSecUid: videoInfo.authorSecUid,
+                authorSignature: videoInfo.authorSignature,
+                authorFollowers: videoInfo.authorFollowers,
+                hashtags: videoInfo.hashtags,
+                transcript: transcript,
+                videoId: videoInfo.videoId,
+                coverUrl: videoInfo.coverUrl,
+                modelUsed: '豆包ASR',
+                url: cleanUrl
+            };
+            
+            // 自动保存文案到后台
             try {
-                const polishResult = await polishTranscriptWithDoubao(transcript);
-                if (polishResult.success && polishResult.polished) {
-                    transcript = polishResult.polished;
-                    console.log('✅ 润色成功');
-                } else {
-                    console.log('⚠️ 润色失败，使用原始转写:', polishResult.error);
-                }
-            } catch (polishError) {
-                console.log('⚠️ 润色出错，使用原始转写:', polishError.message);
+                authorMonitor.saveTranscript(resultData);
+            } catch (saveError) {
+                console.log('保存文案失败:', saveError.message);
             }
+            
+            progressCallback(100, '完成！');
+            
+            return {
+                success: true,
+                data: resultData
+            };
+        } else {
+            throw new Error('无法获取视频或音频URL');
         }
-        
-        progressCallback(98, '保存结果...');
-        
-        const resultData = {
-            title: videoInfo.title,
-            description: videoInfo.description,
-            author: videoInfo.author,
-            authorId: videoInfo.authorId,
-            authorAvatar: videoInfo.authorAvatar,
-            authorSecUid: videoInfo.authorSecUid,
-            authorSignature: videoInfo.authorSignature,
-            authorFollowers: videoInfo.authorFollowers,
-            hashtags: videoInfo.hashtags,
-            transcript: transcript,
-            videoId: videoInfo.videoId,
-            coverUrl: videoInfo.coverUrl,
-            modelUsed: modelSize,
-            url: cleanUrl
-        };
-        
-        // 自动保存文案到后台
-        try {
-            authorMonitor.saveTranscript(resultData);
-        } catch (saveError) {
-            console.error('保存文案失败:', saveError.message);
-        }
-        
-        progressCallback(100, '完成！');
-        
-        return { success: true, data: resultData };
         
     } catch (error) {
         console.error('转写错误:', error);
@@ -1894,14 +2302,11 @@ async function handleConfig(requestBody) {
         
         if (action === 'get') {
             const pythonCmd = await checkPython();
-            const hasWhisper = pythonCmd ? await checkWhisper(pythonCmd) : false;
             
             return {
                 success: true,
                 data: {
-                    modelSize: config.modelSize || 'small',
-                    hasPython: !!pythonCmd,
-                    hasWhisper: hasWhisper
+                    hasPython: !!pythonCmd
                 }
             };
         }
@@ -1926,7 +2331,6 @@ async function handleConfig(requestBody) {
 async function handleCheckDeps() {
     const hasFfmpeg = await checkFfmpeg();
     const pythonCmd = await checkPython();
-    const hasWhisper = pythonCmd ? await checkWhisper(pythonCmd) : false;
     const config = getConfig();
     const platform = process.platform; // darwin, win32, linux
     
@@ -1936,7 +2340,6 @@ async function handleCheckDeps() {
             ffmpeg: hasFfmpeg,
             python: !!pythonCmd,
             pythonCmd: pythonCmd,
-            whisper: hasWhisper,
             modelSize: config.modelSize || 'small',
             platform: platform
         }
@@ -2372,48 +2775,10 @@ const server = http.createServer(async (req, res) => {
         return;
     }
     
-    // API: 语音转写（普通版本）
-    if (parsedUrl.pathname === '/api/transcribe' && req.method === 'POST') {
-        let body = '';
-        req.on('data', chunk => body += chunk);
-        req.on('end', async () => {
-            const result = await handleTranscribe(body);
-            res.writeHead(200, corsHeaders);
-            res.end(JSON.stringify(result));
-        });
-        return;
-    }
-    
-    // API: 语音转写（流式版本，支持进度）
-    if (parsedUrl.pathname === '/api/transcribe-stream' && req.method === 'POST') {
-        let body = '';
-        req.on('data', chunk => body += chunk);
-        req.on('end', async () => {
-            // 使用 Server-Sent Events
-            res.writeHead(200, {
-                ...corsHeaders,
-                'Content-Type': 'text/event-stream',
-                'Cache-Control': 'no-cache',
-                'Connection': 'keep-alive'
-            });
-            
-            const sendEvent = (eventType, data) => {
-                res.write(`event: ${eventType}\n`);
-                res.write(`data: ${JSON.stringify(data)}\n\n`);
-            };
-            
-            try {
-                const result = await handleTranscribeWithProgress(body, (progress, message) => {
-                    sendEvent('progress', { progress, message });
-                });
-                
-                sendEvent('complete', result);
-            } catch (error) {
-                sendEvent('error', { error: error.message });
-            }
-            
-            res.end();
-        });
+    // API: 语音转写（已移除）
+    if ((parsedUrl.pathname === '/api/transcribe' || parsedUrl.pathname === '/api/transcribe-stream') && req.method === 'POST') {
+        res.writeHead(410, corsHeaders);
+        res.end(JSON.stringify({ success: false, error: '语音转写功能已移除' }));
         return;
     }
     
@@ -2519,9 +2884,7 @@ const server = http.createServer(async (req, res) => {
                 }
                 // 添加作者，并传入转写回调（自动转写7天内前3个视频）
                 // 回调函数现在接收 videoUrl 和 videoInfo（包含作者/标题信息）
-                const result = await authorMonitor.addAuthor(authorUrl, async (videoUrl, videoInfo) => {
-                    return await handleTranscribe(JSON.stringify({ url: videoUrl, modelSize: 'small' }), videoInfo);
-                });
+                const result = await authorMonitor.addAuthor(authorUrl);
                 res.writeHead(200, corsHeaders);
                 res.end(JSON.stringify(result));
             } catch (error) {
@@ -2619,18 +2982,7 @@ const server = http.createServer(async (req, res) => {
         res.writeHead(200, corsHeaders);
         res.end(JSON.stringify({ success: true, message: '开始检查更新...' }));
         // 异步执行检查，传递视频信息（包含作者信息）
-        authorMonitor.checkAllUpdates(async (videoUrl, videoInfo) => {
-            // 将视频信息作为预设信息传递给 handleTranscribe
-            const presetInfo = videoInfo ? {
-                title: videoInfo.title,
-                author: videoInfo.authorNickname,
-                authorNickname: videoInfo.authorNickname,
-                authorId: videoInfo.authorId,
-                authorAvatar: videoInfo.authorAvatar,
-                authorSecUid: videoInfo.authorSecUid || videoInfo.authorUid
-            } : null;
-            return await handleTranscribe(JSON.stringify({ url: videoUrl, modelSize: 'small' }), presetInfo);
-        });
+        authorMonitor.checkAllUpdates();
         return;
     }
     
@@ -2653,6 +3005,15 @@ const server = http.createServer(async (req, res) => {
     if (parsedUrl.pathname === '/api/monitor/logs') {
         const limit = parseInt(parsedUrl.searchParams?.get('limit')) || 100;
         const logs = authorMonitor.getLogs(limit);
+        res.writeHead(200, corsHeaders);
+        res.end(JSON.stringify({ success: true, data: logs }));
+        return;
+    }
+    
+    // 获取终端日志
+    if (parsedUrl.pathname === '/api/terminal/logs') {
+        const since = parsedUrl.query?.since;
+        const logs = getTerminalLogs(since);
         res.writeHead(200, corsHeaders);
         res.end(JSON.stringify({ success: true, data: logs }));
         return;
@@ -3021,6 +3382,68 @@ const server = http.createServer(async (req, res) => {
         return;
     }
     
+    // 获取某场比赛的自媒体预测
+    if (parsedUrl.pathname === '/api/matches/author-predictions' && req.method === 'POST') {
+        let body = '';
+        req.on('data', chunk => body += chunk);
+        req.on('end', () => {
+            try {
+                const { homeTeam, awayTeam } = JSON.parse(body);
+                const predictions = matchPredictor.getPredictions();
+                const transcripts = authorMonitor.getTranscripts();
+                
+                // 查找匹配的预测记录（支持主客场相反）
+                let matchedPrediction = null;
+                for (const pred of predictions) {
+                    const predHome = pred.match?.homeTeam || '';
+                    const predAway = pred.match?.awayTeam || '';
+                    
+                    // 精确匹配或主客场相反
+                    if ((predHome === homeTeam && predAway === awayTeam) ||
+                        (predHome === awayTeam && predAway === homeTeam) ||
+                        (predHome.includes(homeTeam) && predAway.includes(awayTeam)) ||
+                        (predHome.includes(awayTeam) && predAway.includes(homeTeam)) ||
+                        (homeTeam.includes(predHome) && awayTeam.includes(predAway)) ||
+                        (homeTeam.includes(predAway) && awayTeam.includes(predHome))) {
+                        if (pred.authorPredictions && pred.authorPredictions.length > 0) {
+                            matchedPrediction = pred;
+                            break;
+                        }
+                    }
+                }
+                
+                if (matchedPrediction && matchedPrediction.authorPredictions) {
+                    // 为每个预测添加文案内容
+                    const enrichedPredictions = matchedPrediction.authorPredictions.map(ap => {
+                        let transcriptContent = '';
+                        if (ap.videoId) {
+                            const transcript = transcripts.find(t => 
+                                t.videoId === ap.videoId || t.id === ap.videoId
+                            );
+                            if (transcript) {
+                                transcriptContent = transcript.transcript || transcript.content || '';
+                            }
+                        }
+                        return {
+                            ...ap,
+                            transcriptContent
+                        };
+                    });
+                    
+                    res.writeHead(200, corsHeaders);
+                    res.end(JSON.stringify({ success: true, data: enrichedPredictions }));
+                } else {
+                    res.writeHead(200, corsHeaders);
+                    res.end(JSON.stringify({ success: true, data: [] }));
+                }
+            } catch (e) {
+                res.writeHead(400, corsHeaders);
+                res.end(JSON.stringify({ success: false, error: e.message }));
+            }
+        });
+        return;
+    }
+    
     // 保存用户对比赛的预测
     if (parsedUrl.pathname === '/api/matches/user-prediction' && req.method === 'POST') {
         let body = '';
@@ -3057,11 +3480,77 @@ const server = http.createServer(async (req, res) => {
         return;
     }
     
-    // 获取预测列表
+    // 获取预测列表（包含文案内容和本地头像）
     if (parsedUrl.pathname === '/api/predictions' && req.method === 'GET') {
         const predictions = matchPredictor.getPredictions();
+        const transcripts = authorMonitor.getTranscripts();
+        const matches = matchPredictor.getMatches();
+        const authors = authorMonitor.getAuthors();
+        
+        // 构建作者头像映射（优先使用本地头像）
+        const authorAvatarMap = {};
+        for (const author of authors) {
+            const avatar = author.localAvatar || author.avatar || '';
+            if (author.nickname) {
+                authorAvatarMap[author.nickname] = avatar;
+            }
+            if (author.secUid) {
+                authorAvatarMap[author.secUid] = avatar;
+            }
+        }
+        
+        // 为每个预测的 authorPredictions 添加文案内容和比赛时间
+        const enrichedPredictions = predictions.map(pred => {
+            // 获取比赛时间
+            let matchTime = pred.match?.matchTime || '';
+            if (!matchTime) {
+                const match = matches.find(m => 
+                    (m.homeTeam === pred.match?.homeTeam && m.awayTeam === pred.match?.awayTeam) ||
+                    (m.homeTeam === pred.match?.awayTeam && m.awayTeam === pred.match?.homeTeam)
+                );
+                if (match) {
+                    matchTime = match.matchTime;
+                }
+            }
+            
+            const enrichedAuthorPredictions = (pred.authorPredictions || []).map(ap => {
+                let transcriptContent = '';
+                if (ap.videoId) {
+                    const transcript = transcripts.find(t => 
+                        t.videoId === ap.videoId || t.id === ap.videoId
+                    );
+                    if (transcript) {
+                        transcriptContent = transcript.transcript || transcript.content || '';
+                    }
+                }
+                
+                // 优先使用本地缓存的头像
+                let avatar = ap.authorAvatar || '';
+                if (ap.author && authorAvatarMap[ap.author]) {
+                    avatar = authorAvatarMap[ap.author];
+                } else if (ap.authorSecUid && authorAvatarMap[ap.authorSecUid]) {
+                    avatar = authorAvatarMap[ap.authorSecUid];
+                }
+                
+                return {
+                    ...ap,
+                    authorAvatar: avatar,
+                    transcriptContent
+                };
+            });
+            
+            return {
+                ...pred,
+                match: {
+                    ...pred.match,
+                    matchTime
+                },
+                authorPredictions: enrichedAuthorPredictions
+            };
+        });
+        
         res.writeHead(200, corsHeaders);
-        res.end(JSON.stringify({ success: true, data: predictions }));
+        res.end(JSON.stringify({ success: true, data: enrichedPredictions }));
         return;
     }
     
@@ -3093,11 +3582,220 @@ const server = http.createServer(async (req, res) => {
         return;
     }
     
-    // 获取准确率统计
+    // 获取准确率统计（实时计算，只统计有比分的比赛）
     if (parsedUrl.pathname === '/api/accuracy' && req.method === 'GET') {
-        const accuracy = matchPredictor.getAccuracy();
+        const predictions = matchPredictor.getPredictions();
+        const matches = matchPredictor.getMatches();
+        const accuracyData = matchPredictor.getAccuracy();
+        
+        // 重新计算每个作者的准确率（只统计有比分的比赛）
+        const authorStats = {};
+        
+        for (const pred of predictions) {
+            if (!pred.authorPredictions) continue;
+            
+            // 查找比赛结果
+            let match = matches.find(m => m.matchId === pred.matchId);
+            if (!match) {
+                match = matches.find(m => 
+                    (m.homeTeam === pred.match?.homeTeam && m.awayTeam === pred.match?.awayTeam) ||
+                    (m.homeTeam === pred.match?.awayTeam && m.awayTeam === pred.match?.homeTeam)
+                );
+            }
+            
+            const matchResult = match?.result || pred.result;
+            
+            // 只统计有明确比分的比赛
+            if (!matchResult || matchResult.homeScore === null || matchResult.homeScore === undefined ||
+                matchResult.awayScore === null || matchResult.awayScore === undefined) {
+                continue;
+            }
+            
+            // 计算比赛结果
+            let winner;
+            if (matchResult.homeScore > matchResult.awayScore) winner = 'home';
+            else if (matchResult.homeScore < matchResult.awayScore) winner = 'away';
+            else winner = 'draw';
+            
+            // 更新每个作者的统计
+            for (const ap of pred.authorPredictions) {
+                if (ap.prediction === 'unclear') continue;
+                
+                const authorId = ap.authorId || ap.author;
+                if (!authorStats[authorId]) {
+                    const existingData = accuracyData.authors?.[authorId] || {};
+                    authorStats[authorId] = {
+                        name: ap.author || existingData.name || authorId,
+                        avatar: ap.authorAvatar || existingData.avatar || '',
+                        wins: 0,
+                        total: 0,
+                        disabled: existingData.disabled || false
+                    };
+                }
+                
+                authorStats[authorId].total++;
+                if (ap.prediction === winner) {
+                    authorStats[authorId].wins++;
+                }
+            }
+        }
+        
+        // 合并原有的 disabled 状态和头像信息
+        for (const [id, data] of Object.entries(accuracyData.authors || {})) {
+            if (!authorStats[id]) {
+                // 这个作者没有任何有比分的预测，不显示在列表中
+                continue;
+            }
+            if (data.disabled !== undefined) {
+                authorStats[id].disabled = data.disabled;
+            }
+            if (data.avatar && !authorStats[id].avatar) {
+                authorStats[id].avatar = data.avatar;
+            }
+        }
+        
+        const result = {
+            authors: authorStats,
+            doubao: accuracyData.doubao || { wins: 0, total: 0 },
+            user: accuracyData.user || { wins: 0, total: 0 }
+        };
+        
         res.writeHead(200, corsHeaders);
-        res.end(JSON.stringify({ success: true, data: accuracy }));
+        res.end(JSON.stringify({ success: true, data: result }));
+        return;
+    }
+    
+    // 获取作者预测历史
+    if (parsedUrl.pathname.startsWith('/api/author-stats/') && req.method === 'GET') {
+        const authorId = decodeURIComponent(parsedUrl.pathname.split('/')[3]);
+        try {
+            const predictions = matchPredictor.getPredictions();
+            const matches = matchPredictor.getMatches();
+            const transcripts = authorMonitor.getTranscripts();
+            
+            // 辅助函数：通过球队名称模糊匹配比赛
+            function findMatchByTeams(homeTeam, awayTeam) {
+                if (!homeTeam || !awayTeam) return null;
+                
+                // 先尝试精确匹配
+                let match = matches.find(m => 
+                    m.homeTeam === homeTeam && m.awayTeam === awayTeam
+                );
+                if (match) return match;
+                
+                // 尝试主客场反转匹配
+                match = matches.find(m => 
+                    m.homeTeam === awayTeam && m.awayTeam === homeTeam
+                );
+                if (match) return match;
+                
+                // 尝试包含匹配（处理名称差异如 卡拉巴赫/卡拉巴克）
+                const normalize = (s) => s.replace(/[·\s]/g, '').toLowerCase();
+                const h = normalize(homeTeam);
+                const a = normalize(awayTeam);
+                
+                match = matches.find(m => {
+                    const mh = normalize(m.homeTeam || '');
+                    const ma = normalize(m.awayTeam || '');
+                    // 检查是否包含关系（至少3个字符匹配）
+                    const hMatch = h.includes(mh.slice(0,3)) || mh.includes(h.slice(0,3));
+                    const aMatch = a.includes(ma.slice(0,3)) || ma.includes(a.slice(0,3));
+                    const hMatchRev = h.includes(ma.slice(0,3)) || ma.includes(h.slice(0,3));
+                    const aMatchRev = a.includes(mh.slice(0,3)) || mh.includes(a.slice(0,3));
+                    return (hMatch && aMatch) || (hMatchRev && aMatchRev);
+                });
+                
+                return match;
+            }
+            
+            // 找出该作者的所有预测
+            const authorHistory = [];
+            let wins = 0;
+            let total = 0;
+            
+            for (const pred of predictions) {
+                if (!pred.authorPredictions) continue;
+                
+                for (const ap of pred.authorPredictions) {
+                    if (ap.authorId === authorId || ap.author === authorId) {
+                        // 找到对应的比赛结果 - 先精确匹配，再模糊匹配
+                        let match = matches.find(m => m.matchId === pred.matchId);
+                        if (!match) {
+                            match = findMatchByTeams(pred.match?.homeTeam, pred.match?.awayTeam);
+                        }
+                        const matchResult = match?.result || pred.result;
+                        
+                        // 确定比赛结果 - 只有有明确比分的才算有结果
+                        let winner = null;
+                        let hasScore = false;
+                        if (matchResult) {
+                            if (matchResult.homeScore !== undefined && matchResult.awayScore !== undefined &&
+                                matchResult.homeScore !== null && matchResult.awayScore !== null) {
+                                hasScore = true;
+                                if (matchResult.homeScore > matchResult.awayScore) winner = 'home';
+                                else if (matchResult.homeScore < matchResult.awayScore) winner = 'away';
+                                else winner = 'draw';
+                            } else if (matchResult.winner) {
+                                // 只有 winner 没有比分的历史记录，也标记为有结果
+                                winner = matchResult.winner;
+                            }
+                        }
+                        
+                        // 获取完整文案内容
+                        let transcriptContent = '';
+                        if (ap.videoId) {
+                            const transcript = transcripts.find(t => t.videoId === ap.videoId || t.id === ap.videoId);
+                            if (transcript) {
+                                transcriptContent = transcript.transcript || transcript.content || '';
+                            }
+                        }
+                        
+                        // 获取完整比赛时间（优先从 matches.json 中获取）
+                        const matchTime = match?.matchTime || pred.match?.matchTime || '';
+                        
+                        // 获取比分（如果比赛已结束）
+                        const finalResult = match?.result || matchResult;
+                        
+                        const historyItem = {
+                            match: `${pred.match?.homeTeam || '主队'} vs ${pred.match?.awayTeam || '客队'}`,
+                            homeTeam: pred.match?.homeTeam,
+                            awayTeam: pred.match?.awayTeam,
+                            league: pred.match?.league,
+                            matchTime: matchTime,
+                            date: matchTime || '',
+                            prediction: ap.prediction,
+                            reason: ap.reason,
+                            result: winner,
+                            homeScore: matchResult?.homeScore,
+                            awayScore: matchResult?.awayScore,
+                            videoUrl: ap.videoUrl,
+                            transcript: transcriptContent
+                        };
+                        
+                        authorHistory.push(historyItem);
+                        
+                        if (winner) {
+                            total++;
+                            if (ap.prediction === winner) wins++;
+                        }
+                    }
+                }
+            }
+            
+            res.writeHead(200, corsHeaders);
+            res.end(JSON.stringify({
+                success: true,
+                data: {
+                    authorId,
+                    total,
+                    wins,
+                    history: authorHistory
+                }
+            }));
+        } catch (e) {
+            res.writeHead(500, corsHeaders);
+            res.end(JSON.stringify({ success: false, error: e.message }));
+        }
         return;
     }
     
@@ -3127,6 +3825,18 @@ const server = http.createServer(async (req, res) => {
         return;
     }
     
+    // 头像文件访问
+    if (parsedUrl.pathname.startsWith('/avatars/')) {
+        const avatarPath = path.join(getDataDir(), parsedUrl.pathname.replace(/^\/+/, ''));
+        if (fs.existsSync(avatarPath)) {
+            const ext = path.extname(avatarPath).toLowerCase();
+            const mimeTypes = { '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.png': 'image/png', '.webp': 'image/webp' };
+            res.writeHead(200, { ...corsHeaders, 'Content-Type': mimeTypes[ext] || 'image/jpeg', 'Cache-Control': 'max-age=86400' });
+            fs.createReadStream(avatarPath).pipe(res);
+            return;
+        }
+    }
+    
     // 静态文件服务
     let filePath = parsedUrl.pathname;
     if (filePath === '/') filePath = '/index.html';
@@ -3154,11 +3864,24 @@ const server = http.createServer(async (req, res) => {
 });
 
 // 启动服务器（Railway 需要监听 0.0.0.0）
+// 先清理可能占用端口的进程
+killPortProcess(PORT).then(() => {
 server.listen(PORT, '0.0.0.0', async () => {
     const hasFfmpeg = await checkFfmpeg();
     const pythonCmd = await checkPython();
-    const hasWhisper = pythonCmd ? await checkWhisper(pythonCmd) : false;
     const config = getConfig();
+    
+    // 初始化本地文件托管服务（localtunnel内网穿透）
+    let tunnelStatus = '❌ 未启动';
+    try {
+        console.log('\n🌐 初始化本地文件托管服务...');
+        await localFileServer.init();
+        const status = localFileServer.getStatus();
+        tunnelStatus = status.running ? `✅ ${status.tunnelUrl}` : '❌ 启动失败';
+    } catch (err) {
+        console.error('⚠️ 隧道启动失败，将使用第三方托管:', err.message);
+        tunnelStatus = '⚠️ 降级到第三方托管';
+    }
     
     console.log('');
     console.log('╔════════════════════════════════════════════════════════════════╗');
@@ -3169,19 +3892,15 @@ server.listen(PORT, '0.0.0.0', async () => {
     console.log('║                                                                ║');
     console.log('║     📋 功能:                                                   ║');
     console.log('║        • 提取视频标题、描述、话题标签                           ║');
-    console.log('║        • 下载视频并提取音频                                     ║');
-    console.log('║        • 本地语音转文字（无需API，完全离线）                     ║');
+    console.log('║        • 下载视频                                               ║');
     console.log('║                                                                ║');
     console.log('║     ⚙️  系统状态:                                               ║');
     console.log(`║        • FFmpeg: ${hasFfmpeg ? '✅ 已安装' : '❌ 未安装'}                                  ║`);
     console.log(`║        • Python: ${pythonCmd ? '✅ 已安装 (' + pythonCmd + ')' : '❌ 未安装'}                           ║`);
-    console.log(`║        • Whisper: ${hasWhisper ? '✅ 已安装' : '⚠️  首次使用自动安装'}                        ║`);
-    console.log(`║        • 模型大小: ${config.modelSize || 'small'}                                     ║`);
     console.log('║                                                                ║');
     console.log('║     💡 使用说明:                                                ║');
     console.log('║        1. 打开浏览器访问上述地址                                ║');
-    console.log('║        2. 粘贴抖音链接，点击「语音转文字」                       ║');
-    console.log('║        3. 首次运行会自动下载模型（约500MB）                      ║');
+    console.log('║        2. 粘贴抖音链接，点击「仅提取标题」                       ║');
     console.log('║                                                                ║');
     console.log('║     👤 作者监控:                                                ║');
     const monitorStatus = authorMonitor.getMonitorStatus();
@@ -3194,14 +3913,29 @@ server.listen(PORT, '0.0.0.0', async () => {
     console.log('╚════════════════════════════════════════════════════════════════╝');
     console.log('');
     
-    // 启动作者监控
-    authorMonitor.startMonitor(async (videoUrl) => {
-        return await handleTranscribe(JSON.stringify({ url: videoUrl, modelSize: config.modelSize || 'small' }));
-    });
+    // 启动作者监控（不含语音转写）
+    authorMonitor.startMonitor();
+
+    // 启动后自动打开浏览器
+    openBrowser(`http://localhost:${PORT}`);
+    
+    // 头像会在检查作者更新时自动从页面提取保存
     
     // 初始化比赛预测模块
     matchPredictor.setDoubaoConfig(DOUBAO_CONFIG);
+    
+    // 启动时自动检查球赛数据（超过24小时才更新）
+    matchPredictor.autoUpdateOnStartup().then(result => {
+        if (result.skipped) {
+            console.log('⚽ 球赛数据已是最新');
+        } else if (result.success) {
+            console.log(`⚽ 球赛数据已更新: ${result.matches || 0} 场比赛`);
+        }
+    }).catch(err => {
+        console.error('⚽ 球赛数据更新失败:', err.message);
+    });
 });
+}); // 结束 killPortProcess().then()
 
 server.on('error', (err) => {
     if (err.code === 'EADDRINUSE') {

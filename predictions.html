@@ -31,28 +31,9 @@
         
         .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
         
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 20px;
-        }
-        
-        header h1 { font-size: 24px; }
-        
-        .nav-links { display: flex; gap: 10px; }
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 14px;
-        }
-        .nav-links a:hover, .nav-links a.active {
-            background: var(--bg-card);
-            color: var(--text-primary);
+        .page-header h1 {
+            font-size: 24px;
+            margin: 0;
         }
         
         .tabs { display: flex; gap: 8px; margin-bottom: 20px; }
@@ -112,9 +93,159 @@
             padding: 12px;
             border: 1px solid var(--border-color);
             transition: all 0.2s;
+            cursor: pointer;
         }
         
         .match-card:hover { border-color: var(--accent-blue); }
+        
+        .match-card.expanded { border-color: var(--accent-blue); }
+        
+        .author-predictions-panel {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-color);
+            display: none;
+        }
+        
+        .author-predictions-panel.show { display: block; }
+        
+        .author-pred-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: var(--bg-primary);
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .author-pred-item img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .author-pred-info {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .author-pred-name {
+            font-weight: 500;
+            font-size: 13px;
+            margin-bottom: 2px;
+        }
+        
+        .author-pred-reason {
+            font-size: 11px;
+            color: var(--text-secondary);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        .author-pred-result {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .author-pred-result.home { background: rgba(59, 130, 246, 0.2); color: var(--accent-blue); }
+        .author-pred-result.away { background: rgba(239, 68, 68, 0.2); color: var(--accent-red); }
+        .author-pred-result.draw { background: rgba(156, 163, 175, 0.2); color: var(--text-secondary); }
+        
+        .view-transcript-btn {
+            padding: 4px 10px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 11px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .view-transcript-btn:hover {
+            background: var(--accent-blue);
+            color: white;
+            border-color: var(--accent-blue);
+        }
+        
+        /* 文案弹窗 */
+        .transcript-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .transcript-modal.show { display: flex; }
+        
+        .transcript-modal-content {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .transcript-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .transcript-modal-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .transcript-modal-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: none;
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 18px;
+        }
+        
+        .transcript-modal-close:hover { background: var(--accent-red); color: white; }
+        
+        .transcript-modal-body {
+            padding: 20px;
+            overflow-y: auto;
+            flex: 1;
+        }
+        
+        .transcript-modal-text {
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--text-primary);
+            white-space: pre-wrap;
+        }
+        
+        .expand-hint {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-top: 8px;
+        }
         
         .match-header {
             display: flex;
@@ -156,6 +287,24 @@
             font-size: 12px;
             color: var(--accent-yellow);
             padding: 0 10px;
+        }
+        
+        .vs.score {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--primary);
+            background: rgba(254, 44, 85, 0.1);
+            padding: 4px 12px;
+            border-radius: 6px;
+        }
+        
+        .match-card.finished {
+            opacity: 0.8;
+            border-color: var(--border-color);
+        }
+        
+        .match-card.finished .match-time {
+            color: var(--accent-green);
         }
         
         .match-handicap {
@@ -402,29 +551,60 @@
         }
         
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        
+        .match-dialog-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.8);
+            display: none; align-items: center; justify-content: center; z-index: 2000;
+        }
+        .match-dialog-overlay.active { display: flex; }
+        .match-dialog {
+            background: var(--bg-card); border-radius: 12px; padding: 20px;
+            max-width: 560px; width: 92%; max-height: 85vh; display: flex; flex-direction: column;
+        }
+        .match-dialog-header {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
+        }
+        .match-dialog-header h3 { margin: 0; font-size: 16px; }
+        .match-dialog-close {
+            background: none; border: none; font-size: 20px; color: var(--text-secondary); cursor: pointer;
+        }
+        .match-dialog-search {
+            width: 100%; padding: 10px 12px; background: var(--bg-secondary); border: 1px solid var(--border-color);
+            border-radius: 8px; color: var(--text-primary); font-size: 13px; margin-bottom: 10px; box-sizing: border-box;
+        }
+        .match-dialog-list {
+            flex: 1; overflow-y: auto; max-height: 320px; border: 1px solid var(--border-color); border-radius: 8px;
+        }
+        .match-dialog-item {
+            padding: 10px 12px; border-bottom: 1px solid var(--border-color); cursor: pointer; font-size: 13px;
+            transition: background 0.15s;
+        }
+        .match-dialog-item:hover { background: var(--bg-secondary); }
+        .match-dialog-item.selected { background: rgba(59,130,246,0.2); border-left: 3px solid var(--accent-blue); }
+        .match-dialog-item .match-meta { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+        .match-dialog-prediction {
+            display: flex; gap: 8px; margin-top: 12px; justify-content: center;
+        }
+        .match-dialog-prediction button {
+            padding: 8px 20px; border-radius: 8px; border: 2px solid var(--border-color);
+            background: var(--bg-secondary); color: var(--text-primary); cursor: pointer; font-size: 13px; font-weight: 600;
+        }
+        .match-dialog-prediction button.active {
+            border-color: var(--accent-blue); background: rgba(59,130,246,0.2); color: var(--accent-blue);
+        }
+        .match-dialog-submit {
+            margin-top: 12px; width: 100%; padding: 10px; border-radius: 8px; border: none;
+            background: var(--accent-blue); color: white; font-size: 14px; font-weight: 600; cursor: pointer;
+        }
+        .match-dialog-submit:disabled { opacity: 0.4; cursor: not-allowed; }
     </style>
-    <script src="auth-check.js"></script>
+    <script src="sidebar.js"></script>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>⚽ 球赛预测系统</h1>
-            <nav class="nav-links" style="display: flex; align-items: center; flex-wrap: wrap;">
-                <a href="index.html">🎬 文案提取</a>
-                <a href="authors.html">👤 作者监控</a>
-                <a href="transcripts.html">📝 文案库</a>
-                <a href="predictions.html" class="active">⚽ 球赛预测</a>
-                <span style="margin-left: auto; display: flex; align-items: center; gap: 10px;">
-                    <span id="user-info" style="color: var(--text-secondary); font-size: 13px;"></span>
-                    <button onclick="logout()" style="background: transparent; border: 1px solid var(--text-secondary); color: var(--text-secondary); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;">退出</button>
-                </span>
-            </nav>
-            <script>
-                window.addEventListener('authReady', (e) => {
-                    document.getElementById('user-info').textContent = '👤 ' + (e.detail.nickname || e.detail.username);
-                });
-            </script>
-        </header>
+        <div class="page-header" style="margin-bottom: 20px;">
+            <h1 style="font-size: 24px; margin-bottom: 15px;">⚽ 球赛预测</h1>
+        </div>
         
         <div class="tabs">
             <button class="tab-btn active" data-tab="matches">🏟️ 比赛列表</button>
@@ -435,11 +615,24 @@
         <!-- 比赛列表 -->
         <div id="matches-panel" class="panel active">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header" style="flex-wrap: wrap; gap: 10px;">
                     <h2 class="card-title">近期比赛</h2>
-                    <div style="display: flex; gap: 8px;">
+                    <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                        <input type="text" id="matchSearch" placeholder="🔍 搜索球队、联赛..." 
+                            style="padding: 8px 14px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-secondary); color: var(--text-primary); font-size: 13px; width: 180px;"
+                            oninput="filterMatchesByKeyword(this.value)">
+                        <button class="btn btn-primary" id="filter-btn" onclick="toggleFilter()">
+                            <span id="filter-icon">⭐</span> <span id="filter-text">显示全部</span>
+                        </button>
+                        <select id="status-filter" onchange="applyStatusFilter(this.value)" 
+                            style="padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-secondary); color: var(--text-primary); font-size: 13px; cursor: pointer;">
+                            <option value="all">全部比赛</option>
+                            <option value="upcoming">未结束</option>
+                            <option value="finished">已结束</option>
+                            <option value="has-prediction">有预测</option>
+                        </select>
                         <button class="btn btn-secondary" onclick="addMatchManually()">➕ 添加</button>
-                        <button class="btn btn-primary" id="search-btn" onclick="searchMatches()">🔄 更新比赛</button>
+                        <button class="btn btn-primary" id="update-btn" onclick="updateAll()">🔄 更新数据</button>
                     </div>
                 </div>
                 <div id="match-grid" class="match-grid">
@@ -451,8 +644,14 @@
         <!-- 预测记录 -->
         <div id="predictions-panel" class="panel">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header" style="flex-wrap: wrap; gap: 10px;">
                     <h2 class="card-title">预测记录</h2>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <input type="text" id="predictionSearch" placeholder="🔍 搜索球队、联赛、作者..." 
+                            style="padding: 8px 14px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-secondary); color: var(--text-primary); font-size: 13px; width: 250px;"
+                            oninput="filterPredictions(this.value)">
+                        <button class="btn btn-sm btn-secondary" onclick="loadPredictions()">刷新</button>
+                    </div>
                 </div>
                 <div id="prediction-list">
                     <div class="loading">加载中</div>
@@ -478,21 +677,47 @@
             </div>
             
             <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title">自媒体准确率</h2>
+                <div class="card-header" style="flex-wrap: wrap; gap: 10px;">
+                    <h2 class="card-title">自媒体准确率排名</h2>
+                    <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <label style="font-size: 13px; color: var(--text-secondary);">最低预测:</label>
+                            <select id="min-predictions-filter" onchange="loadAccuracy()" 
+                                style="padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-secondary); color: var(--text-primary); font-size: 13px; cursor: pointer;">
+                                <option value="1">1次以上</option>
+                                <option value="3">3次以上</option>
+                                <option value="5">5次以上</option>
+                                <option value="10">10次以上</option>
+                            </select>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <label style="font-size: 13px; color: var(--text-secondary);">排序:</label>
+                            <select id="sort-by-filter" onchange="loadAccuracy()" 
+                                style="padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-secondary); color: var(--text-primary); font-size: 13px; cursor: pointer;">
+                                <option value="winRate">按胜率</option>
+                                <option value="total">按预测数</option>
+                            </select>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 4px;">
+                            <input type="checkbox" id="filter-inactive" onchange="loadAccuracy()" style="cursor: pointer;">
+                            <label for="filter-inactive" style="font-size: 12px; color: var(--text-secondary); cursor: pointer; white-space: nowrap;">过滤10天未更新</label>
+                        </div>
+                    </div>
                 </div>
-                <table class="accuracy-table">
-                    <thead>
-                        <tr>
-                            <th>自媒体</th>
-                            <th>预测</th>
-                            <th>正确</th>
-                            <th>准确率</th>
-                            <th>启用</th>
-                        </tr>
-                    </thead>
-                    <tbody id="author-accuracy-list"></tbody>
-                </table>
+                <div id="author-accuracy-list" style="padding: 10px;"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 作者预测历史模态框 -->
+    <div class="modal" id="author-history-modal">
+        <div class="modal-content" style="max-width: 700px; max-height: 80vh; overflow-y: auto;">
+            <div class="modal-header">
+                <h3 id="author-history-title">预测历史</h3>
+                <button class="modal-close" onclick="closeModal('author-history-modal')">&times;</button>
+            </div>
+            <div id="author-history-body" style="padding: 16px;">
+                加载中...
             </div>
         </div>
     </div>
@@ -532,9 +757,580 @@
         </div>
     </div>
     
+    <!-- 自媒体预测弹窗 -->
+    <div id="authorPredModal" class="transcript-modal" onclick="if(event.target === this) closeAuthorPredModal()">
+        <div class="transcript-modal-content" style="max-width: 700px;">
+            <div class="transcript-modal-header">
+                <div class="transcript-modal-title" id="authorPredModalTitle">自媒体预测</div>
+                <button class="transcript-modal-close" onclick="closeAuthorPredModal()">×</button>
+            </div>
+            <div class="transcript-modal-body" id="authorPredModalBody">
+                <div style="text-align: center; color: var(--text-secondary);">加载中...</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 文案查看弹窗 -->
+    <div id="transcriptModal" class="transcript-modal" onclick="if(event.target === this) closeTranscriptModal()">
+        <div class="transcript-modal-content">
+            <div class="transcript-modal-header">
+                <div class="transcript-modal-title" id="transcriptModalTitle">文案内容</div>
+                <button class="transcript-modal-close" onclick="closeTranscriptModal()">×</button>
+            </div>
+            <div class="transcript-modal-body">
+                <div class="transcript-modal-text" id="transcriptModalText"></div>
+            </div>
+        </div>
+    </div>
+    
     <script>
         const API_BASE = window.location.origin; // 自动适配部署环境
         let cachedMatches = []; // 缓存比赛数据
+        let showOnlyPopular = true; // 默认只显示热门联赛（中文）
+        
+        // 将 UTC 时间转换为北京时间
+        function toBeijingTime(timeStr) {
+            if (!timeStr) return '时间待定';
+            try {
+                // 解析时间字符串
+                let date;
+                if (timeStr.includes('T')) {
+                    date = new Date(timeStr);
+                } else {
+                    // 格式: "2026-01-21 17:45"
+                    date = new Date(timeStr.replace(' ', 'T') + ':00Z');
+                }
+                
+                // 转换为北京时间（UTC+8）
+                const beijingTime = new Date(date.getTime() + 8 * 60 * 60 * 1000);
+                
+                const month = String(beijingTime.getUTCMonth() + 1).padStart(2, '0');
+                const day = String(beijingTime.getUTCDate()).padStart(2, '0');
+                const hours = String(beijingTime.getUTCHours()).padStart(2, '0');
+                const minutes = String(beijingTime.getUTCMinutes()).padStart(2, '0');
+                
+                return `${month}-${day} ${hours}:${minutes}`;
+            } catch (e) {
+                return timeStr;
+            }
+        }
+        
+        // 热门联赛列表（支持中英文）
+        const POPULAR_LEAGUES = {
+            // 英格兰
+            'Premier League': ['England', '英格兰'],
+            '英超': ['England', '英格兰', ''],
+            'Championship': ['England'],
+            'FA Cup': ['England'],
+            'EFL Cup': ['England'],
+            // 西班牙
+            'La Liga': ['Spain', '西班牙'],
+            '西甲': ['Spain', '西班牙', ''],
+            'Copa del Rey': ['Spain'],
+            // 德国
+            'Bundesliga': ['Germany', '德国'],
+            '德甲': ['Germany', '德国', ''],
+            'DFB Pokal': ['Germany'],
+            // 意大利
+            'Serie A': ['Italy', '意大利'],
+            '意甲': ['Italy', '意大利', ''],
+            'Coppa Italia': ['Italy'],
+            // 法国
+            'Ligue 1': ['France', '法国'],
+            '法甲': ['France', '法国', ''],
+            'Coupe de France': ['France'],
+            // 欧洲赛事
+            'UEFA Champions League': ['World', '欧洲'],
+            '欧冠': ['World', '欧洲', ''],
+            'UEFA Europa League': ['World', '欧洲'],
+            '欧联': ['World', '欧洲', ''],
+            'UEFA Europa Conference League': ['World'],
+            // 其他
+            'World Cup': ['World'],
+            'Chinese Super League': ['China', '中国'],
+            '中超': ['China', '中国', '']
+        };
+        
+        // 联赛翻译（需要配合国家）
+        const LEAGUE_TRANSLATIONS = {
+            // 英格兰
+            'Premier League_England': '英超',
+            'Championship_England': '英冠',
+            'FA Cup_England': '足总杯',
+            'EFL Cup_England': '联赛杯',
+            'League One_England': '英甲',
+            'League Two_England': '英乙',
+            // 西班牙
+            'La Liga_Spain': '西甲',
+            'Copa del Rey_Spain': '国王杯',
+            // 德国
+            'Bundesliga_Germany': '德甲',
+            'DFB Pokal_Germany': '德国杯',
+            // 意大利
+            'Serie A_Italy': '意甲',
+            'Coppa Italia_Italy': '意大利杯',
+            // 法国
+            'Ligue 1_France': '法甲',
+            'Coupe de France_France': '法国杯',
+            // 欧洲
+            'UEFA Champions League_World': '欧冠',
+            'UEFA Europa League_World': '欧联',
+            'UEFA Europa Conference League_World': '欧协联',
+            // 其他
+            'World Cup_World': '世界杯',
+            'Chinese Super League_China': '中超'
+        };
+        
+        // 翻译函数（需要国家信息）
+        function translateLeague(league, country) {
+            const key = league + '_' + country;
+            if (LEAGUE_TRANSLATIONS[key]) {
+                return LEAGUE_TRANSLATIONS[key];
+            }
+            // 如果没有精确匹配，尝试只用联赛名
+            for (const [k, v] of Object.entries(LEAGUE_TRANSLATIONS)) {
+                if (k.startsWith(league + '_')) {
+                    return v;
+                }
+            }
+            return league;
+        }
+        
+        // 检查是否是热门联赛（五大联赛+中超+欧冠）
+        function isPopularLeague(league, country) {
+            // 直接匹配联赛名
+            const allowedCountries = POPULAR_LEAGUES[league];
+            if (allowedCountries) {
+                // 如果有空字符串，表示不需要检查国家
+                if (allowedCountries.includes('')) return true;
+                if (allowedCountries.includes(country)) return true;
+            }
+            return false;
+        }
+        
+        // 切换筛选
+        function toggleFilter() {
+            showOnlyPopular = !showOnlyPopular;
+            const filterBtn = document.getElementById('filter-btn');
+            const filterIcon = document.getElementById('filter-icon');
+            const filterText = document.getElementById('filter-text');
+            
+            if (showOnlyPopular) {
+                filterBtn.classList.add('btn-primary');
+                filterBtn.classList.remove('btn-secondary');
+                filterIcon.textContent = '⭐';
+                filterText.textContent = '显示全部';
+            } else {
+                filterBtn.classList.remove('btn-primary');
+                filterBtn.classList.add('btn-secondary');
+                filterIcon.textContent = '⭐';
+                filterText.textContent = '热门联赛';
+            }
+            
+            displayMatches(cachedMatches);
+        }
+        
+        // 存储搜索关键词
+        let matchSearchKeyword = '';
+        // 状态筛选
+        let statusFilter = 'all';
+        // 有预测的比赛（存储球队名称对，用于匹配）
+        let predictedMatchTeams = [];
+        
+        // 按关键词筛选比赛
+        function filterMatchesByKeyword(keyword) {
+            matchSearchKeyword = keyword.toLowerCase().trim();
+            displayMatches(cachedMatches);
+        }
+        
+        // 状态筛选
+        function applyStatusFilter(value) {
+            statusFilter = value;
+            displayMatches(cachedMatches);
+        }
+        
+        // 存储媒体预测详情和禁用列表
+        let matchPredictionsMap = {};  // 按比赛存储预测详情
+        let disabledAuthors = {};  // 禁用的媒体列表
+        
+        // 加载有预测的比赛列表（只保留有自媒体预测的记录）
+        async function loadPredictionMatchIds() {
+            try {
+                // 同时加载预测数据和准确率数据（获取禁用列表）
+                const [predRes, accRes] = await Promise.all([
+                    fetch(`${API_BASE}/api/predictions`),
+                    fetch(`${API_BASE}/api/accuracy`)
+                ]);
+                
+                const predJson = await predRes.json();
+                const accJson = await accRes.json();
+                
+                // 获取禁用的媒体列表
+                if (accJson.success && accJson.data && accJson.data.authors) {
+                    disabledAuthors = {};
+                    for (const [id, author] of Object.entries(accJson.data.authors)) {
+                        if (author.disabled) {
+                            disabledAuthors[id] = true;
+                            disabledAuthors[author.name] = true;
+                        }
+                    }
+                }
+                
+                const data = predJson.data || predJson || [];
+                
+                // 只保留有自媒体预测的记录
+                predictedMatchTeams = data
+                    .filter(p => p.authorPredictions && p.authorPredictions.length > 0)
+                    .map(p => ({
+                        home: p.match?.homeTeam || '',
+                        away: p.match?.awayTeam || ''
+                    }))
+                    .filter(t => t.home && t.away);
+                
+                // 构建比赛预测详情映射
+                matchPredictionsMap = {};
+                data.filter(p => p.authorPredictions && p.authorPredictions.length > 0).forEach(p => {
+                    const home = p.match?.homeTeam || '';
+                    const away = p.match?.awayTeam || '';
+                    if (home && away) {
+                        const key = `${home}_${away}`;
+                        matchPredictionsMap[key] = p.authorPredictions;
+                    }
+                });
+                
+                console.log('有预测的比赛数:', predictedMatchTeams.length, predictedMatchTeams);
+            } catch (e) {
+                console.error('加载预测列表失败:', e);
+            }
+        }
+        
+        // 获取比赛的媒体预测统计（排除禁用的媒体）
+        function getMatchPredictionStats(homeTeam, awayTeam) {
+            // 尝试多种匹配方式
+            let predictions = matchPredictionsMap[`${homeTeam}_${awayTeam}`];
+            
+            if (!predictions) {
+                // 尝试模糊匹配
+                for (const [key, preds] of Object.entries(matchPredictionsMap)) {
+                    const [h, a] = key.split('_');
+                    if ((h.includes(homeTeam) || homeTeam.includes(h)) &&
+                        (a.includes(awayTeam) || awayTeam.includes(a))) {
+                        predictions = preds;
+                        break;
+                    }
+                }
+            }
+            
+            if (!predictions || predictions.length === 0) {
+                return null;
+            }
+            
+            // 统计预测（排除禁用的媒体）
+            let homeCount = 0, awayCount = 0, drawCount = 0;
+            
+            predictions.forEach(ap => {
+                const authorId = ap.authorId || ap.author;
+                // 检查是否禁用
+                if (disabledAuthors[authorId] || disabledAuthors[ap.author]) {
+                    return;
+                }
+                
+                if (ap.prediction === 'home') homeCount++;
+                else if (ap.prediction === 'away') awayCount++;
+                else if (ap.prediction === 'draw') drawCount++;
+            });
+            
+            const total = homeCount + awayCount + drawCount;
+            if (total === 0) return null;
+            
+            return { homeCount, awayCount, drawCount, total };
+        }
+        
+        // 检查比赛是否有预测（两支球队都必须在同一条预测记录中出现）
+        function matchHasPrediction(match) {
+            const home = (match.homeTeam || '').trim();
+            const away = (match.awayTeam || '').trim();
+            if (!home || !away) return false;
+            
+            return predictedMatchTeams.some(t => {
+                const predHome = (t.home || '').trim();
+                const predAway = (t.away || '').trim();
+                
+                // 检查 match 的主队是否出现在 prediction 的某一方
+                const homeInPred = predHome === home || predAway === home ||
+                                   predHome.includes(home) || home.includes(predHome) ||
+                                   predAway.includes(home) || home.includes(predAway);
+                
+                // 检查 match 的客队是否出现在 prediction 的另一方
+                const awayInPred = predHome === away || predAway === away ||
+                                   predHome.includes(away) || away.includes(predHome) ||
+                                   predAway.includes(away) || away.includes(predAway);
+                
+                return homeInPred && awayInPred;
+            });
+        }
+        
+        // 显示比赛（带筛选）
+        function displayMatches(matches) {
+            const container = document.getElementById('match-grid');
+            
+            // 应用筛选（使用国家信息判断真正的五大联赛）
+            let filteredMatches = matches;
+            if (showOnlyPopular) {
+                filteredMatches = matches.filter(m => isPopularLeague(m.league, m.leagueCountry || 'World'));
+            }
+            
+            // 应用搜索关键词筛选
+            if (matchSearchKeyword) {
+                filteredMatches = filteredMatches.filter(m => {
+                    const searchText = [
+                        m.homeTeam || '',
+                        m.awayTeam || '',
+                        m.league || '',
+                        m.homeTeam || '',
+                        m.awayTeam || '',
+                        translateLeague(m.league, m.leagueCountry || 'World') || ''
+                    ].join(' ').toLowerCase();
+                    return searchText.includes(matchSearchKeyword);
+                });
+            }
+            
+            // 应用状态筛选
+            if (statusFilter === 'upcoming') {
+                filteredMatches = filteredMatches.filter(m => 
+                    m.status !== 'finished' && m.statusText !== '已结束'
+                );
+            } else if (statusFilter === 'finished') {
+                filteredMatches = filteredMatches.filter(m => 
+                    m.status === 'finished' || m.statusText === '已结束'
+                );
+            } else if (statusFilter === 'has-prediction') {
+                filteredMatches = filteredMatches.filter(m => matchHasPrediction(m));
+            }
+            
+            if (filteredMatches.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1/-1;">
+                        🏟️ ${showOnlyPopular ? '暂无热门联赛比赛（五大联赛/欧冠/世界杯）' : '暂无比赛，点击"更新比赛"获取'}
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = filteredMatches.map(m => {
+                const country = m.leagueCountry || 'World';
+                const isPopular = isPopularLeague(m.league, country);
+                // 只翻译热门联赛的比赛，非热门联赛保持英文
+                const leagueName = isPopular ? translateLeague(m.league, country) : m.league;
+                const homeTeam = m.homeTeam;
+                const awayTeam = m.awayTeam;
+                const cardId = m.matchId.replace(/[^a-zA-Z0-9]/g, '_');
+                
+                // 检查是否有比分
+                const hasScore = m.result && m.result.homeScore !== null && m.result.homeScore !== undefined;
+                const scoreDisplay = hasScore ? `${m.result.homeScore} : ${m.result.awayScore}` : 'VS';
+                const isFinished = m.status === 'finished' || m.statusText === '已结束';
+                
+                // 获取媒体预测统计
+                const predStats = getMatchPredictionStats(homeTeam, awayTeam);
+                let predictionHtml = '';
+                if (predStats && predStats.total > 0) {
+                    const homeRate = Math.round((predStats.homeCount / predStats.total) * 100);
+                    const awayRate = Math.round((predStats.awayCount / predStats.total) * 100);
+                    const drawRate = Math.round((predStats.drawCount / predStats.total) * 100);
+                    
+                    // 确定显示内容
+                    let displayText = '';
+                    let displayColor = 'var(--text-secondary)';
+                    
+                    if (homeRate > awayRate && homeRate > drawRate) {
+                        displayText = `📢 ${homeRate}% 媒体看好 ${homeTeam}`;
+                        displayColor = 'var(--accent-blue)';
+                    } else if (awayRate > homeRate && awayRate > drawRate) {
+                        displayText = `📢 ${awayRate}% 媒体看好 ${awayTeam}`;
+                        displayColor = 'var(--accent-red)';
+                    } else if (drawRate > homeRate && drawRate > awayRate) {
+                        displayText = `📢 ${drawRate}% 媒体看好平局`;
+                        displayColor = 'var(--text-secondary)';
+                    } else if (homeRate === awayRate && homeRate > 0) {
+                        // 50%-50%时显示主队
+                        displayText = `📢 ${homeRate}% 媒体看好 ${homeTeam}`;
+                        displayColor = 'var(--accent-blue)';
+                    } else if (homeRate === drawRate && homeRate > awayRate) {
+                        displayText = `📢 ${homeRate}% 媒体看好 ${homeTeam}`;
+                        displayColor = 'var(--accent-blue)';
+                    } else if (awayRate === drawRate && awayRate > homeRate) {
+                        displayText = `📢 ${awayRate}% 媒体看好 ${awayTeam}`;
+                        displayColor = 'var(--accent-red)';
+                    }
+                    
+                    if (displayText) {
+                        predictionHtml = `<div style="font-size: 11px; color: ${displayColor}; text-align: center; margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--border-color);">${displayText}</div>`;
+                    }
+                }
+                
+                return `
+                    <div class="match-card ${isFinished ? 'finished' : ''}" id="match-${cardId}" onclick="showAuthorPredictionsModal('${m.homeTeam.replace(/'/g, "\\'")}', '${m.awayTeam.replace(/'/g, "\\'")}', '${homeTeam.replace(/'/g, "\\'")}', '${awayTeam.replace(/'/g, "\\'")}', '${leagueName.replace(/'/g, "\\'")}', '${m.matchId.replace(/'/g, "\\'")}')">
+                        <div class="match-header">
+                            <span class="match-league">${isPopular ? '⭐ ' : ''}${leagueName}</span>
+                            <span class="match-time">${isFinished ? '✅ ' + toBeijingTime(m.matchTime) : '🕐 ' + toBeijingTime(m.matchTime)}</span>
+                        </div>
+                        <div class="match-teams">
+                            <span class="team-name home">${homeTeam}</span>
+                            <span class="vs ${hasScore ? 'score' : ''}">${scoreDisplay}</span>
+                            <span class="team-name away">${awayTeam}</span>
+                        </div>
+                        ${m.handicap ? `<div class="match-handicap">📊 ${m.handicap}</div>` : ''}
+                        ${predictionHtml}
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // 显示自媒体预测弹窗
+        async function showAuthorPredictionsModal(homeTeamEn, awayTeamEn, homeTeamCn, awayTeamCn, league, matchId) {
+            const modal = document.getElementById('authorPredModal');
+            const title = document.getElementById('authorPredModalTitle');
+            const body = document.getElementById('authorPredModalBody');
+            
+            // 存储当前比赛信息供豆包预测使用
+            window.currentMatchInfo = { homeTeamEn, awayTeamEn, homeTeamCn, awayTeamCn, league, matchId };
+            
+            title.textContent = `${league}: ${homeTeamCn} VS ${awayTeamCn}`;
+            body.innerHTML = '<div style="text-align: center; color: var(--text-secondary); padding: 20px;">加载中...</div>';
+            modal.classList.add('show');
+            
+            try {
+                const res = await fetch(`${API_BASE}/api/matches/author-predictions`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ homeTeam: homeTeamEn, awayTeam: awayTeamEn })
+                });
+                const data = await res.json();
+                
+                if (data.success && data.data && data.data.length > 0) {
+                    // 存储文案内容供弹窗使用
+                    window.transcriptCache = window.transcriptCache || {};
+                    const cacheKey = `modal_${Date.now()}`;
+                    data.data.forEach((ap, i) => {
+                        window.transcriptCache[`${cacheKey}_${i}`] = {
+                            author: ap.author || '未知',
+                            content: ap.transcriptContent || ''
+                        };
+                    });
+                    
+                    // 存储当前预测ID供录入结果使用
+                    window.currentPredictionId = data.predictionId;
+                    
+                    body.innerHTML = `
+                        <!-- 豆包AI预测区域 -->
+                        <div style="margin-bottom: 15px; padding: 12px; background: rgba(147, 51, 234, 0.1); border-radius: 8px;">
+                            <div id="doubao-pred-area" style="text-align: center;">
+                                <button class="btn" onclick="getDoubaoModalPrediction()" style="background: linear-gradient(135deg, #8b5cf6, #6366f1); color: white; border: none; padding: 10px 24px; border-radius: 20px;">
+                                    🤖 获取豆包AI预测
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 15px;">📢 共 ${data.data.length} 位自媒体发布了预测</div>
+                        ${data.data.map((ap, i) => `
+                            <div class="author-pred-item" style="margin-bottom: 12px;">
+                                <img src="${ap.authorAvatar || ''}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23333%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2255%22 font-size=%2240%22 text-anchor=%22middle%22 fill=%22%23666%22>👤</text></svg>'">
+                                <div class="author-pred-info">
+                                    <div class="author-pred-name">${ap.author || '未知'}</div>
+                                    <div class="author-pred-reason">${ap.reason || '暂无分析'}</div>
+                                </div>
+                                <span class="author-pred-result ${ap.prediction}">${ap.prediction === 'home' ? '主胜' : ap.prediction === 'away' ? '客胜' : '平局'}</span>
+                                ${ap.transcriptContent ? `<button class="view-transcript-btn" onclick="event.stopPropagation(); showTranscriptFromCache('${cacheKey}_${i}')">📄 查看文案</button>` : ''}
+                            </div>
+                        `).join('')}
+                        
+                        <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--border-color);">
+                            <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 10px;">📝 录入比赛结果</div>
+                            <div style="display: flex; gap: 10px; justify-content: center;">
+                                <button class="btn" onclick="recordMatchResult('home')" style="background: rgba(59, 130, 246, 0.2); color: var(--accent-blue); border: none; padding: 10px 20px;">${homeTeamCn} 胜</button>
+                                <button class="btn" onclick="recordMatchResult('draw')" style="background: rgba(156, 163, 175, 0.2); color: var(--text-secondary); border: none; padding: 10px 20px;">平局</button>
+                                <button class="btn" onclick="recordMatchResult('away')" style="background: rgba(239, 68, 68, 0.2); color: var(--accent-red); border: none; padding: 10px 20px;">${awayTeamCn} 胜</button>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    body.innerHTML = `
+                        <!-- 豆包AI预测区域 -->
+                        <div style="margin-bottom: 20px; padding: 15px; background: rgba(147, 51, 234, 0.1); border-radius: 8px; text-align: center;">
+                            <div id="doubao-pred-area">
+                                <button class="btn" onclick="getDoubaoModalPrediction()" style="background: linear-gradient(135deg, #8b5cf6, #6366f1); color: white; border: none; padding: 12px 28px; border-radius: 20px; font-size: 14px;">
+                                    🤖 获取豆包AI预测
+                                </button>
+                            </div>
+                        </div>
+                        <div style="text-align: center; color: var(--text-secondary); padding: 20px; font-size: 14px;">
+                            暂无自媒体预测<br>
+                            <small style="color: var(--text-secondary);">添加作者并转写文案后，系统会自动分析预测</small>
+                        </div>
+                    `;
+                }
+            } catch (e) {
+                console.error('加载自媒体预测失败:', e);
+                body.innerHTML = '<div style="text-align: center; color: var(--accent-red); padding: 20px;">加载失败</div>';
+            }
+        }
+        
+        // 关闭自媒体预测弹窗
+        function closeAuthorPredModal() {
+            document.getElementById('authorPredModal').classList.remove('show');
+        }
+        
+        // 录入比赛结果
+        async function recordMatchResult(result) {
+            if (!window.currentPredictionId) {
+                alert('无法录入结果：未找到预测记录');
+                return;
+            }
+            
+            try {
+                const res = await fetch(`${API_BASE}/api/predictions/${window.currentPredictionId}/result`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ result })
+                });
+                const data = await res.json();
+                
+                if (data.success) {
+                    alert('✅ 比赛结果已录入！自媒体准确率已更新');
+                    closeAuthorPredModal();
+                    // 刷新预测列表
+                    loadPredictions();
+                } else {
+                    alert('录入失败: ' + (data.error || '未知错误'));
+                }
+            } catch (e) {
+                console.error('录入结果失败:', e);
+                alert('录入失败: ' + e.message);
+            }
+        }
+        
+        // 从缓存显示文案
+        function showTranscriptFromCache(cacheKey) {
+            const cached = window.transcriptCache && window.transcriptCache[cacheKey];
+            if (cached) {
+                document.getElementById('transcriptModalTitle').textContent = cached.author + ' 的预测文案';
+                document.getElementById('transcriptModalText').textContent = cached.content || '暂无文案内容';
+                document.getElementById('transcriptModal').classList.add('show');
+            }
+        }
+        
+        // 显示文案弹窗
+        function showTranscript(author, content) {
+            document.getElementById('transcriptModalTitle').textContent = author + ' 的预测文案';
+            document.getElementById('transcriptModalText').textContent = content;
+            document.getElementById('transcriptModal').classList.add('show');
+        }
+        
+        // 关闭文案弹窗
+        function closeTranscriptModal() {
+            document.getElementById('transcriptModal').classList.remove('show');
+        }
         
         // Tab 切换
         document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -553,31 +1349,19 @@
         // 加载比赛列表
         async function loadMatches() {
             const container = document.getElementById('match-grid');
+            
             try {
+                // 先加载有预测的比赛列表
+                await loadPredictionMatchIds();
+                
                 const res = await fetch(`${API_BASE}/api/matches`);
                 const data = await res.json();
                 
                 // 缓存比赛数据
                 cachedMatches = data.data || [];
                 
-                if (data.success && data.data.length > 0) {
-                    container.innerHTML = data.data.map(m => `
-                        <div class="match-card" id="match-${m.matchId.replace(/[^a-zA-Z0-9]/g, '_')}">
-                            <div class="match-header">
-                                <span class="match-league">${m.league}</span>
-                                <span class="match-time">${m.matchTime || '时间待定'}</span>
-                            </div>
-                            <div class="match-teams">
-                                <span class="team-name home">${m.homeTeam}</span>
-                                <span class="vs">VS</span>
-                                <span class="team-name away">${m.awayTeam}</span>
-                            </div>
-                            ${m.handicap ? `<div class="match-handicap">📊 ${m.handicap}</div>` : ''}
-                            <div class="prediction-banner" id="pred-${m.matchId.replace(/[^a-zA-Z0-9]/g, '_')}">
-                                ${renderPredictionBanner(m)}
-                            </div>
-                        </div>
-                    `).join('');
+                if (data.success && cachedMatches.length > 0) {
+                    displayMatches(cachedMatches);
                 } else {
                     container.innerHTML = `
                         <div class="empty-state" style="grid-column: 1/-1;">
@@ -592,11 +1376,16 @@
         
         // 渲染预测 banner（支持已保存的预测）
         function renderPredictionBanner(m) {
+            const country = m.leagueCountry || 'World';
+            const isPopular = isPopularLeague(m.league, country);
+            const homeTeam = m.homeTeam;
+            const awayTeam = m.awayTeam;
+            
             if (m.doubaoPrediction) {
                 const pred = m.doubaoPrediction;
                 const predLabel = {
-                    'home': m.homeTeam + '胜',
-                    'away': m.awayTeam + '胜',
+                    'home': homeTeam + '胜',
+                    'away': awayTeam + '胜',
                     'draw': '平局'
                 };
                 return `
@@ -617,11 +1406,11 @@
                     <div class="prediction-reason">${pred.reason || ''}</div>
                     <div class="prediction-actions">
                         <button class="btn ${m.userPrediction === 'home' ? 'selected' : ''}" style="background: var(--accent-green);" 
-                                onclick="saveUserPrediction('${m.matchId}', 'home', this)">${m.homeTeam}胜</button>
+                                onclick="saveUserPrediction('${m.matchId}', 'home', this)">${homeTeam}胜</button>
                         <button class="btn ${m.userPrediction === 'draw' ? 'selected' : ''}" style="background: var(--accent-yellow);" 
                                 onclick="saveUserPrediction('${m.matchId}', 'draw', this)">平局</button>
                         <button class="btn ${m.userPrediction === 'away' ? 'selected' : ''}" style="background: var(--accent-red);" 
-                                onclick="saveUserPrediction('${m.matchId}', 'away', this)">${m.awayTeam}胜</button>
+                                onclick="saveUserPrediction('${m.matchId}', 'away', this)">${awayTeam}胜</button>
                     </div>
                 `;
             }
@@ -633,12 +1422,55 @@
             `;
         }
         
-        // 搜索比赛
-        async function searchMatches() {
+        // 更新所有数据（比赛列表 + 同步结果）
+        async function updateAll() {
             const container = document.getElementById('match-grid');
-            const btn = document.getElementById('search-btn');
+            const btn = document.getElementById('update-btn');
             
-            container.innerHTML = '<div class="loading" style="grid-column: 1/-1;">🔄 豆包AI正在更新比赛信息</div>';
+            container.innerHTML = '<div class="loading" style="grid-column: 1/-1;">🔄 正在更新比赛数据...</div>';
+            btn.disabled = true;
+            btn.textContent = '⏳ 更新中...';
+            
+            try {
+                // 1. 更新比赛列表
+                const searchRes = await fetch(`${API_BASE}/api/matches/search`, { method: 'POST' });
+                const searchData = await searchRes.json();
+                
+                // 2. 同步比赛结果
+                container.innerHTML = '<div class="loading" style="grid-column: 1/-1;">📊 正在同步比赛结果...</div>';
+                const syncRes = await fetch(`${API_BASE}/api/matches/sync-results`, { method: 'POST' });
+                const syncData = await syncRes.json();
+                
+                // 显示结果
+                const matchCount = searchData.matches?.length || 0;
+                const resultCount = syncData.updated || 0;
+                
+                alert(`✅ 更新完成！\n📋 比赛列表: ${matchCount} 场\n📊 结果同步: ${resultCount} 条`);
+                
+                // 刷新显示
+                await loadMatches();
+                loadPredictions();
+                
+            } catch (e) {
+                alert('更新失败: ' + e.message);
+                container.innerHTML = '<div class="empty-state">更新失败，请重试</div>';
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '🔄 更新数据';
+            }
+        }
+        
+        // 搜索比赛（保留兼容）
+        async function searchMatches() {
+            return updateAll();
+        }
+        
+        // 搜索比赛（原逻辑备用）
+        async function searchMatchesOnly() {
+            const container = document.getElementById('match-grid');
+            const btn = document.getElementById('update-btn');
+            
+            container.innerHTML = '<div class="loading" style="grid-column: 1/-1;">🔄 正在更新比赛信息...</div>';
             btn.disabled = true;
             btn.textContent = '⏳ 更新中...';
             
@@ -736,6 +1568,68 @@
             }
         }
         
+        // 弹窗中的豆包预测
+        async function getDoubaoModalPrediction() {
+            const area = document.getElementById('doubao-pred-area');
+            const info = window.currentMatchInfo;
+            
+            if (!info || !info.matchId) {
+                area.innerHTML = '<div style="color: var(--accent-red);">比赛信息缺失</div>';
+                return;
+            }
+            
+            area.innerHTML = '<div style="color: var(--text-secondary);">🤖 豆包分析中...</div>';
+            
+            try {
+                const res = await fetch(`${API_BASE}/api/predictions/doubao`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ matchId: info.matchId })
+                });
+                const data = await res.json();
+                
+                if (data.success) {
+                    const pred = data.prediction;
+                    const predLabel = {
+                        'home': info.homeTeamCn + ' 胜',
+                        'away': info.awayTeamCn + ' 胜',
+                        'draw': '平局'
+                    };
+                    
+                    area.innerHTML = `
+                        <div style="text-align: left;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                <span style="font-weight: bold; color: var(--primary);">🤖 豆包预测：${predLabel[pred.prediction] || '?'}</span>
+                                <span style="color: var(--text-secondary); font-size: 12px;">置信度: ${pred.confidence || '-'}</span>
+                            </div>
+                            ${pred.score ? `<div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 8px;">预测比分: ${pred.score}</div>` : ''}
+                            <div style="font-size: 13px; color: var(--text-primary); line-height: 1.5;">${pred.reason || ''}</div>
+                        </div>
+                    `;
+                    
+                    // 保存豆包预测
+                    fetch(`${API_BASE}/api/predictions`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            matchId: info.matchId,
+                            analysis: { predictions: [], summary: {}, doubaoPrediction: pred },
+                            userPrediction: null
+                        })
+                    });
+                } else {
+                    area.innerHTML = `
+                        <div style="color: var(--accent-red);">
+                            预测失败: ${data.error}
+                            <button class="btn btn-sm" onclick="getDoubaoModalPrediction()" style="margin-left: 10px; background: rgba(147, 51, 234, 0.3); border: none;">重试</button>
+                        </div>
+                    `;
+                }
+            } catch (e) {
+                area.innerHTML = `<div style="color: var(--accent-red);">预测失败: ${e.message}</div>`;
+            }
+        }
+        
         // 保存用户预测
         async function saveUserPrediction(matchId, prediction, btn) {
             // 高亮选中的按钮
@@ -769,64 +1663,239 @@
         }
         
         
-        // 加载预测记录（从比赛数据中获取有预测的比赛）
+        // 存储所有预测数据供搜索使用
+        let allPredictionsData = [];
+        
+        // 过滤预测记录
+        function filterPredictions(keyword) {
+            if (!keyword.trim()) {
+                renderPredictionList(allPredictionsData);
+                return;
+            }
+            
+            const kw = keyword.toLowerCase();
+            const filtered = allPredictionsData.filter(p => {
+                const m = p.match || {};
+                const searchText = [
+                    m.homeTeam || '',
+                    m.awayTeam || '',
+                    m.league || '',
+                    ...(p.authorPredictions || []).map(ap => ap.author || '')
+                ].join(' ').toLowerCase();
+                return searchText.includes(kw);
+            });
+            
+            renderPredictionList(filtered);
+        }
+        
+        // 加载预测记录（从 predictions API 获取包含自媒体预测的数据）
         async function loadPredictions() {
             const container = document.getElementById('prediction-list');
+            container.innerHTML = '<div class="loading">加载中...</div>';
+            
             try {
-                const res = await fetch(`${API_BASE}/api/matches`);
+                const res = await fetch(`${API_BASE}/api/predictions`);
                 const data = await res.json();
                 
-                // 只显示有豆包预测或用户预测的比赛
-                const matchesWithPrediction = data.data.filter(m => m.doubaoPrediction || m.userPrediction);
-                
-                if (matchesWithPrediction.length > 0) {
-                    container.innerHTML = matchesWithPrediction.map(m => {
-                        const predLabel = {
-                            'home': m.homeTeam + '胜',
-                            'away': m.awayTeam + '胜',
-                            'draw': '平局'
-                        };
-                        
-                        return `
-                            <div class="match-card" style="margin-bottom: 10px;">
-                                <div class="match-header">
-                                    <span class="match-league">${m.league}</span>
-                                    <span class="match-time">${m.matchTime}</span>
-                                </div>
-                                <div class="match-teams">
-                                    <span class="team-name home">${m.homeTeam}</span>
-                                    <span class="vs">VS</span>
-                                    <span class="team-name away">${m.awayTeam}</span>
-                                </div>
-                                <div class="prediction-row" style="margin-top: 10px;">
-                                    <div class="prediction-item">
-                                        <div class="prediction-label">🤖 豆包</div>
-                                        <span class="prediction-value ${m.doubaoPrediction?.prediction || ''}">${predLabel[m.doubaoPrediction?.prediction] || '-'}</span>
-                                    </div>
-                                    <div class="prediction-item">
-                                        <div class="prediction-label">👤 我的预测</div>
-                                        <span class="prediction-value ${m.userPrediction || ''}">${predLabel[m.userPrediction] || '-'}</span>
-                                    </div>
-                                    <div class="prediction-item">
-                                        <div class="prediction-label">结果</div>
-                                        ${m.result ? 
-                                            `<span class="prediction-value ${m.result.winner}">${predLabel[m.result.winner]}</span>` :
-                                            `<button class="btn btn-sm btn-secondary" onclick="setResult('${m.matchId}')">录入</button>`
-                                        }
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                    }).join('');
+                if (data.success && data.data) {
+                    allPredictionsData = data.data;
+                    renderPredictionList(allPredictionsData);
                 } else {
                     container.innerHTML = '<div class="empty-state">暂无预测记录</div>';
                 }
             } catch (e) {
+                console.error('加载预测记录失败:', e);
                 container.innerHTML = '<div class="empty-state">加载失败</div>';
             }
         }
         
-        // 录入结果
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text == null ? '' : String(text);
+            return div.innerHTML;
+        }
+        
+        function safeUrl(url) {
+            if (!url) return '';
+            try {
+                const parsed = new URL(url, window.location.origin);
+                if (parsed.protocol === 'http:' || parsed.protocol === 'https:') return parsed.href;
+                return '';
+            } catch (_) {
+                return '';
+            }
+        }
+        
+        // 渲染预测列表（以博主为主体展示）
+        function renderPredictionList(predictions) {
+            const container = document.getElementById('prediction-list');
+            
+            if (!predictions || predictions.length === 0) {
+                container.innerHTML = '<div class="empty-state">暂无预测记录<br><small style="color: var(--text-secondary);">文案转写后会自动分析是否包含比赛预测</small></div>';
+                return;
+            }
+            
+            // 展开所有博主预测为独立条目
+            const allAuthorPredictions = [];
+            predictions.forEach((p, pIdx) => {
+                const authorPreds = p.authorPredictions || [];
+                authorPreds.forEach((ap, apIdx) => {
+                    allAuthorPredictions.push({
+                        ...ap,
+                        match: p.match,
+                        matchId: p.matchId,
+                        result: p.result,
+                        predictionId: p.id,
+                        authorIndex: apIdx,
+                        uniqueId: `${pIdx}_${apIdx}`
+                    });
+                });
+            });
+            
+            if (allAuthorPredictions.length === 0) {
+                container.innerHTML = '<div class="empty-state">暂无博主预测<br><small style="color: var(--text-secondary);">添加作者并转写文案后，系统会自动分析预测</small></div>';
+                return;
+            }
+            
+            // 存储文案到缓存供弹窗使用
+            window.predictionTranscripts = {};
+            allAuthorPredictions.forEach((ap, idx) => {
+                window.predictionTranscripts[idx] = {
+                    author: ap.author || '未知',
+                    reason: ap.reason || '',
+                    content: ap.transcriptContent || ap.transcript || ''
+                };
+            });
+            
+            container.innerHTML = allAuthorPredictions.map((ap, idx) => {
+                const m = ap.match || {};
+                const homeTeam = m.homeTeam || '主队';
+                const awayTeam = m.awayTeam || '客队';
+                
+                // 格式化比赛时间
+                const matchTime = m.matchTime || '';
+                const timeDisplay = matchTime ? matchTime.replace('T', ' ').slice(0, 16) : '时间待定';
+                
+                // 预测标签
+                const predLabel = ap.prediction === 'home' ? '主胜' : ap.prediction === 'away' ? '客胜' : '平局';
+                const predColor = ap.prediction === 'home' ? 'var(--accent-blue)' : ap.prediction === 'away' ? 'var(--accent-red)' : 'var(--text-secondary)';
+                const predBg = ap.prediction === 'home' ? 'rgba(59, 130, 246, 0.2)' : ap.prediction === 'away' ? 'rgba(239, 68, 68, 0.2)' : 'rgba(156, 163, 175, 0.2)';
+                
+                // 比赛结果
+                let resultDisplay = '';
+                if (ap.result) {
+                    const resultWinner = ap.result.winner;
+                    const isCorrect = ap.prediction === resultWinner;
+                    const resultLabel = resultWinner === 'home' ? homeTeam + '胜' : resultWinner === 'away' ? awayTeam + '胜' : '平局';
+                    resultDisplay = `<span style="margin-left: 6px; padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: 500; ${
+                        isCorrect ? 'background: rgba(34, 197, 94, 0.2); color: var(--accent-green);' : 'background: rgba(239, 68, 68, 0.2); color: var(--accent-red);'
+                    }">${isCorrect ? '✓' : '✗'} ${resultLabel}</span>`;
+                }
+                
+                // 头像
+                const avatarUrl = ap.authorAvatar || '';
+                const safeAvatarUrl = safeUrl(avatarUrl);
+                const safeAuthorName = escapeHtml(ap.author || '未知博主');
+                const safeLeague = escapeHtml(m.league || '联赛');
+                const safeHomeTeam = escapeHtml(homeTeam);
+                const safeAwayTeam = escapeHtml(awayTeam);
+                const safeReason = escapeHtml(ap.reason || '');
+                const safeTranscript = escapeHtml(ap.transcriptContent || ap.transcript || '暂无文案内容');
+                const safeVideoUrl = safeUrl(ap.videoUrl);
+                
+                return `
+                    <div class="author-prediction-card" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--bg-secondary); border-radius: 10px; margin-bottom: 10px; border: 1px solid var(--border-color); cursor: pointer; transition: all 0.2s;" 
+                         onclick="togglePredictionDetail(${idx})" 
+                         onmouseover="this.style.borderColor='var(--primary)'" 
+                         onmouseout="this.style.borderColor='var(--border-color)'">
+                        <!-- 博主头像 -->
+                        <div style="flex-shrink: 0;">
+                            ${safeAvatarUrl ? `<img src="${safeAvatarUrl}" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; background: var(--bg-primary);" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 40 40%22><rect fill=%22%23374151%22 width=%2240%22 height=%2240%22/><text x=%2220%22 y=%2226%22 text-anchor=%22middle%22 fill=%22%239ca3af%22 font-size=%2216%22>👤</text></svg>'">` : 
+                            `<div style="width: 40px; height: 40px; border-radius: 50%; background: var(--bg-primary); display: flex; align-items: center; justify-content: center; font-size: 18px;">👤</div>`}
+                        </div>
+                        
+                        <!-- 博主信息和比赛 -->
+                        <div style="flex: 1; min-width: 0;">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                                <span style="font-weight: 600; font-size: 14px; color: var(--text-primary);">${safeAuthorName}</span>
+                                <span style="padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 500; background: ${predBg}; color: ${predColor};">${predLabel}</span>
+                                ${resultDisplay}
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-secondary);">
+                                <span style="background: var(--bg-primary); padding: 2px 6px; border-radius: 4px;">${safeLeague}</span>
+                                <span style="font-weight: 500; color: var(--text-primary);">${safeHomeTeam}</span>
+                                <span>vs</span>
+                                <span style="font-weight: 500; color: var(--text-primary);">${safeAwayTeam}</span>
+                                <span style="margin-left: auto;">🕐 ${timeDisplay}</span>
+                            </div>
+                        </div>
+                        
+                        <!-- 展开箭头 -->
+                        <div id="arrow-${idx}" style="color: var(--text-secondary); transition: transform 0.2s;">▼</div>
+                    </div>
+                    
+                    <!-- 展开详情（预测理由和文案） -->
+                    <div id="detail-${idx}" style="display: none; margin: -6px 0 10px 52px; padding: 12px 16px; background: var(--bg-primary); border-radius: 8px; border: 1px solid var(--border-color);">
+                        ${ap.videoPublishTime ? `<div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 8px;">🕐 视频发布: ${ap.videoPublishTime.replace('T', ' ').slice(0, 16)}</div>` : ''}
+                        ${ap.reason ? `
+                            <div style="margin-bottom: 10px;">
+                                <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 4px;">💡 预测理由</div>
+                                <div style="font-size: 13px; color: var(--text-primary); line-height: 1.5;">${safeReason}</div>
+                            </div>
+                        ` : ''}
+                        <div>
+                            <div style="font-size: 11px; color: var(--text-secondary); margin-bottom: 4px;">📄 完整文案</div>
+                            <div style="font-size: 12px; color: var(--text-secondary); line-height: 1.6; max-height: 200px; overflow-y: auto; white-space: pre-wrap; background: var(--bg-secondary); padding: 10px; border-radius: 6px;">${safeTranscript}</div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 8px; margin-top: 10px;">
+                            ${safeVideoUrl ? `<a href="${safeVideoUrl}" target="_blank" rel="noopener noreferrer" style="color: var(--primary); font-size: 12px; text-decoration: none;">🎬 查看原视频 →</a>` : ''}
+                            <button onclick="event.stopPropagation(); editPredictionMatch('${ap.predictionId}', ${ap.authorIndex})" style="margin-left: auto; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--accent-blue); background: rgba(59,130,246,0.1); color: var(--accent-blue); cursor: pointer; font-size: 11px;">✏️ 修改匹配</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // 展开/收起预测详情
+        function togglePredictionDetail(idx) {
+            const detail = document.getElementById(`detail-${idx}`);
+            const arrow = document.getElementById(`arrow-${idx}`);
+            if (detail.style.display === 'none') {
+                detail.style.display = 'block';
+                arrow.style.transform = 'rotate(180deg)';
+            } else {
+                detail.style.display = 'none';
+                arrow.style.transform = 'rotate(0deg)';
+            }
+        }
+        
+        // 录入比赛结果（使用新的 API）
+        async function setResultValue(predictionId, result) {
+            if (!confirm(`确认录入结果为「${result === 'home' ? '主胜' : result === 'away' ? '客胜' : '平局'}」？\n录入后将更新所有自媒体的胜率统计。`)) {
+                return;
+            }
+            
+            try {
+                const res = await fetch(`${API_BASE}/api/predictions/${encodeURIComponent(predictionId)}/result`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ result })
+                });
+                const data = await res.json();
+                
+                if (data.success) {
+                    showToast(`✅ 结果已录入，更新了 ${data.updatedAuthors || 0} 个自媒体的胜率`, 'success');
+                    loadPredictions();
+                    loadAccuracy();
+                } else {
+                    showToast('录入失败: ' + (data.error || '未知错误'), 'error');
+                }
+            } catch (e) {
+                showToast('录入失败', 'error');
+            }
+        }
+        
+        // 旧版录入结果（兼容比赛列表）
         async function setResult(matchId) {
             const r = prompt('请输入结果:\n1 = 主队胜\n2 = 平局\n3 = 客队胜');
             const map = { '1': 'home', '2': 'draw', '3': 'away' };
@@ -847,6 +1916,9 @@
         
         // 加载准确率
         async function loadAccuracy() {
+            const minPredictions = parseInt(document.getElementById('min-predictions-filter')?.value || '1');
+            const sortBy = document.getElementById('sort-by-filter')?.value || 'winRate';
+            
             try {
                 const res = await fetch(`${API_BASE}/api/accuracy`);
                 const data = await res.json();
@@ -860,35 +1932,74 @@
                     const userRate = acc.user.total > 0 ? Math.round((acc.user.wins / acc.user.total) * 100) : 0;
                     document.getElementById('user-accuracy').textContent = acc.user.total > 0 ? `${userRate}%` : '--%';
                     
-                    const authors = Object.values(acc.authors);
-                    if (authors.length > 0) {
-                        const totalWins = authors.reduce((s, a) => s + a.wins, 0);
-                        const totalCount = authors.reduce((s, a) => s + a.total, 0);
+                    const allAuthors = Object.values(acc.authors);
+                    if (allAuthors.length > 0) {
+                        const totalWins = allAuthors.reduce((s, a) => s + a.wins, 0);
+                        const totalCount = allAuthors.reduce((s, a) => s + a.total, 0);
                         const avgRate = totalCount > 0 ? Math.round((totalWins / totalCount) * 100) : 0;
                         document.getElementById('author-avg-accuracy').textContent = `${avgRate}%`;
                     }
                     
-                    const tbody = document.getElementById('author-accuracy-list');
-                    const sorted = Object.entries(acc.authors)
-                        .map(([id, a]) => ({ id, ...a }))
-                        .sort((a, b) => (b.total > 0 ? b.wins/b.total : 0) - (a.total > 0 ? a.wins/a.total : 0));
+                    const filterInactive = document.getElementById('filter-inactive')?.checked || false;
+                    const tenDaysAgo = new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString();
                     
-                    tbody.innerHTML = sorted.map(a => {
-                        const rate = a.total > 0 ? Math.round((a.wins / a.total) * 100) : 0;
+                    let authors = Object.entries(acc.authors)
+                        .map(([id, a]) => ({ id, ...a, rate: a.total > 0 ? (a.wins / a.total) : 0 }))
+                        .filter(a => a.total >= minPredictions)
+                        .filter(a => !filterInactive || (a.latestVideoTime && a.latestVideoTime >= tenDaysAgo));
+                    
+                    if (sortBy === 'winRate') {
+                        authors.sort((a, b) => b.rate - a.rate || b.total - a.total);
+                    } else {
+                        authors.sort((a, b) => b.total - a.total);
+                    }
+                    
+                    const container = document.getElementById('author-accuracy-list');
+                    
+                    if (authors.length === 0) {
+                        container.innerHTML = '<div style="text-align: center; padding: 40px; color: var(--text-secondary);">暂无符合条件的数据</div>';
+                        return;
+                    }
+                    
+                    container.innerHTML = authors.map((a, idx) => {
+                        const rate = Math.round(a.rate * 100);
+                        const rankClass = idx === 0 ? 'top1' : idx === 1 ? 'top2' : idx === 2 ? 'top3' : '';
+                        const rankColors = { top1: '#ffd700', top2: '#c0c0c0', top3: '#cd7f32' };
+                        const rankColor = rankColors[rankClass] || 'var(--accent-yellow)';
+                        
                         return `
-                            <tr style="${a.disabled ? 'opacity: 0.5;' : ''}">
-                                <td>${a.name || a.id}</td>
-                                <td>${a.total}</td>
-                                <td>${a.wins}</td>
-                                <td>${rate}%</td>
-                                <td>
+                            <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: var(--bg-secondary); border-radius: 10px; margin-bottom: 8px; cursor: pointer; border: 1px solid var(--border-color); transition: all 0.2s;" 
+                                 onclick="showAuthorHistory('${a.id}', '${(a.name || a.id).replace(/'/g, "\\'")}')"
+                                 onmouseover="this.style.borderColor='var(--primary)'" 
+                                 onmouseout="this.style.borderColor='var(--border-color)'">
+                                <!-- 排名 -->
+                                <div style="font-size: 20px; font-weight: 700; color: ${rankColor}; min-width: 32px; text-align: center;">${idx + 1}</div>
+                                
+                                <!-- 头像 -->
+                                <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--bg-primary); display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0;">
+                                    ${a.avatar ? `<img src="${a.avatar}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.parentElement.innerHTML='👤'">` : '👤'}
+                                </div>
+                                
+                                <!-- 名称和预测数 -->
+                                <div style="flex: 1; min-width: 0;">
+                                    <div style="font-weight: 500; color: var(--text-primary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${a.name || a.id}</div>
+                                    <div style="font-size: 12px; color: var(--text-secondary);">${a.total} 次预测 · ${a.wins} 正确</div>
+                                </div>
+                                
+                                <!-- 胜率 -->
+                                <div style="text-align: right;">
+                                    <div style="font-size: 22px; font-weight: 700; color: ${rate >= 60 ? 'var(--accent-green)' : rate >= 40 ? 'var(--accent-yellow)' : 'var(--accent-red)'};">${rate}%</div>
+                                </div>
+                                
+                                <!-- 启用开关 -->
+                                <div onclick="event.stopPropagation();" style="flex-shrink: 0;">
                                     <label class="toggle-switch">
                                         <input type="checkbox" ${!a.disabled ? 'checked' : ''} 
                                                onchange="toggleAuthor('${a.id}', !this.checked)">
                                         <span class="toggle-slider"></span>
                                     </label>
-                                </td>
-                            </tr>
+                                </div>
+                            </div>
                         `;
                     }).join('');
                 }
@@ -903,6 +2014,156 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ disabled })
             });
+            
+            // 更新禁用列表并刷新比赛列表显示
+            if (disabled) {
+                disabledAuthors[authorId] = true;
+            } else {
+                delete disabledAuthors[authorId];
+            }
+            
+            // 刷新比赛列表以更新预测统计
+            if (cachedMatches && cachedMatches.length > 0) {
+                displayMatches(cachedMatches);
+            }
+        }
+        
+        // 显示作者预测历史
+        async function showAuthorHistory(authorId, authorName) {
+            const modal = document.getElementById('author-history-modal');
+            const title = document.getElementById('author-history-title');
+            const body = document.getElementById('author-history-body');
+            
+            modal.classList.add('active');
+            title.textContent = `📊 ${authorName} 的预测历史`;
+            body.innerHTML = '<div style="text-align: center; color: var(--text-secondary); padding: 20px;">加载中...</div>';
+            
+            try {
+                // 获取该作者的所有预测
+                const res = await fetch(`${API_BASE}/api/author-stats/${encodeURIComponent(authorId)}`);
+                const data = await res.json();
+                
+                if (!data.success || !data.data) {
+                    body.innerHTML = '<div style="text-align: center; color: var(--text-secondary);">暂无预测记录</div>';
+                    return;
+                }
+                
+                const stats = data.data;
+                const history = stats.history || [];
+                
+                if (history.length === 0) {
+                    body.innerHTML = '<div style="text-align: center; color: var(--text-secondary);">暂无预测记录</div>';
+                    return;
+                }
+                
+                // 计算已结束和未开赛的比赛数量（只统计有明确比分的）
+                const hasScore = h => h.homeScore !== null && h.homeScore !== undefined &&
+                                      h.awayScore !== null && h.awayScore !== undefined;
+                const finishedWithScore = history.filter(h => hasScore(h));
+                const finishedCount = finishedWithScore.length;
+                const pendingCount = history.length - finishedCount;
+                const correctCount = finishedWithScore.filter(h => h.prediction === h.result).length;
+                const wrongCount = finishedCount - correctCount;
+                
+                // 准确率只基于已结束比赛
+                const rate = finishedCount > 0 ? Math.round((correctCount / finishedCount) * 100) : 0;
+                const summaryHtml = `
+                    <div style="display: flex; gap: 16px; margin-bottom: 16px; padding: 12px; background: var(--bg-primary); border-radius: 8px; flex-wrap: wrap; justify-content: center;">
+                        <div style="text-align: center; min-width: 60px;">
+                            <div style="font-size: 24px; font-weight: 600; color: ${rate >= 60 ? 'var(--accent-green)' : rate >= 40 ? 'var(--accent-yellow)' : 'var(--accent-red)'};">${rate}%</div>
+                            <div style="font-size: 12px; color: var(--text-secondary);">准确率</div>
+                        </div>
+                        <div style="text-align: center; min-width: 60px;">
+                            <div style="font-size: 24px; font-weight: 600;">${history.length}</div>
+                            <div style="font-size: 12px; color: var(--text-secondary);">总预测</div>
+                        </div>
+                        <div style="text-align: center; min-width: 60px;">
+                            <div style="font-size: 24px; font-weight: 600; color: var(--accent-green);">${correctCount}</div>
+                            <div style="font-size: 12px; color: var(--text-secondary);">正确</div>
+                        </div>
+                        <div style="text-align: center; min-width: 60px;">
+                            <div style="font-size: 24px; font-weight: 600; color: var(--accent-red);">${wrongCount}</div>
+                            <div style="font-size: 12px; color: var(--text-secondary);">错误</div>
+                        </div>
+                        <div style="text-align: center; min-width: 60px;">
+                            <div style="font-size: 24px; font-weight: 600; color: var(--accent-yellow);">${pendingCount}</div>
+                            <div style="font-size: 12px; color: var(--text-secondary);">未开赛</div>
+                        </div>
+                    </div>
+                `;
+                
+                // 渲染预测历史列表
+                const historyHtml = history.map((h, idx) => {
+                    const predLabel = h.prediction === 'home' ? '主胜' : h.prediction === 'away' ? '客胜' : '平局';
+                    const resultLabel = h.result === 'home' ? '主胜' : h.result === 'away' ? '客胜' : h.result === 'draw' ? '平局' : '待定';
+                    const isCorrect = h.result && h.prediction === h.result;
+                    const isWrong = h.result && h.prediction !== h.result;
+                    
+                    // 球队名：优先用 match 字段，否则用 homeTeam/awayTeam
+                    const matchName = h.match || `${h.homeTeam || '主队'} vs ${h.awayTeam || '客队'}`;
+                    
+                    // 解析比分（如果有）- 只有真实数字才显示
+                    const hasScore = h.homeScore !== null && h.homeScore !== undefined && 
+                                     h.awayScore !== null && h.awayScore !== undefined &&
+                                     !isNaN(h.homeScore) && !isNaN(h.awayScore);
+                    const scoreInfo = hasScore ? `${h.homeScore} : ${h.awayScore}` : '';
+                    
+                    // 格式化时间显示（完整时间，精确到小时）
+                    const timeDisplay = h.matchTime || h.date || '时间未知';
+                    const safeMatchName = escapeHtml(matchName);
+                    const safeLeague = escapeHtml(h.league || '');
+                    const safeReason = escapeHtml(h.reason || '');
+                    const safeVideoUrl = safeUrl(h.videoUrl);
+                    const safeTranscript = escapeHtml(h.transcript || '');
+                    
+                    return `
+                        <div class="history-item" style="padding: 12px; background: var(--bg-primary); border-radius: 8px; margin-bottom: 8px; border-left: 3px solid ${isCorrect ? 'var(--accent-green)' : isWrong ? 'var(--accent-red)' : 'var(--border-color)'}; cursor: pointer;" onclick="toggleHistoryDetail(${idx})">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <div style="font-weight: 500; font-size: 14px;">${safeMatchName}</div>
+                                    <div style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">${safeLeague} · ${timeDisplay}${h.videoPublishTime ? ` · 🕐 发布 ${h.videoPublishTime.replace('T', ' ').slice(0, 16)}` : ''}</div>
+                                </div>
+                                <div style="display: flex; gap: 6px; align-items: center;">
+                                    ${scoreInfo ? `<span style="font-weight: 600; font-size: 13px; color: var(--text-primary);">${scoreInfo}</span>` : ''}
+                                    <span style="padding: 2px 8px; border-radius: 4px; font-size: 11px; ${
+                                        h.prediction === 'home' ? 'background: rgba(59, 130, 246, 0.2); color: var(--accent-blue);' :
+                                        h.prediction === 'away' ? 'background: rgba(239, 68, 68, 0.2); color: var(--accent-red);' :
+                                        'background: rgba(156, 163, 175, 0.2); color: var(--text-secondary);'
+                                    }">${predLabel}</span>
+                                    <span style="padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 500; ${
+                                        isCorrect ? 'background: rgba(34, 197, 94, 0.2); color: var(--accent-green);' :
+                                        isWrong ? 'background: rgba(239, 68, 68, 0.2); color: var(--accent-red);' :
+                                        'background: rgba(234, 179, 8, 0.2); color: #eab308;'
+                                    }">${h.result ? (isCorrect ? '✓' : '✗') : '?'}</span>
+                                </div>
+                            </div>
+                            <div id="history-detail-${idx}" style="display: none; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border-color);">
+                                ${h.reason ? `<div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">💡 预测理由: ${safeReason}</div>` : ''}
+                                ${safeVideoUrl ? `<div style="font-size: 12px; margin-bottom: 8px;"><a href="${safeVideoUrl}" target="_blank" rel="noopener noreferrer" style="color: var(--primary);">🎬 查看原视频</a></div>` : ''}
+                                ${h.transcript ? `
+                                    <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 4px;">📄 完整文案:</div>
+                                    <div style="padding: 10px; background: var(--bg-secondary); border-radius: 6px; font-size: 12px; line-height: 1.6; max-height: 300px; overflow-y: auto; white-space: pre-wrap;">${safeTranscript}</div>
+                                ` : '<div style="font-size: 12px; color: var(--text-secondary);">暂无文案记录</div>'}
+                                ${h.predictionId ? `<div style="margin-top: 8px; text-align: right;"><button onclick="event.stopPropagation(); editPredictionMatch('${h.predictionId}', ${h.authorIndex})" style="padding: 4px 10px; border-radius: 6px; border: 1px solid var(--accent-blue); background: rgba(59,130,246,0.1); color: var(--accent-blue); cursor: pointer; font-size: 11px;">✏️ 修改匹配</button></div>` : ''}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+                body.innerHTML = summaryHtml + historyHtml;
+                
+            } catch (e) {
+                console.error('加载作者历史失败:', e);
+                body.innerHTML = '<div style="text-align: center; color: var(--accent-red);">加载失败</div>';
+            }
+        }
+        
+        // 切换历史详情显示
+        function toggleHistoryDetail(idx) {
+            const detail = document.getElementById(`history-detail-${idx}`);
+            if (detail) {
+                detail.style.display = detail.style.display === 'none' ? 'block' : 'none';
+            }
         }
         
         function addMatchManually() {
@@ -946,7 +2207,57 @@
             setTimeout(() => t.remove(), 3000);
         }
         
+        function editPredictionMatch(predictionId, authorIndex) {
+            openMatchDialog({
+                title: '修改匹配比赛',
+                apiBase: API_BASE,
+                mode: 'full',
+                extraData: { predictionId, authorIndex },
+                callback: async (data) => {
+                    try {
+                        const res = await fetch(`${API_BASE}/api/predictions/${encodeURIComponent(data.predictionId)}/update-match`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                authorIndex: data.authorIndex,
+                                newMatchId: data.matchId,
+                                newPrediction: data.prediction
+                            })
+                        });
+                        const result = await res.json();
+                        if (result.success) {
+                            showToast('修改成功！', 'success');
+                            loadPredictions();
+                        } else {
+                            showToast('修改失败: ' + (result.error || '未知错误'), 'error');
+                        }
+                    } catch (e) {
+                        showToast('请求失败: ' + e.message, 'error');
+                    }
+                }
+            });
+        }
+        
         loadMatches();
     </script>
+
+    <!-- 匹配比赛对话框 -->
+    <div class="match-dialog-overlay" id="match-dialog-overlay">
+        <div class="match-dialog">
+            <div class="match-dialog-header">
+                <h3 id="match-dialog-title">选择比赛</h3>
+                <button class="match-dialog-close" onclick="closeMatchDialog()">✕</button>
+            </div>
+            <input class="match-dialog-search" id="match-dialog-search" placeholder="搜索球队名称..." oninput="filterMatchList(this.value)">
+            <div class="match-dialog-list" id="match-dialog-list"></div>
+            <div class="match-dialog-prediction" id="match-dialog-prediction" style="display:none;">
+                <button onclick="selectPredDirection('home')" id="pred-btn-home">主胜</button>
+                <button onclick="selectPredDirection('draw')" id="pred-btn-draw">平局</button>
+                <button onclick="selectPredDirection('away')" id="pred-btn-away">客胜</button>
+            </div>
+            <button class="match-dialog-submit" id="match-dialog-submit" disabled onclick="submitMatchDialog()">确认提交</button>
+        </div>
+    </div>
+    <script src="match-dialog.js"></script>
 </body>
 </html>

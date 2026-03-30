@@ -403,11 +403,69 @@
             margin-top: 4px;
         }
 
+        .logs-container {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .logs-container > .log-panel {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        @media (max-width: 900px) {
+            .logs-container {
+                flex-direction: column;
+            }
+        }
+        
+        .log-panel {
+            background: var(--bg-input);
+            border-radius: 12px;
+            padding: 16px;
+            border: 1px solid var(--border);
+        }
+        
+        .log-panel-title {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
         .log-list {
-            max-height: 300px;
+            max-height: 400px;
             overflow-y: auto;
             font-family: 'Courier New', monospace;
             font-size: 0.85rem;
+        }
+        
+        .terminal-log {
+            background: #0d0d0d;
+            border-radius: 8px;
+            padding: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            line-height: 1.4;
+            min-height: 300px;
+        }
+        
+        .terminal-line {
+            padding: 2px 0;
+            word-break: break-all;
+        }
+        
+        .terminal-line.log { color: #a8a8a8; }
+        .terminal-line.error { color: #ff6b6b; }
+        .terminal-line.warn { color: #ffa500; }
+        .terminal-time {
+            color: #666;
+            margin-right: 8px;
         }
 
         .log-item {
@@ -514,6 +572,7 @@
         }
     </style>
     <script src="auth-check.js"></script>
+    <script src="sidebar.js"></script>
 </head>
 <body>
     <div class="background">
@@ -523,25 +582,10 @@
     </div>
 
     <div class="container">
-        <header>
-            <nav class="nav-links" style="display: flex; align-items: center; flex-wrap: wrap;">
-                <a href="index.html">🎬 文案提取</a>
-                <a href="authors.html" class="active">👤 作者监控</a>
-                <a href="transcripts.html">📝 文案库</a>
-                <a href="predictions.html">⚽ 球赛预测</a>
-                <span style="margin-left: auto; display: flex; align-items: center; gap: 10px;">
-                    <span id="user-info" style="color: var(--text-secondary); font-size: 13px;"></span>
-                    <button onclick="logout()" style="background: transparent; border: 1px solid var(--text-secondary); color: var(--text-secondary); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12px;">退出</button>
-                </span>
-            </nav>
-            <script>
-                window.addEventListener('authReady', (e) => {
-                    document.getElementById('user-info').textContent = '👤 ' + (e.detail.nickname || e.detail.username);
-                });
-            </script>
+        <div class="page-header" style="margin-bottom: 20px;">
             <h1>👤 作者监控</h1>
             <p class="subtitle">自动监控抖音作者，每6小时检查更新并提取文案</p>
-        </header>
+        </div>
 
         <!-- 状态栏 -->
         <div class="card">
@@ -568,12 +612,6 @@
                     🔑 登录抖音
                 </button>
                 <span id="loginStatus" style="font-size: 0.85rem; color: var(--text-secondary);">检查中...</span>
-                <span style="border-left: 1px solid var(--border); margin: 0 8px; height: 24px;"></span>
-                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.9rem;">
-                    <input type="checkbox" id="polishToggle" onchange="togglePolish(this.checked)" checked style="width: 16px; height: 16px; cursor: pointer;">
-                    <span>✨ 豆包润色</span>
-                </label>
-                <span id="polishStatus" style="font-size: 0.8rem; color: var(--text-secondary);">已启用</span>
                 <span style="border-left: 1px solid var(--border); margin: 0 8px; height: 24px;"></span>
                 <button class="btn btn-secondary" onclick="checkNow()">
                     🔄 立即检查更新
@@ -626,7 +664,6 @@
         <!-- 标签页 -->
         <div class="tabs">
             <button class="tab active" onclick="switchTab('authors')">👤 监控列表</button>
-            <button class="tab" onclick="switchTab('videos')">🎬 抓取的视频</button>
             <button class="tab" onclick="switchTab('logs')">📋 监控日志</button>
         </div>
 
@@ -643,38 +680,26 @@
             </div>
         </div>
 
-        <!-- 视频列表 -->
-        <div id="videosTab" class="tab-content">
-            <div class="card">
-                <div class="video-actions">
-                    <span id="videoListCount">0 个视频</span>
-                    <div style="display: flex; gap: 10px;">
-                        <button class="btn" onclick="updateVideoTitles()" id="updateTitlesBtn" style="background: var(--bg-hover); color: var(--text);">🔄 更新标题</button>
-                        <button class="btn btn-primary" onclick="extractAllTranscripts()" id="extractAllBtn">📝 批量提取文案</button>
-                    </div>
-                </div>
-                <div id="extractProgress" class="extract-progress" style="display: none;">
-                    <div class="progress-text">正在提取: <span id="extractCurrent">0</span>/<span id="extractTotal">0</span></div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="extractFill" style="width: 0%"></div>
-                    </div>
-                </div>
-                <div id="videoList" class="video-list">
-                    <div class="empty-state">
-                        <div class="empty-state-icon">🎬</div>
-                        <p>还没有抓取到视频</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- 日志 -->
         <div id="logsTab" class="tab-content">
             <div class="card">
-                <div id="logList" class="log-list">
-                    <div class="empty-state">
-                        <div class="empty-state-icon">📋</div>
-                        <p>暂无日志</p>
+                <div class="logs-container">
+                    <!-- 监控日志 -->
+                    <div class="log-panel">
+                        <div class="log-panel-title">📋 监控日志</div>
+                        <div id="logList" class="log-list">
+                            <div class="empty-state">
+                                <div class="empty-state-icon">📋</div>
+                                <p>暂无日志</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 终端日志 -->
+                    <div class="log-panel">
+                        <div class="log-panel-title">🖥️ 终端输出 <span id="terminalStatus" style="font-size: 0.75rem; color: var(--success);">● 实时</span></div>
+                        <div id="terminalLog" class="terminal-log">
+                            <div class="terminal-line log">等待连接...</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -689,11 +714,9 @@
         document.addEventListener('DOMContentLoaded', () => {
             loadStatus();
             loadAuthors();
-            loadVideos();
             loadLogs();
             checkTaskStatus(); // 检查任务状态
             checkLoginStatus(); // 检查登录状态
-            checkPolishStatus(); // 检查润色状态
 
             // 每30秒刷新状态
             setInterval(loadStatus, 30000);
@@ -763,7 +786,6 @@
                         
                         // 刷新数据
                         loadStatus();
-                        loadVideos();
                         loadLogs();
                         
                         lastTaskComplete = true;
@@ -817,12 +839,13 @@
             document.getElementById(tab + 'Tab').classList.add('active');
             
             // 切换到对应标签页时加载数据
-            if (tab === 'videos') {
-                loadVideos();
-            } else if (tab === 'logs') {
-                loadLogs();
+            if (tab === 'logs') {
+                startMonitorLogPolling(); // 启动监控日志轮询
+                startTerminalLogPolling(); // 启动终端日志轮询
             } else if (tab === 'authors') {
                 loadAuthors();
+                stopMonitorLogPolling(); // 停止监控日志轮询
+                stopTerminalLogPolling(); // 停止终端日志轮询
             }
         }
 
@@ -892,7 +915,10 @@
                             ${author.lastChecked ? `<span>上次检查 ${formatDate(author.lastChecked)}</span>` : ''}
                             <a href="${author.url}" target="_blank" style="color: var(--secondary); font-size: 0.8rem;">🔗 主页</a>
                         </div>
-                        <div class="author-actions">
+                        <div class="author-actions" style="display: flex; gap: 8px;">
+                            <button class="btn" style="background: var(--secondary);" onclick="refreshAuthor('${author.url}', '${author.uid || author.secUid}')">
+                                🔄 重新识别
+                            </button>
                             <button class="btn btn-danger" onclick="removeAuthor('${author.uid || author.secUid}')">
                                 删除
                             </button>
@@ -902,52 +928,6 @@
                 
             } catch (e) {
                 console.error('加载作者失败:', e);
-            }
-        }
-
-        // 加载视频列表
-        async function loadVideos() {
-            try {
-                const res = await fetch(`${API_BASE}/api/videos`);
-                const data = await res.json();
-                
-                const container = document.getElementById('videoList');
-                
-                if (!data.success || !data.data.length) {
-                    container.innerHTML = `
-                        <div class="empty-state">
-                            <div class="empty-state-icon">🎬</div>
-                            <p>还没有抓取到视频</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                // 保持原始顺序（新视频已在数组开头）
-                const videos = data.data;
-                
-                // 更新视频计数
-                document.getElementById('videoListCount').textContent = `${videos.length} 个视频`;
-                
-                container.innerHTML = videos.slice(0, 100).map(video => {
-                    const vid = video.videoId || video.id; // 兼容两种字段名
-                    return `
-                    <div class="video-item" data-video-id="${vid}" data-video-url="https://www.douyin.com/video/${vid}">
-                        <div class="video-title">
-                            <div>${video.title || '无标题'}</div>
-                            <div class="video-author">${video.authorNickname || ''}</div>
-                        </div>
-                        <div class="video-actions-inline">
-                            <a href="https://www.douyin.com/video/${vid}" target="_blank" class="btn-link">🔗</a>
-                            <button class="btn-extract" onclick="extractSingleVideo('${vid}')" ${video.hasTranscript ? 'disabled' : ''}>
-                                ${video.hasTranscript ? '✅ 已提取' : '📝 提取'}
-                            </button>
-                        </div>
-                    </div>
-                `}).join('');
-                
-            } catch (e) {
-                console.error('加载视频失败:', e);
             }
         }
 
@@ -989,6 +969,96 @@
                 console.error('加载日志失败:', e);
             }
         }
+        
+        // 终端日志相关
+        let lastTerminalLogTime = null;
+        let terminalPollInterval = null;
+        
+        async function loadTerminalLogs() {
+            try {
+                const url = lastTerminalLogTime 
+                    ? `${API_BASE}/api/terminal/logs?since=${encodeURIComponent(lastTerminalLogTime)}`
+                    : `${API_BASE}/api/terminal/logs`;
+                    
+                const res = await fetch(url);
+                const data = await res.json();
+                
+                if (!data.success) return;
+                
+                const container = document.getElementById('terminalLog');
+                const logs = data.data;
+                
+                if (logs.length === 0 && !lastTerminalLogTime) {
+                    container.innerHTML = '<div class="terminal-line log">暂无日志...</div>';
+                    return;
+                }
+                
+                // 首次加载时清空
+                if (!lastTerminalLogTime && logs.length > 0) {
+                    container.innerHTML = '';
+                }
+                
+                // 添加新日志
+                for (const log of logs) {
+                    const time = new Date(log.time).toLocaleTimeString('zh-CN', { hour12: false });
+                    const line = document.createElement('div');
+                    line.className = `terminal-line ${log.type}`;
+                    line.innerHTML = `<span class="terminal-time">${time}</span>${escapeHtml(log.message)}`;
+                    container.appendChild(line);
+                    lastTerminalLogTime = log.time;
+                }
+                
+                // 自动滚动到底部
+                if (logs.length > 0) {
+                    container.scrollTop = container.scrollHeight;
+                }
+                
+                // 限制显示行数
+                while (container.children.length > 200) {
+                    container.removeChild(container.firstChild);
+                }
+                
+            } catch (e) {
+                console.error('加载终端日志失败:', e);
+            }
+        }
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // 启动终端日志轮询
+        function startTerminalLogPolling() {
+            if (terminalPollInterval) return;
+            loadTerminalLogs();
+            terminalPollInterval = setInterval(loadTerminalLogs, 2000);
+        }
+        
+        // 停止终端日志轮询
+        function stopTerminalLogPolling() {
+            if (terminalPollInterval) {
+                clearInterval(terminalPollInterval);
+                terminalPollInterval = null;
+            }
+        }
+        
+        // 监控日志轮询
+        let monitorLogPollInterval = null;
+        
+        function startMonitorLogPolling() {
+            if (monitorLogPollInterval) return;
+            loadLogs();
+            monitorLogPollInterval = setInterval(loadLogs, 2000);
+        }
+        
+        function stopMonitorLogPolling() {
+            if (monitorLogPollInterval) {
+                clearInterval(monitorLogPollInterval);
+                monitorLogPollInterval = null;
+            }
+        }
 
         // 添加作者
         async function addAuthor() {
@@ -1018,7 +1088,6 @@
                     showAlert(alert, 'success', `✅ ${data.message}${data.videoCount ? `，获取到 ${data.videoCount} 个视频` : ''}`);
                     input.value = '';
                     loadAuthors();
-                    loadVideos();
                     loadStatus();
                 } else {
                     showAlert(alert, 'error', data.error || '添加失败');
@@ -1053,11 +1122,55 @@
             }
         }
 
+        // 重新识别作者（删除后重新添加，自动获取前3个视频）
+        async function refreshAuthor(authorUrl, authorId) {
+            if (!confirm('确定要重新识别这个作者吗？\n将删除当前记录并重新获取作者信息和最新视频（后台转写）')) return;
+            
+            try {
+                // 1. 删除作者
+                const deleteRes = await fetch(`${API_BASE}/api/authors/${authorId}`, {
+                    method: 'DELETE'
+                });
+                
+                const deleteData = await deleteRes.json();
+                if (!deleteData.success) {
+                    alert('删除失败: ' + (deleteData.error || '未知错误'));
+                    return;
+                }
+                
+                // 2. 重新添加作者（视频转写在后台进行）
+                const addRes = await fetch(`${API_BASE}/api/authors`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url: authorUrl })
+                });
+                
+                const addData = await addRes.json();
+                if (!addData.success) {
+                    alert('重新添加失败: ' + (addData.error || '未知错误'));
+                    loadAuthors();
+                    return;
+                }
+                
+                // 3. 刷新列表
+                loadAuthors();
+                loadStatus();
+                
+                // 4. 提示成功
+                alert(`✅ 重新识别成功！\n作者: ${addData.author?.nickname || addData.author?.uid || '未知'}\n\n视频转写正在后台进行，请稍后刷新查看文案库`);
+                
+            } catch (e) {
+                console.error('重新识别失败:', e);
+                alert('服务连接失败');
+                loadAuthors();
+            }
+        }
+
         // 检查登录状态
         async function checkLoginStatus() {
             const statusEl = document.getElementById('loginStatus');
             try {
-                const res = await fetch(`${API_BASE}/api/auth/status`);
+                const res = await fetch(`${API_BASE}/api/douyin/status`);
                 const data = await res.json();
                 
                 if (data.success) {
@@ -1074,49 +1187,6 @@
             }
         }
 
-        // 检查豆包润色状态
-        async function checkPolishStatus() {
-            const toggle = document.getElementById('polishToggle');
-            const statusEl = document.getElementById('polishStatus');
-            try {
-                const res = await fetch(`${API_BASE}/api/doubao/config`);
-                const data = await res.json();
-                
-                if (data.success && data.data) {
-                    toggle.checked = data.data.enabled;
-                    statusEl.textContent = data.data.enabled ? '已启用' : '已关闭';
-                    statusEl.style.color = data.data.enabled ? '#10b981' : 'var(--text-secondary)';
-                }
-            } catch (e) {
-                console.error('检查润色状态失败:', e);
-            }
-        }
-
-        // 切换润色功能
-        async function togglePolish(enabled) {
-            const statusEl = document.getElementById('polishStatus');
-            statusEl.textContent = '更新中...';
-            
-            try {
-                const res = await fetch(`${API_BASE}/api/doubao/config`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ enabled: enabled })
-                });
-                const data = await res.json();
-                
-                if (data.success) {
-                    statusEl.textContent = enabled ? '已启用' : '已关闭';
-                    statusEl.style.color = enabled ? '#10b981' : 'var(--text-secondary)';
-                    showExtractToast(enabled ? '✨ 豆包润色已启用，转写后会自动添加标点和修正错误' : '豆包润色已关闭', enabled ? 'success' : 'info');
-                } else {
-                    showExtractToast('更新失败: ' + data.error, 'error');
-                }
-            } catch (e) {
-                showExtractToast('请求失败: ' + e.message, 'error');
-            }
-        }
-
         // 登录抖音
         async function loginDouyin() {
             const btn = document.getElementById('loginBtn');
@@ -1126,7 +1196,7 @@
             statusEl.textContent = '等待登录...';
             
             try {
-                const res = await fetch(`${API_BASE}/api/auth/login`, {
+                const res = await fetch(`${API_BASE}/api/douyin/login`, {
                     method: 'POST'
                 });
                 const data = await res.json();
@@ -1168,7 +1238,6 @@
                 // 延迟几秒后刷新日志
                 setTimeout(() => {
                     loadLogs();
-                    loadVideos();
                 }, 3000);
             } catch (e) {
                 alert('服务连接失败');
@@ -1211,242 +1280,6 @@
             setTimeout(() => {
                 toast.style.opacity = '0';
             }, 3000);
-        }
-
-        // 单个视频提取文案
-        async function extractSingleVideo(videoId) {
-            const btn = event.target;
-            btn.disabled = true;
-            btn.textContent = '⏳ 提取中...';
-            
-            try {
-                const videoUrl = `https://www.douyin.com/video/${videoId}`;
-                
-                // 使用 POST 请求流式 API
-                const response = await fetch(`${API_BASE}/api/transcribe-stream`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        url: videoUrl,
-                        model: 'medium'
-                    })
-                });
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}`);
-                }
-                
-                // 读取流式响应
-                const reader = response.body.getReader();
-                const decoder = new TextDecoder();
-                let result = null;
-                
-                while (true) {
-                    const { done, value } = await reader.read();
-                    if (done) break;
-                    
-                    const text = decoder.decode(value);
-                    const lines = text.split('\n');
-                    
-                    for (const line of lines) {
-                        if (line.startsWith('data: ')) {
-                            try {
-                                const data = JSON.parse(line.slice(6));
-                                if (data.progress !== undefined) {
-                                    btn.textContent = `${data.progress}%`;
-                                }
-                                // 检查完成状态（返回格式是 {success: true, data: {transcript: "..."}}）
-                                if (data.success !== undefined) {
-                                    result = data;
-                                }
-                            } catch (e) {}
-                        }
-                    }
-                }
-                
-                if (result && result.success && result.data && result.data.transcript) {
-                    btn.textContent = '✅ 已提取';
-                    showExtractToast('文案提取成功！', 'success');
-                    // 标记视频已提取
-                    markVideoExtracted(videoId);
-                } else {
-                    btn.textContent = '📝 提取';
-                    btn.disabled = false;
-                    const errorMsg = (result && result.error) ? result.error : '提取失败，请重试';
-                    showExtractToast(errorMsg, 'error');
-                }
-            } catch (e) {
-                console.error('提取失败:', e);
-                btn.textContent = '📝 提取';
-                btn.disabled = false;
-                showExtractToast('提取失败: ' + e.message, 'error');
-            }
-        }
-
-        // 标记视频已提取
-        function markVideoExtracted(videoId) {
-            const item = document.querySelector(`[data-video-id="${videoId}"]`);
-            if (item) {
-                const btn = item.querySelector('.btn-extract');
-                if (btn) {
-                    btn.textContent = '✅ 已提取';
-                    btn.disabled = true;
-                }
-            }
-        }
-
-        // 更新视频标题
-        async function updateVideoTitles() {
-            const btn = document.getElementById('updateTitlesBtn');
-            btn.disabled = true;
-            btn.innerHTML = '⏳ 更新中...';
-            
-            try {
-                const res = await fetch(`${API_BASE}/api/monitor/update-titles`, { method: 'POST' });
-                const data = await res.json();
-                
-                if (data.success) {
-                    showExtractToast('开始更新标题，请稍候...', 'info');
-                    // 5秒后刷新视频列表
-                    setTimeout(() => {
-                        loadVideos();
-                        btn.disabled = false;
-                        btn.innerHTML = '🔄 更新标题';
-                    }, 5000);
-                } else {
-                    showExtractToast('更新失败: ' + data.message, 'error');
-                    btn.disabled = false;
-                    btn.innerHTML = '🔄 更新标题';
-                }
-            } catch (e) {
-                showExtractToast('请求失败: ' + e.message, 'error');
-                btn.disabled = false;
-                btn.innerHTML = '🔄 更新标题';
-            }
-        }
-
-        // 批量提取所有文案
-        let extracting = false;
-        async function extractAllTranscripts() {
-            if (extracting) {
-                showExtractToast('正在提取中，请等待...', 'warning');
-                return;
-            }
-            
-            const videoItems = document.querySelectorAll('.video-item[data-video-id]');
-            const unextracted = Array.from(videoItems).filter(item => {
-                const btn = item.querySelector('.btn-extract');
-                return btn && !btn.disabled;
-            });
-            
-            if (unextracted.length === 0) {
-                showExtractToast('没有需要提取的视频');
-                return;
-            }
-            
-            if (!confirm(`确定要批量提取 ${unextracted.length} 个视频的文案吗？\n\n注意：每个视频需要数分钟处理，请耐心等待。`)) {
-                return;
-            }
-            
-            extracting = true;
-            const progressSection = document.getElementById('extractProgress');
-            const currentEl = document.getElementById('extractCurrent');
-            const totalEl = document.getElementById('extractTotal');
-            const fillEl = document.getElementById('extractFill');
-            const extractBtn = document.getElementById('extractAllBtn');
-            
-            extractBtn.disabled = true;
-            extractBtn.textContent = '⏳ 正在提取...';
-            progressSection.style.display = 'block';
-            totalEl.textContent = unextracted.length;
-            
-            let successCount = 0;
-            let failCount = 0;
-            
-            for (let i = 0; i < unextracted.length; i++) {
-                currentEl.textContent = i + 1;
-                fillEl.style.width = `${((i + 1) / unextracted.length) * 100}%`;
-                
-                const item = unextracted[i];
-                const videoId = item.dataset.videoId;
-                const btn = item.querySelector('.btn-extract');
-                
-                try {
-                    btn.textContent = '⏳ 提取中...';
-                    btn.disabled = true;
-                    
-                    const videoUrl = `https://www.douyin.com/video/${videoId}`;
-                    const response = await fetch(`${API_BASE}/api/transcribe-stream`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            url: videoUrl,
-                            model: 'medium'
-                        })
-                    });
-                    
-                    if (!response.ok) {
-                        throw new Error(`HTTP ${response.status}`);
-                    }
-                    
-                    const reader = response.body.getReader();
-                    const decoder = new TextDecoder();
-                    let result = null;
-                    
-                    while (true) {
-                        const { done, value } = await reader.read();
-                        if (done) break;
-                        
-                        const text = decoder.decode(value);
-                        const lines = text.split('\n');
-                        
-                        for (const line of lines) {
-                            if (line.startsWith('data: ')) {
-                                try {
-                                    const data = JSON.parse(line.slice(6));
-                                    if (data.progress !== undefined) {
-                                        btn.textContent = `${data.progress}%`;
-                                    }
-                                    // 检查完成状态
-                                    if (data.success !== undefined) {
-                                        result = data;
-                                    }
-                                } catch (e) {}
-                            }
-                        }
-                    }
-                    
-                    if (result && result.success && result.data && result.data.transcript) {
-                        btn.textContent = '✅ 已提取';
-                        successCount++;
-                    } else {
-                        btn.textContent = '❌ 失败';
-                        btn.disabled = false;
-                        failCount++;
-                    }
-                } catch (e) {
-                    console.error('提取失败:', e);
-                    btn.textContent = '❌ 失败';
-                    btn.disabled = false;
-                    failCount++;
-                }
-                
-                // 每个视频之间间隔 2 秒，避免请求过快
-                if (i < unextracted.length - 1) {
-                    await new Promise(r => setTimeout(r, 2000));
-                }
-            }
-            
-            extracting = false;
-            extractBtn.disabled = false;
-            extractBtn.textContent = '📝 批量提取文案';
-            progressSection.style.display = 'none';
-            
-            showExtractToast(`提取完成！成功: ${successCount}, 失败: ${failCount}`, 'success');
         }
 
         // 格式化日期

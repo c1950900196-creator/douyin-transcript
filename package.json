@@ -6,14 +6,28 @@
   "scripts": {
     "start": "node server-cloud.js",
     "dev": "node server-cloud.js",
-    "start:local": "node server.js"
+    "start:local": "node server.js",
+    "build:win": "pkg server.js --targets node18-win-x64 --output dist/douyin-transcript.exe"
   },
   "dependencies": {
     "puppeteer-core": "^24.0.0",
     "puppeteer-extra": "^3.3.6",
     "puppeteer-extra-plugin-stealth": "^2.11.2"
   },
+  "devDependencies": {
+    "pkg": "^5.8.1"
+  },
   "engines": {
     "node": ">=18"
+  },
+  "pkg": {
+    "assets": [
+      "*.html",
+      "*.css",
+      "*.js",
+      "*.png",
+      "*.ico",
+      "config.json"
+    ]
   }
 }
